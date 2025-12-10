@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        <ion-title>HorneburgAR</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -13,44 +13,41 @@
         </ion-toolbar>
       </ion-header>
 
-      <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-      </div>
+      <ion-card router-link="/ar">
+        <ion-card-header>
+          <ion-card-title>Inselmodus</ion-card-title>
+          <ion-card-subtitle>AR-Anwendung vor Ort</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          Erlebe Horneburg in Augmented Reality direkt vor Ort auf der Insel.
+        </ion-card-content>
+
+      </ion-card>
+
+      <ion-card router-link="/liste">
+        <ion-card-header>
+          <ion-card-title>Einzelmodus</ion-card-title>
+          <ion-card-subtitle>Gebäude von allen Seiten</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          Erkunde die 3D-Modelle der Horneburger Gebäude interaktiv aus allen Blickwinkeln.
+        </ion-card-content>
+
+      </ion-card>
+
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 </script>
 
 <style scoped>
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+ion-card:hover {
+  cursor: pointer;
+  background-color: #f0f0f0;
 }
 </style>
