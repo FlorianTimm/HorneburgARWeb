@@ -96,7 +96,7 @@ onMounted(() => {
 
         if (firstLocation) {
             const loader = new GLTFLoader();
-            loader.loadAsync('modelle/wohnhaus1.glb').then((gltf: GLTF) => {
+            loader.loadAsync('modelle/wohnhaus1.gltf').then((gltf: GLTF) => {
                 let object = gltf.scene;
 
                 object.rotation.y = Math.PI * 210 / 180; // Rotate 180 degrees
