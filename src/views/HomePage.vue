@@ -25,7 +25,7 @@
 
       </ion-card>
 
-      <ion-card router-link="/liste">
+      <ion-card router-link="/orbit">
         <ion-card-header>
           <ion-card-title>Einzelmodus</ion-card-title>
           <ion-card-subtitle>Gebäude von allen Seiten</ion-card-subtitle>

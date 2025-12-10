@@ -21,12 +21,12 @@ const routes: Array<RouteRecordRaw> = [
     component: AR,
   },
   {
-    path: '/liste',
+    path: '/orbit',
     name: 'Liste',
     component: Liste,
   },
   {
-    path: '/orbit',
+    path: '/orbit/:model',
     name: 'Orbit',
     component: Orbit,
   }

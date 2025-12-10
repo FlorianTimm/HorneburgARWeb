@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "patternProperties": {
+    "^.*$": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "rotation": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 360
+        }
+      },
+      "required": [
+        "name",
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

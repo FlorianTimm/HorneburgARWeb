@@ -5,7 +5,7 @@
                 <ion-buttons slot="start">
                     <ion-back-button default-href="/liste"></ion-back-button>
                 </ion-buttons>
-                <ion-title>Wohnhaus 1</ion-title>
+                <ion-title>{{ modelle ? modelle[model]?.name : '' }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -24,7 +24,21 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-onMounted(() => {
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const { model } = route.params as { model: string };
+
+import axios from 'axios';
+import { ref } from 'vue';
+import { ModelleJson } from '@/types';
+
+const modelle: ModelleJson = ref({});
+
+onMounted(async () => {
+    await axios.get('/modelle/modelle.json').then(response => {
+        modelle.value = response.data;
+    });
     console.log("Orbit.vue mounted");
 
     const container = document.getElementById('orbit-container');
@@ -34,7 +48,7 @@ onMounted(() => {
         return;
     }
 
-    const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.001, 1000);
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.001, 1000);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -49,11 +63,13 @@ onMounted(() => {
     });
 
     let cameraControls = new OrbitControls(camera, renderer.domElement);
-    camera.position.set(6, 0, 10);
+    camera.position.set(10, 2, 12);
     //cameraControls.update();
 
     const loader = new GLTFLoader();
-    loader.loadAsync('wohnhaus1_neu.glb').then((gltf: GLTF) => {
+    let file = modelle.value[model].path
+    console.log(modelle.value);
+    loader.loadAsync(file).then((gltf: GLTF) => {
 
         //const loader = new OBJLoader();
         //loader.loadAsync('backhausv.obj').then((object: THREE.Group) => {
@@ -61,8 +77,8 @@ onMounted(() => {
         let object = gltf.scene;
 
         object.translateX(-5);
-        object.translateY(-2);
-        object.translateZ(5);
+        object.translateY(-3);
+        object.translateZ(4);
         scene.add(object);
     })
     // Add illumination to the scene

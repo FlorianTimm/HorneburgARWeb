@@ -1,0 +1,16 @@
+{
+    "wohnhaus1": {
+        "name": "Wohnhaus 1",
+        "path": "/modelle/wohnhaus1.glb",
+        "longitude": 9.5873684507624617,
+        "latitude": 53.509736171441112,
+        "rotation": 210
+    },
+    "ganerben4": {
+        "name": "Ganerbenhaus 4",
+        "path": "/modelle/ganerben4.glb",
+        "longitude": 0,
+        "latitude": 0,
+        "rotation": 0
+    }
+}

@@ -1,7 +1,7 @@
 # Specifies intentionally untracked files to ignore when using Git
 # http://git-scm.com/docs/gitignore
 
-/wohnhaus1_neu.glb
+/public/modelle/*.glb
 
 *~
 *.sw[mnpcod]

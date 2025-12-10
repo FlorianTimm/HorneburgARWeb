@@ -16,13 +16,14 @@
                 </ion-toolbar>
             </ion-header>
 
-            <ion-card router-link="/orbit#Wohnhaus1">
+
+            <ion-card :router-link="`/orbit/${key}`" v-for="(model, key) in modelle" :key="key">
                 <ion-card-header>
-                    <ion-card-title>Wohnhaus 1</ion-card-title>
+                    <ion-card-title>{{ model.name }}</ion-card-title>
                 </ion-card-header>
 
                 <ion-card-content>
-                    Erkunde das 3D-Modell des Wohnhauses 1 interaktiv aus allen Blickwinkeln.
+                    Erkunde das 3D-Modell des {{ model.name }} interaktiv aus allen Blickwinkeln.
                 </ion-card-content>
             </ion-card>
 
@@ -33,6 +34,19 @@
 
 <script setup lang="ts">
 import { IonCard, IonCardContent, IonCardHeader, IonButtons, IonBackButton, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { ModelleJson } from '@/types';
+
+const modelle: ModelleJson = ref({});
+
+onMounted(async () => {
+    await axios.get('/modelle/modelle.json').then(response => {
+        modelle.value = response.data;
+    });
+    console.log("Liste.vue mounted");
+});
+
 </script>
 
 <style scoped>
