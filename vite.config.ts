@@ -1,19 +1,23 @@
-import basicSsl from '@vitejs/plugin-basic-ssl'
-import { build } from 'vite'
+/// <reference types="vitest" />
 
-export default {
-    build: {
-        sourcemap: true,
-        rollupOptions: {
-            input: {
-                main: 'index.html',
-                orbit: 'orbit.html',
-                ar: 'ar.html',
-                list: 'list.html'
-            }
-        }
+import legacy from '@vitejs/plugin-legacy'
+import vue from '@vitejs/plugin-vue'
+import path from 'path'
+import { defineConfig } from 'vite'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+    legacy()
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
     },
-    plugins: [
-        basicSsl()
-    ]
-}
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom'
+  }
+})
