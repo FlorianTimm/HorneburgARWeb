@@ -44,5 +44,6 @@
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^0.34.6",
     "vue-tsc": "^2.1.10"
-  }
+  },
+  "description": "Horneburg in AR"
 }
