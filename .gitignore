@@ -2,6 +2,10 @@
 # http://git-scm.com/docs/gitignore
 
 /public/modelle/*.glb
+/public/modelle/*.gltf
+/public/modelle/*.bin
+/public/modelle/*.webp
+/public/modelle/*.png
 
 *~
 *.sw[mnpcod]

@@ -3,7 +3,7 @@
         <ion-header :translucent="true">
             <ion-toolbar>
                 <ion-buttons slot="start">
-                    <ion-back-button default-href="/liste"></ion-back-button>
+                    <ion-back-button default-href="/orbit"></ion-back-button>
                 </ion-buttons>
                 <ion-title>{{ modelle ? modelle[model]?.name : '' }}</ion-title>
             </ion-toolbar>
