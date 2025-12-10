@@ -1,0 +1,22 @@
+{
+    "dependencies": {
+        "locar": "^0.1.7",
+        "three": "^0.181.2",
+        "@ionic/vue": "^8.7.11",
+        "@ionic/vue-router": "^8.7.11",
+        "ionicons": "^8.0.13",
+        "vue": "^3.5.25",
+        "vue-router": "^4.6.3"
+    },
+    "devDependencies": {
+        "@types/three": "^0.181.0",
+        "@vitejs/plugin-basic-ssl": "^2.1.0",
+        "vite": "^7.2.7",
+        "vite-plugin-pwa": "^1.2.0",
+        "vue-tsc": "^3.1.8"
+    },
+    "scripts": {
+        "dev": "vite dev --host",
+        "build": "vite build"
+    }
+}
