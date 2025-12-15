@@ -24,6 +24,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { onMounted, onUnmounted } from 'vue';
 import { toastController } from '@ionic/vue';
+import { load_json } from '@/func/modelle_json';
 
 const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.001, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -91,30 +92,54 @@ onMounted(() => {
         toast(`GPS Fehler: Code ${error.code}`);
     });
 
-    locar.on("gpsupdate", ev => {
+    locar.on("gpsupdate", async ev => {
         toast(`GPS Update: Lat ${ev.position.coords.latitude.toFixed(6)}, Lon ${ev.position.coords.longitude.toFixed(6)}, Accuracy ${ev.position.coords.accuracy}m`);
 
         if (firstLocation) {
             const loader = new GLTFLoader();
-            loader.loadAsync('modelle/wohnhaus1.gltf').then((gltf: GLTF) => {
-                let object = gltf.scene;
 
-                object.rotation.y = Math.PI * 210 / 180; // Rotate 180 degrees
-                locar.add(object, 10.006360171632716, 53.54025627076634, -1.5); // Uni
-                locar.add(object.clone(), 10.0282, 53.4174, -1.5); // Meckelfeld
-                locar.add(object.clone(), 9.5873684507624617, 53.509736171441112, -1.5); // Horneburg
+            let diff_for_uni = [0, 0]
+            let diff_for_meckelfeld = [0, 0]
 
-                // Add illumination to the scene
-                const ambientLight = new THREE.AmbientLight(0xffffff, 3);
-                scene.add(ambientLight);
 
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
-                directionalLight.position.set(100, 200, 100);
-                scene.add(directionalLight);
-                console.log(object);
-            }).catch((err: Error) => {
-                console.error('An error happened while loading the FBX model.', err);
-            });
+            // Ort - Horneburg
+            diff_for_uni[0] = 10.006360171632716 - 9.5873684507624617;
+            diff_for_uni[1] = 53.54025627076634 - 53.509736171441112;
+
+            diff_for_meckelfeld[0] = 10.0282 - 9.5873684507624617;
+            diff_for_meckelfeld[1] = 53.4174 - 53.509736171441112;
+
+            let liste = await load_json()
+
+            for (let name in liste) {
+                let obj = liste[name];
+
+                loader.loadAsync(obj.path).then((gltf: GLTF) => {
+                    let object = gltf.scene;
+
+                    object.rotation.y = Math.PI * obj.rotation / 180; // Rotate 180 degrees
+                    locar.add(object,
+                        obj.longitude + diff_for_uni[0],
+                        obj.latitude + diff_for_uni[1],
+                        -1.5); // Uni
+                    locar.add(object.clone(),
+                        obj.longitude + diff_for_meckelfeld[0],
+                        obj.latitude + diff_for_meckelfeld[1],
+                        -1.5); // Meckelfeld
+                    locar.add(object.clone(), obj.longitude, obj.latitude, -1.5); // Horneburg
+
+                    // Add illumination to the scene
+                    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
+                    scene.add(ambientLight);
+
+                    const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+                    directionalLight.position.set(100, 200, 100);
+                    scene.add(directionalLight);
+                    console.log(object);
+                }).catch((err: Error) => {
+                    console.error('An error happened while loading the FBX model.', err);
+                });
+            }
 
             firstLocation = false;
         }

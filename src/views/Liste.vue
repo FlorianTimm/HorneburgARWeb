@@ -35,15 +35,13 @@
 <script setup lang="ts">
 import { IonCard, IonCardContent, IonCardHeader, IonButtons, IonBackButton, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import { ModelleJson } from '@/types';
+import { load_json, ModelleJson } from '@/func/modelle_json';
 
-const modelle: ModelleJson = ref({});
+import type { Ref } from 'vue';
+const modelle: Ref<ModelleJson> = ref({});
 
 onMounted(async () => {
-    await axios.get('/modelle/modelle.json').then(response => {
-        modelle.value = response.data;
-    });
+    modelle.value = await load_json();
     console.log("Liste.vue mounted");
 });
 

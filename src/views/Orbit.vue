@@ -31,7 +31,7 @@ const { model } = route.params as { model: string };
 
 import axios from 'axios';
 import { ref } from 'vue';
-import { ModelleJson } from '@/types';
+import { ModelleJson } from '@/func/modelle_json';
 
 const modelle: ModelleJson = ref({});
 
