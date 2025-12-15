@@ -32,8 +32,9 @@ const { model } = route.params as { model: string };
 import axios from 'axios';
 import { ref } from 'vue';
 import { ModelleJson } from '@/func/modelle_json';
+import type { Ref } from 'vue';
 
-const modelle: ModelleJson = ref({});
+const modelle: Ref<ModelleJson> = ref({});
 
 onMounted(async () => {
     await axios.get('/modelle/modelle.json').then(response => {
