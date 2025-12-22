@@ -23,8 +23,8 @@ import * as LocAR from 'locar';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { onMounted, onUnmounted } from 'vue';
-import { toastController } from '@ionic/vue';
 import { load_json } from '@/func/modelle_json';
+import { toast } from '@/func/toast';
 
 const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.001, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -35,18 +35,6 @@ const cam = new LocAR.Webcam({
         facingMode: "environment"
     }
 });
-
-
-
-async function toast(text: string) {
-    const toast = await toastController.create({
-        message: text,
-        duration: 1500,
-        position: 'bottom',
-    });
-
-    await toast.present();
-}
 
 onMounted(() => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -118,28 +106,32 @@ onMounted(() => {
                     let object = gltf.scene;
 
                     object.rotation.y = Math.PI * obj.rotation / 180; // Rotate 180 degrees
+
                     locar.add(object,
                         obj.longitude + diff_for_uni[0],
                         obj.latitude + diff_for_uni[1],
                         -1.5); // Uni
+
                     locar.add(object.clone(),
                         obj.longitude + diff_for_meckelfeld[0],
                         obj.latitude + diff_for_meckelfeld[1],
                         -1.5); // Meckelfeld
+
                     locar.add(object.clone(), obj.longitude, obj.latitude, -1.5); // Horneburg
 
-                    // Add illumination to the scene
-                    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
-                    scene.add(ambientLight);
-
-                    const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
-                    directionalLight.position.set(100, 200, 100);
-                    scene.add(directionalLight);
                     console.log(object);
                 }).catch((err: Error) => {
                     console.error('An error happened while loading the FBX model.', err);
                 });
             }
+            // Add illumination to the scene
+            const ambientLight = new THREE.AmbientLight(0xffffff, 3);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+            directionalLight.position.set(100, 200, 100);
+            scene.add(directionalLight);
+
 
             firstLocation = false;
         }
