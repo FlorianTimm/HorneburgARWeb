@@ -1,4 +1,32 @@
 {
+    "backhaus5": {
+        "name": "Backhaus 5",
+        "path": "/modelle/backhaus5.gltf",
+        "longitude": 9.5877355108312816,
+        "latitude": 53.509465843008336,
+        "rotation": 180
+    },
+    "ganerben4": {
+        "name": "Ganerbenhaus 4",
+        "path": "/modelle/ganerben4.gltf",
+        "longitude": 9.5874431844670784,
+        "latitude": 53.509336623973411,
+        "rotation": 230
+    },
+    "ganerben6": {
+        "name": "Ganerbenhaus 6",
+        "path": "/modelle/ganerben6.gltf",
+        "longitude": 9.5876443157315965,
+        "latitude": 53.509282408092076,
+        "rotation": 270
+    },
+    "ganerben8": {
+        "name": "Ganerbenhaus 8",
+        "path": "/modelle/ganerben8.gltf",
+        "longitude": 9.5879581685594175,
+        "latitude": 53.509537604539489,
+        "rotation": 245
+    },
     "wohnhaus1": {
         "name": "Wohnhaus 1",
         "path": "/modelle/wohnhaus1.gltf",
@@ -9,15 +37,29 @@
     "wohnhaus2": {
         "name": "Wohnhaus 2",
         "path": "/modelle/wohnhaus2.gltf",
-        "longitude": 0,
-        "latitude": 0,
-        "rotation": 0
+        "longitude": 9.5873975869172359,
+        "latitude": 53.509596622461174,
+        "rotation": 200
     },
-    "ganerben5": {
-        "name": "Ganerbenhaus 4",
-        "path": "/modelle/ganerben4.gltf",
-        "longitude": 0,
-        "latitude": 0,
-        "rotation": 0
+    "wohnhaus3": {
+        "name": "Wohnhaus 3",
+        "path": "/modelle/wohnhaus3.gltf",
+        "longitude": 9.58734930715858,
+        "latitude": 53.509429138955547,
+        "rotation": 230
+    },
+    "wohnhaus12": {
+        "name": "Wohnhaus 12",
+        "path": "/modelle/wohnhaus12.gltf",
+        "longitude": 9.5880992196999788,
+        "latitude": 53.509746901765972,
+        "rotation": 240
+    },
+    "wohnturm11": {
+        "name": "Wohnturm 11",
+        "path": "/modelle/wohnturm11.gltf",
+        "longitude": 9.5877167353695825,
+        "latitude": 53.509603019905121,
+        "rotation": 240
     }
 }

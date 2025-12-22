@@ -6,6 +6,8 @@
 /public/modelle/*.bin
 /public/modelle/*.webp
 /public/modelle/*.png
+/public/modelle/*.jpg
+/texturen_verkleinert/*
 
 *~
 *.sw[mnpcod]
@@ -37,3 +39,4 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+texturen_verkleinert/damaged_plaster_diff_1k.webp
