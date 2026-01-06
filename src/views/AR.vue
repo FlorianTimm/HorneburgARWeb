@@ -11,7 +11,6 @@
 
         <ion-content :fullscreen="true">
             <div id="ar-container"></div>
-
         </ion-content>
     </ion-page>
 </template>
@@ -58,7 +57,9 @@ onMounted(() => {
 
     const deviceOrientationControls = new LocAR.DeviceOrientationControls(camera,
         {
-            //smoothingFactor: 0.1
+            smoothingFactor: 0.1,
+            enablePermissionDialog: true
+
         }
     );
 
@@ -73,7 +74,7 @@ onMounted(() => {
     deviceOrientationControls.init();
 
     locar.setGpsOptions({
-        gpsMinDistance: 1.5 // meters
+        gpsMinDistance: 0.5 // meters
     });
 
     locar.on("gpserror", error => {
