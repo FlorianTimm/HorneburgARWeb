@@ -1,12 +1,11 @@
 # Specifies intentionally untracked files to ignore when using Git
 # http://git-scm.com/docs/gitignore
 
-/public/modelle/*.glb
+
 /public/modelle/*.gltf
 /public/modelle/*.bin
-/public/modelle/*.webp
-/public/modelle/*.png
-/public/modelle/*.jpg
+
+/public/modelle/textures/*
 /texturen_verkleinert/*
 
 *~

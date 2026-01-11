@@ -16,6 +16,15 @@
                 </ion-toolbar>
             </ion-header>
 
+            <ion-card :router-link="`/orbit/alle`" :key="'alle'">
+                <ion-card-header>
+                    <ion-card-title>Alle Modelle</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                    Erkunde das 3D-Modell aller Modelle interaktiv aus allen Blickwinkeln.
+                </ion-card-content>
+            </ion-card>
 
             <ion-card :router-link="`/orbit/${key}`" v-for="(model, key) in modelle" :key="key">
                 <ion-card-header>

@@ -5,7 +5,7 @@
                 <ion-buttons slot="start">
                     <ion-back-button default-href="/orbit"></ion-back-button>
                 </ion-buttons>
-                <ion-title>{{ modelle ? modelle[model]?.name : '' }}</ion-title>
+                <ion-title>{{ modelle ? (model == 'alle' ? 'Alle Modelle' : modelle[model]?.name) : '' }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -68,20 +68,67 @@ onMounted(async () => {
     //cameraControls.update();
 
     const loader = new GLTFLoader();
-    let file = modelle.value[model].path
-    console.log(modelle.value);
-    loader.loadAsync(file).then((gltf: GLTF) => {
+    if (model == 'alle') {
 
-        //const loader = new OBJLoader();
-        //loader.loadAsync('backhausv.obj').then((object: THREE.Group) => {
+        // Mittelwert von allen Breiten (latitude) und Längengeraden (longitude) berechnen
+        let latSum = 0;
+        let lngSum = 0;
+        let count = 0;
+        for (let key in modelle.value) {
+            latSum += modelle.value[key].latitude;
+            lngSum += modelle.value[key].longitude;
+            count++;
+        }
+        const latAvg = count > 0 ? latSum / count : 0;
+        const lngAvg = count > 0 ? lngSum / count : 0;
+        //console.log('Mittelwert Latitude:', latAvg, 'Mittelwert Longitude:', lngAvg);
 
-        let object = gltf.scene;
+        let lngFactor = 2 * 6370000 * Math.cos(latAvg / 180 * Math.PI) * Math.PI / 360;
+        let latFactor = 2 * 6370000 * Math.PI / 360;
 
-        object.translateX(-5);
-        object.translateY(-3);
-        object.translateZ(4);
-        scene.add(object);
-    })
+        //console.log('Längengrad Faktor:', lngFactor, 'Breitengrad Faktor:', latFactor);
+
+
+        for (let key in modelle.value) {
+
+            let file = modelle.value[key].path
+            //console.log(modelle.value);
+            // Load each model and position them in a grid
+            loader.loadAsync(file).then((gltf: GLTF) => {
+                let object = gltf.scene;
+
+                // Positioning logic for grid layout
+
+                let lat = (modelle.value[key].latitude - latAvg) * latFactor;
+                let lng = (modelle.value[key].longitude - lngAvg) * lngFactor;
+                let rot = Math.PI * modelle.value[key].rotation / 180
+
+                object.rotateOnAxis(new THREE.Vector3(0, 1, 0), -rot); // Rotate model to face forward
+
+                object.translateX(lng);
+                object.translateZ(lat);
+
+                scene.add(object);
+            });
+        }
+        camera.position.set(10, 20, 30);
+    } else {
+
+        let file = modelle.value[model].path
+        console.log(modelle.value);
+        loader.loadAsync(file).then((gltf: GLTF) => {
+
+            //const loader = new OBJLoader();
+            //loader.loadAsync('backhausv.obj').then((object: THREE.Group) => {
+
+            let object = gltf.scene;
+
+            object.translateX(-5);
+            object.translateY(-3);
+            object.translateZ(4);
+            scene.add(object);
+        })
+    }
     // Add illumination to the scene
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
