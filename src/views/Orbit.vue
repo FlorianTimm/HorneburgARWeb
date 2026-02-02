@@ -23,17 +23,14 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-
-import { useRoute } from 'vue-router';
-
-const route = useRoute();
-const { model } = route.params as { model: string };
-
 import axios from 'axios';
 import { ref } from 'vue';
 import { ModelleJson } from '@/func/modelle_json';
 import type { Ref } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
+const { model } = route.params as { model: string };
 const modelle: Ref<ModelleJson> = ref({});
 
 onMounted(async () => {
@@ -83,8 +80,8 @@ onMounted(async () => {
         const lngAvg = count > 0 ? lngSum / count : 0;
         //console.log('Mittelwert Latitude:', latAvg, 'Mittelwert Longitude:', lngAvg);
 
-        let lngFactor = 2 * 6370000 * Math.cos(latAvg / 180 * Math.PI) * Math.PI / 360;
-        let latFactor = 2 * 6370000 * Math.PI / 360;
+        let lngFactor = 2. * 6370000. * Math.cos(latAvg / 180. * Math.PI) * Math.PI / 360. * 1.1;
+        let latFactor = 2. * 6370000. * Math.PI / 360. * 1.1;
 
         //console.log('Längengrad Faktor:', lngFactor, 'Breitengrad Faktor:', latFactor);
 
@@ -97,21 +94,45 @@ onMounted(async () => {
             loader.loadAsync(file).then((gltf: GLTF) => {
                 let object = gltf.scene;
 
+                object.traverse((child) => {
+                    if ((child as THREE.Mesh).isMesh) {
+                        const mesh = child as THREE.Mesh;
+                        if (Array.isArray(mesh.material)) {
+                            mesh.material.forEach((material) => {
+                                material.side = THREE.FrontSide;
+                            });
+                        } else {
+                            mesh.material.side = THREE.FrontSide;
+                        }
+                    }
+                });
+
+
                 // Positioning logic for grid layout
-
-                let lat = (modelle.value[key].latitude - latAvg) * latFactor;
+                let lat = -(modelle.value[key].latitude - latAvg) * latFactor;
                 let lng = (modelle.value[key].longitude - lngAvg) * lngFactor;
-                let rot = Math.PI * modelle.value[key].rotation / 180
-
-                object.rotateOnAxis(new THREE.Vector3(0, 1, 0), -rot); // Rotate model to face forward
+                let rot = Math.PI * (270 - modelle.value[key].rotation) / 180.;
 
                 object.translateX(lng);
                 object.translateZ(lat);
+                object.rotateY(rot);
 
                 scene.add(object);
+                let sphere = new THREE.SphereGeometry(0.1, 16, 16);
+                let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+                let marker = new THREE.Mesh(sphere, material);
+                marker.position.set(lng, 0, lat);
+                scene.add(marker);
             });
         }
-        camera.position.set(10, 20, 30);
+        camera.position.set(10, 100, -5);
+        //cameraControls.target.set(0, 0, 0);
+
+        let sphere = new THREE.SphereGeometry(0.3, 16, 16);
+        let material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+        let marker = new THREE.Mesh(sphere, material);
+        marker.position.set(0, 0, 0);
+        scene.add(marker);
     } else {
 
         let file = modelle.value[model].path
@@ -122,6 +143,19 @@ onMounted(async () => {
             //loader.loadAsync('backhausv.obj').then((object: THREE.Group) => {
 
             let object = gltf.scene;
+
+            object.traverse((child) => {
+                if ((child as THREE.Mesh).isMesh) {
+                    const mesh = child as THREE.Mesh;
+                    if (Array.isArray(mesh.material)) {
+                        mesh.material.forEach((material) => {
+                            material.side = THREE.FrontSide;
+                        });
+                    } else {
+                        mesh.material.side = THREE.FrontSide;
+                    }
+                }
+            });
 
             object.translateX(-5);
             object.translateY(-3);
