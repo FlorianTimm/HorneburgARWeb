@@ -84,43 +84,84 @@ onMounted(() => {
     locar.on("gpsupdate", async ev => {
         toast(`GPS Update: Lat ${ev.position.coords.latitude.toFixed(6)}, Lon ${ev.position.coords.longitude.toFixed(6)}, Accuracy ${ev.position.coords.accuracy}m`);
 
+        const locations = [
+            {
+                name: 'Uni',
+                longitude: 10.006360171632716,
+                latitude: 53.54025627076634,
+                diffLong: 10.006360171632716 - 9.5873684507624617,
+                diffLat: 53.54025627076634 - 53.509736171441112
+            },
+            {
+                name: 'Meckelfeld',
+                longitude: 10.0282,
+                latitude: 53.4174,
+                diffLong: 10.0282 - 9.5873684507624617,
+                diffLat: 53.4174 - 53.509736171441112
+            },
+            {
+                name: 'Horneburg',
+                longitude: 9.5873684507624617,
+                latitude: 53.509736171441112,
+                diffLong: 0,
+                diffLat: 0
+            }
+        ];
+
+        // Haversine formula to calculate distance
+        function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+            const toRad = (v: number) => v * Math.PI / 180;
+            const R = 6371e3; // metres
+            const φ1 = toRad(lat1);
+            const φ2 = toRad(lat2);
+            const Δφ = toRad(lat2 - lat1);
+            const Δλ = toRad(lon2 - lon1);
+            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+
         if (firstLocation) {
             const loader = new GLTFLoader();
 
-            let diff_for_uni = [0, 0]
-            let diff_for_meckelfeld = [0, 0]
-
-
-            // Ort - Horneburg
-            diff_for_uni[0] = 10.006360171632716 - 9.5873684507624617;
-            diff_for_uni[1] = 53.54025627076634 - 53.509736171441112;
-
-            diff_for_meckelfeld[0] = 10.0282 - 9.5873684507624617;
-            diff_for_meckelfeld[1] = 53.4174 - 53.509736171441112;
-
             let liste = await load_json()
+
+            const userLat = ev.position.coords.latitude;
+            const userLon = ev.position.coords.longitude;
+
+            let diffLat = 0;
+            let diffLong = 0;
+
+            // Find nearest location
+            let nearest = locations[0];
+            let minDist = getDistance(userLat, userLon, locations[0].latitude, locations[0].longitude);
+            for (let i = 1; i < locations.length; i++) {
+                const dist = getDistance(userLat, userLon, locations[i].latitude, locations[i].longitude);
+                if (dist < minDist) {
+                    minDist = dist;
+                    nearest = locations[i];
+                }
+            }
+
+            diffLat = nearest.diffLat;
+            diffLong = nearest.diffLong;
+
+            toast(`Nächster Standort: ${nearest.name}`);
 
             for (let name in liste) {
                 let obj = liste[name];
 
                 loader.loadAsync(obj.path).then((gltf: GLTF) => {
                     let object = gltf.scene;
-
-                    object.rotation.y = Math.PI * obj.rotation / 180; // Rotate 180 degrees
+                    object.rotation.y = Math.PI * obj.rotation / 180;
 
                     locar.add(object,
-                        obj.longitude + diff_for_uni[0],
-                        obj.latitude + diff_for_uni[1],
-                        -1.5); // Uni
-
-                    locar.add(object.clone(),
-                        obj.longitude + diff_for_meckelfeld[0],
-                        obj.latitude + diff_for_meckelfeld[1],
-                        -1.5); // Meckelfeld
-
-                    locar.add(object.clone(), obj.longitude, obj.latitude, -1.5); // Horneburg
-
-                    console.log(object);
+                        obj.longitude + diffLong,
+                        obj.latitude + diffLat,
+                        -1.5);
                 }).catch((err: Error) => {
                     console.error('An error happened while loading the FBX model.', err);
                 });
