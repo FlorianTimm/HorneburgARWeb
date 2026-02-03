@@ -33,6 +33,8 @@ const route = useRoute();
 const { model } = route.params as { model: string };
 const modelle: Ref<ModelleJson> = ref({});
 
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
 onMounted(async () => {
     await get('/modelle/modelle.json').then(response => {
         modelle.value = response.data;
@@ -48,7 +50,6 @@ onMounted(async () => {
 
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.001, 1000);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     container.appendChild(renderer.domElement);
 
@@ -91,7 +92,7 @@ onMounted(async () => {
             let file = modelle.value[key].path
             //console.log(modelle.value);
             // Load each model and position them in a grid
-            loader.loadAsync(file).then((gltf: GLTF) => {
+            await loader.loadAsync(file).then((gltf: GLTF) => {
                 let object = gltf.scene;
 
                 object.traverse((child) => {
@@ -183,8 +184,9 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-    console.log("Orbit.vue deactivated");
-
+    console.log("Orbit.vue unmounted");
+    renderer.dispose();
+    renderer.setAnimationLoop(null);
 });
 </script>
 

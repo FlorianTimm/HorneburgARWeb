@@ -1,4 +1,4 @@
-import axios from 'axios';
+import get from 'axios';
 
 export type ModelJson = {
     name: string;
@@ -11,5 +11,5 @@ export type ModelJson = {
 export type ModelleJson = { [key: string]: ModelJson };
 
 export async function load_json(): Promise<ModelleJson> {
-    return axios.get('/modelle/modelle.json').then(response => response.data);
+    return get('/modelle/modelle.json').then(response => response.data);
 }

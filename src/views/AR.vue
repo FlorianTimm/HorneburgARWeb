@@ -154,7 +154,7 @@ onMounted(() => {
             for (let name in liste) {
                 let obj = liste[name];
 
-                loader.loadAsync(obj.path).then((gltf: GLTF) => {
+                await loader.loadAsync(obj.path).then((gltf: GLTF) => {
                     let object = gltf.scene;
                     object.rotation.y = Math.PI * obj.rotation / 180;
 
