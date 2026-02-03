@@ -23,7 +23,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import axios from 'axios';
+import get from 'axios';
 import { ref } from 'vue';
 import { ModelleJson } from '@/func/modelle_json';
 import type { Ref } from 'vue';
@@ -34,7 +34,7 @@ const { model } = route.params as { model: string };
 const modelle: Ref<ModelleJson> = ref({});
 
 onMounted(async () => {
-    await axios.get('/modelle/modelle.json').then(response => {
+    await get('/modelle/modelle.json').then(response => {
         modelle.value = response.data;
     });
     console.log("Orbit.vue mounted");
