@@ -83,48 +83,49 @@ onMounted(() => {
 
     locar.on("gpsupdate", async ev => {
         toast(`GPS Update: Lat ${ev.position.coords.latitude.toFixed(6)}, Lon ${ev.position.coords.longitude.toFixed(6)}, Accuracy ${ev.position.coords.accuracy}m`);
-
-        const locations = [
-            {
-                name: 'Uni',
-                longitude: 10.006360171632716,
-                latitude: 53.54025627076634,
-                diffLong: 10.006360171632716 - 9.5873684507624617,
-                diffLat: 53.54025627076634 - 53.509736171441112
-            },
-            {
-                name: 'Meckelfeld',
-                longitude: 10.0282,
-                latitude: 53.4174,
-                diffLong: 10.0282 - 9.5873684507624617,
-                diffLat: 53.4174 - 53.509736171441112
-            },
-            {
-                name: 'Horneburg',
-                longitude: 9.5873684507624617,
-                latitude: 53.509736171441112,
-                diffLong: 0,
-                diffLat: 0
-            }
-        ];
-
-        // Haversine formula to calculate distance
-        function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
-            const toRad = (v: number) => v * Math.PI / 180;
-            const R = 6371e3; // metres
-            const φ1 = toRad(lat1);
-            const φ2 = toRad(lat2);
-            const Δφ = toRad(lat2 - lat1);
-            const Δλ = toRad(lon2 - lon1);
-            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-                Math.cos(φ1) * Math.cos(φ2) *
-                Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            return R * c;
-        }
-
-
         if (firstLocation) {
+            firstLocation = false;
+            const locations = [
+                {
+                    name: 'Uni',
+                    longitude: 10.006360171632716,
+                    latitude: 53.54025627076634,
+                    diffLong: 10.006360171632716 - 9.5873684507624617,
+                    diffLat: 53.54025627076634 - 53.509736171441112
+                },
+                {
+                    name: 'Meckelfeld',
+                    longitude: 10.0282,
+                    latitude: 53.4174,
+                    diffLong: 10.0282 - 9.5873684507624617,
+                    diffLat: 53.4174 - 53.509736171441112
+                },
+                {
+                    name: 'Horneburg',
+                    longitude: 9.5873684507624617,
+                    latitude: 53.509736171441112,
+                    diffLong: 0,
+                    diffLat: 0
+                }
+            ];
+
+            // Haversine formula to calculate distance
+            function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+                const toRad = (v: number) => v * Math.PI / 180;
+                const R = 6371e3; // metres
+                const φ1 = toRad(lat1);
+                const φ2 = toRad(lat2);
+                const Δφ = toRad(lat2 - lat1);
+                const Δλ = toRad(lon2 - lon1);
+                const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                    Math.cos(φ1) * Math.cos(φ2) *
+                    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                return R * c;
+            }
+
+
+
             const loader = new GLTFLoader();
 
             let liste = await load_json()
@@ -173,9 +174,6 @@ onMounted(() => {
             const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
             directionalLight.position.set(100, 200, 100);
             scene.add(directionalLight);
-
-
-            firstLocation = false;
         }
     });
 
@@ -193,9 +191,13 @@ onMounted(() => {
 onUnmounted(() => {
     // Clean up resources, event listeners, etc. if needed
     console.log("AR.vue deactivated");
-    locar.stopGps();
-    renderer.setAnimationLoop(null);
-    cam.dispose();
+    try {
+        locar.stopGps();
+        renderer.setAnimationLoop(null);
+        cam.dispose();
+    } catch (e) {
+        console.warn("Error while stopping", e);
+    }
 });
 
 </script>

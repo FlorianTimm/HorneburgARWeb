@@ -166,10 +166,10 @@ onMounted(async () => {
     }
     // Add illumination to the scene
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
+    const ambientLight = new THREE.AmbientLight(0xffeecc, 1.5);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+    const directionalLight = new THREE.DirectionalLight(0xffcc99, 3);
     directionalLight.position.set(100, 200, 100);
     scene.add(directionalLight);
     scene.background = new THREE.Color(0xAAAAAA);
@@ -185,8 +185,12 @@ onMounted(async () => {
 
 onUnmounted(() => {
     console.log("Orbit.vue unmounted");
-    renderer.dispose();
-    renderer.setAnimationLoop(null);
+    try {
+        renderer.dispose();
+        renderer.setAnimationLoop(null);
+    } catch (e) {
+        console.warn("Error while disposing renderer:", e);
+    }
 });
 </script>
 
