@@ -32,7 +32,8 @@ ion-card {
 }
 
 .header-md {
-  box-shadow: none;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 
 @media (min-width: 800px) {

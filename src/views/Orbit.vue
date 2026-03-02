@@ -166,7 +166,7 @@ onMounted(async () => {
     }
     // Add illumination to the scene
 
-    const ambientLight = new THREE.AmbientLight(0xffeecc, 1.5);
+    const ambientLight = new THREE.AmbientLight(0xffeecc, 2.5);
     scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffcc99, 3);

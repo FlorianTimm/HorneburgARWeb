@@ -36,7 +36,7 @@
         <ion-card-content>
           Erlebe Horneburg in Augmented Reality direkt vor Ort auf der Insel.
         </ion-card-content>
-        <img src="../assets/einzelansicht2.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
+        <img src="../assets/inselansicht.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
       </ion-card>
 
       <ion-card router-link="/orbit">
@@ -48,7 +48,7 @@
         <ion-card-content>
           Erkunde die 3D-Modelle der Horneburger Gebäude interaktiv aus allen Blickwinkeln.
         </ion-card-content>
-        <img src="../assets/inselansicht.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
+        <img src="../assets/einzelansicht2.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
       </ion-card>
 
     </ion-content>
