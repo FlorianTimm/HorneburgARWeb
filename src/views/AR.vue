@@ -24,6 +24,7 @@ import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { onMounted, onUnmounted } from 'vue';
 import { load_json } from '@/func/modelle_json';
 import { toast } from '@/func/toast';
+import { addLight, frontSideOnly, getDistance } from '@/func/threed';
 
 const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.001, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -74,7 +75,7 @@ onMounted(() => {
     deviceOrientationControls.init();
 
     locar.setGpsOptions({
-        gpsMinDistance: 0.5 // meters
+        gpsMinDistance: 1.5 // meters
     });
 
     locar.on("gpserror", error => {
@@ -109,23 +110,6 @@ onMounted(() => {
                 }
             ];
 
-            // Haversine formula to calculate distance
-            function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
-                const toRad = (v: number) => v * Math.PI / 180;
-                const R = 6371e3; // metres
-                const φ1 = toRad(lat1);
-                const φ2 = toRad(lat2);
-                const Δφ = toRad(lat2 - lat1);
-                const Δλ = toRad(lon2 - lon1);
-                const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-                    Math.cos(φ1) * Math.cos(φ2) *
-                    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                return R * c;
-            }
-
-
-
             const loader = new GLTFLoader();
 
             let liste = await load_json()
@@ -157,6 +141,7 @@ onMounted(() => {
 
                 await loader.loadAsync(obj.path).then((gltf: GLTF) => {
                     let object = gltf.scene;
+                    frontSideOnly(object);
                     object.rotation.y = Math.PI * obj.rotation / 180;
 
                     locar.add(object,
@@ -168,12 +153,7 @@ onMounted(() => {
                 });
             }
             // Add illumination to the scene
-            const ambientLight = new THREE.AmbientLight(0xffffff, 3);
-            scene.add(ambientLight);
-
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
-            directionalLight.position.set(100, 200, 100);
-            scene.add(directionalLight);
+            addLight(scene)
         }
     });
 

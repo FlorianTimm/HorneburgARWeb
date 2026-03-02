@@ -25,9 +25,11 @@ import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import get from 'axios';
 import { ref } from 'vue';
-import { ModelleJson } from '@/func/modelle_json';
+import { load_json, ModelleJson } from '@/func/modelle_json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { addLight, frontSideOnly } from '@/func/threed';
+import { add } from 'ionicons/icons';
 
 const route = useRoute();
 const { model } = route.params as { model: string };
@@ -36,9 +38,8 @@ const modelle: Ref<ModelleJson> = ref({});
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
 onMounted(async () => {
-    await get('/modelle/modelle.json').then(response => {
-        modelle.value = response.data;
-    });
+    modelle.value = await load_json();
+
     console.log("Orbit.vue mounted");
 
     const container = document.getElementById('orbit-container');
@@ -95,24 +96,12 @@ onMounted(async () => {
             await loader.loadAsync(file).then((gltf: GLTF) => {
                 let object = gltf.scene;
 
-                object.traverse((child) => {
-                    if ((child as THREE.Mesh).isMesh) {
-                        const mesh = child as THREE.Mesh;
-                        if (Array.isArray(mesh.material)) {
-                            mesh.material.forEach((material) => {
-                                material.side = THREE.FrontSide;
-                            });
-                        } else {
-                            mesh.material.side = THREE.FrontSide;
-                        }
-                    }
-                });
-
+                frontSideOnly(object);
 
                 // Positioning logic for grid layout
                 let lat = -(modelle.value[key].latitude - latAvg) * latFactor;
                 let lng = (modelle.value[key].longitude - lngAvg) * lngFactor;
-                let rot = Math.PI * (270 - modelle.value[key].rotation) / 180.;
+                let rot = Math.PI * modelle.value[key].rotation / 180.;
 
                 object.translateX(lng);
                 object.translateZ(lat);
@@ -126,52 +115,32 @@ onMounted(async () => {
                 scene.add(marker);
             });
         }
-        camera.position.set(10, 100, -5);
+        camera.position.set(-20, 33, -90);
         //cameraControls.target.set(0, 0, 0);
 
-        let sphere = new THREE.SphereGeometry(0.3, 16, 16);
-        let material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-        let marker = new THREE.Mesh(sphere, material);
-        marker.position.set(0, 0, 0);
-        scene.add(marker);
+        //let sphere = new THREE.SphereGeometry(0.3, 16, 16);
+        //let material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+        //let marker = new THREE.Mesh(sphere, material);
+        //marker.position.set(0, 0, 0);
+        //scene.add(marker);
     } else {
-
-        let file = modelle.value[model].path
-        console.log(modelle.value);
+        let entry = modelle.value[model];
+        let file = entry.path;
         loader.loadAsync(file).then((gltf: GLTF) => {
-
-            //const loader = new OBJLoader();
-            //loader.loadAsync('backhausv.obj').then((object: THREE.Group) => {
-
             let object = gltf.scene;
 
-            object.traverse((child) => {
-                if ((child as THREE.Mesh).isMesh) {
-                    const mesh = child as THREE.Mesh;
-                    if (Array.isArray(mesh.material)) {
-                        mesh.material.forEach((material) => {
-                            material.side = THREE.FrontSide;
-                        });
-                    } else {
-                        mesh.material.side = THREE.FrontSide;
-                    }
-                }
-            });
+            frontSideOnly(object);
 
-            object.translateX(-5);
-            object.translateY(-3);
-            object.translateZ(4);
+            object.translateX(-entry.tiefe / 0.7);
+            object.translateZ(-entry.breite / 2);
+            object.translateY(-entry.hoehe / 2);
             scene.add(object);
         })
     }
     // Add illumination to the scene
 
-    const ambientLight = new THREE.AmbientLight(0xffeecc, 2.5);
-    scene.add(ambientLight);
+    addLight(scene)
 
-    const directionalLight = new THREE.DirectionalLight(0xffcc99, 3);
-    directionalLight.position.set(100, 200, 100);
-    scene.add(directionalLight);
     scene.background = new THREE.Color(0xAAAAAA);
 
     renderer.setAnimationLoop(animate);
@@ -179,6 +148,8 @@ onMounted(async () => {
 
     function animate() {
         cameraControls.update();
+        console.log(camera.position);
+        console.log(cameraControls.target);
         renderer.render(scene, camera);
     }
 });

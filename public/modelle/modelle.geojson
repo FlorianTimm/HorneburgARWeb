@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"name": "modelle",
+"features": [
+{ "type": "Feature", "properties": { "name": "Backhaus 5", "path": "/modelle/backhaus5.gltf", "rotation": 91, "breite": 7.57, "tiefe": 10.6, "hoehe": 8.64, "id": "backhaus5" }, "geometry": { "type": "Point", "coordinates": [ 9.587823408205654, 53.509437031679248 ] } },
+{ "type": "Feature", "properties": { "name": "Ganerbenhaus 4", "path": "/modelle/ganerben4.gltf", "rotation": 45, "breite": 16.7, "tiefe": 10.6, "hoehe": 15.8, "id": "ganerbenhaus4" }, "geometry": { "type": "Point", "coordinates": [ 9.587447527496442, 53.509351740126647 ] } },
+{ "type": "Feature", "properties": { "name": "Ganerbenhaus 6", "path": "/modelle/ganerben6.gltf", "rotation": 5, "breite": 20.9, "tiefe": 18.7, "hoehe": 15.1, "id": "ganerbenhaus6" }, "geometry": { "type": "Point", "coordinates": [ 9.587671858368569, 53.50927765156365 ] } },
+{ "type": "Feature", "properties": { "name": "Ganerbenhaus 8", "path": "/modelle/ganerben8.gltf", "rotation": 14, "breite": 19.9, "tiefe": 15.5, "hoehe": 12.8, "id": "ganerbenhaus8" }, "geometry": { "type": "Point", "coordinates": [ 9.587955086512867, 53.509484639378634 ] } },
+{ "type": "Feature", "properties": { "name": "Wohnhaus 1", "path": "/modelle/wohnhaus1.gltf", "rotation": 61, "breite": 8.23, "tiefe": 13.0, "hoehe": 7.19, "id": "wohnhaus1" }, "geometry": { "type": "Point", "coordinates": [ 9.587400854162548, 53.509697859773482 ] } },
+{ "type": "Feature", "properties": { "name": "Wohnhaus 2", "path": "/modelle/wohnhaus2.gltf", "rotation": 83, "breite": 8.23, "tiefe": 13.0, "hoehe": 7.19, "id": "wohnhaus2" }, "geometry": { "type": "Point", "coordinates": [ 9.587367497328545, 53.50959542011848 ] } },
+{ "type": "Feature", "properties": { "name": "Wohnhaus 3", "path": "/modelle/wohnhaus3.gltf", "rotation": 37, "breite": 8.23, "tiefe": 10.7, "hoehe": 7.19, "id": "wohnhaus3" }, "geometry": { "type": "Point", "coordinates": [ 9.587305429514403, 53.509469850594343 ] } },
+{ "type": "Feature", "properties": { "name": "Wohnhaus 12", "path": "/modelle/wohnhaus12.gltf", "rotation": 217, "breite": 5.96, "tiefe": 12.9, "hoehe": 5.84, "id": "wohnhaus12" }, "geometry": { "type": "Point", "coordinates": [ 9.588071350283847, 53.509807744708411 ] } },
+{ "type": "Feature", "properties": { "name": "Wohnturm 11", "path": "/modelle/wohnturm11.gltf", "rotation": 44, "breite": 11.9, "tiefe": 14.8, "hoehe": 18.8, "id": "wohnturm11" }, "geometry": { "type": "Point", "coordinates": [ 9.587754055647753, 53.509575538216957 ] } }
+]
+}
