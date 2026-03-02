@@ -1,12 +1,26 @@
 <template>
   <ion-page>
+    <transition name="fade">
+      <div v-if="showSplash" class="splash-overlay">
+        <img src="../assets/storch.png" alt="Storch" />
+        <div class="splash-content">
+          <ion-icon :icon="homeOutline" size="large" />
+          <h1>Willkommen auf der Burginsel</h1>
+          <!--<p><ion-icon :icon="arrowDownOutline" size="large" /></p>-->
+        </div>
+      </div>
+    </transition>
+
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>HorneburgAR</ion-title>
+        <ion-title>Willkommen auf der Burginsel Horneburg<br />
+          <span style="font-size: 1rem;">Wie möchtest du die Burginsel entdecken? Vor Ort oder von zuhause aus?</span>
+        </ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" :scroll-events="true" @ionScroll="handleScroll">
+
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">HorneburgAR</ion-title>
@@ -22,7 +36,7 @@
         <ion-card-content>
           Erlebe Horneburg in Augmented Reality direkt vor Ort auf der Insel.
         </ion-card-content>
-
+        <img src="../assets/einzelansicht2.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
       </ion-card>
 
       <ion-card router-link="/orbit">
@@ -34,7 +48,7 @@
         <ion-card-content>
           Erkunde die 3D-Modelle der Horneburger Gebäude interaktiv aus allen Blickwinkeln.
         </ion-card-content>
-
+        <img src="../assets/inselansicht.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
       </ion-card>
 
     </ion-content>
@@ -43,11 +57,74 @@
 
 <script setup lang="ts">
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { ref, onMounted } from 'vue';
+import { IonIcon } from '@ionic/vue';
+import { arrowDownOutline, homeOutline } from 'ionicons/icons';
+import type { ScrollDetail } from '@ionic/vue';
+
+const showSplash = ref(true);
+
+// Funktion zum Ausblenden
+const dismissSplash = () => {
+  showSplash.value = false;
+};
+
+// Timer: Nach 3 Sekunden automatisch ausblenden
+onMounted(() => {
+  setTimeout(() => {
+    dismissSplash();
+  }, 3000);
+});
+
+// Scroll: Sobald der User scrollt, Splash entfernen
+const handleScroll = (event: CustomEvent<ScrollDetail>) => {
+  console.log("Scroll event detected, scrollTop:", event.detail.scrollTop);
+  if (showSplash.value && event.detail.scrollTop > 10) {
+    dismissSplash();
+  }
+};
+
 </script>
 
 <style scoped>
-ion-card:hover {
-  cursor: pointer;
-  background-color: #f0f0f0;
+/* Splash-Screen Styling */
+.splash-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #3880ff, #2dd36f);
+  background-image: url('@/assets/startscreen.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  color: white;
+  text-align: center;
+}
+
+.splash-overlay img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Vue Fade-Animation */
+.fade-leave-active {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.main-content {
+  padding: 16px;
 }
 </style>
