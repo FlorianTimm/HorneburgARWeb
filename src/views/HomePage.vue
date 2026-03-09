@@ -20,12 +20,6 @@
     </ion-header>
 
     <ion-content :fullscreen="true" :scroll-events="true" @ionScroll="handleScroll">
-      <div class="locale-changer">
-        <select v-model="$i18n.locale">
-          <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}
-          </option>
-        </select>
-      </div>
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">{{ $t('welcome') }} Horneburg</ion-title>

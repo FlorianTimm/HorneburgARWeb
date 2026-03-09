@@ -42,7 +42,8 @@ import { createI18n } from 'vue-i18n';
 export const SUPPORT_LOCALES = ['en', 'de']
 
 const i18n = createI18n({
-  locale: 'de',
+  // @ts-ignore
+  locale: navigator.language || navigator.userLanguage || 'de',
   fallbackLocale: 'en',
   messages: {
     en: en,
