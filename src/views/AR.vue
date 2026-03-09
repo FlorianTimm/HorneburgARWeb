@@ -5,7 +5,7 @@
                 <ion-buttons slot="start">
                     <ion-back-button default-href="/"></ion-back-button>
                 </ion-buttons>
-                <ion-title>HorneburgAR</ion-title>
+                <ion-title>{{ $t('armode') }}</ion-title>
             </ion-toolbar>
         </ion-header>
 

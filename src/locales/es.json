@@ -1,0 +1,13 @@
+{
+    "welcome": "Bienvenido a la isla del castillo de Horneburg",
+    "island": "Modo isla",
+    "island_description": "Aplicación AR en el lugar",
+    "island_content": "Experimenta Horneburg en realidad aumentada directamente en la isla.",
+    "single": "Modo individual",
+    "single_description": "Edificios desde todos los ángulos",
+    "single_content": "Explora los modelos 3D de los edificios de Horneburg interactivamente desde todas las perspectivas.",
+    "discovery_prompt": "¿Cómo te gustaría descubrir la isla del castillo? ¿En el lugar o desde casa?",
+    "armode": "Isla del castillo en AR",
+    "all_models": "Todos los modelos",
+    "all_models_description": "Explora el modelo 3D de todos los modelos interactivamente desde todas las perspectivas."
+}

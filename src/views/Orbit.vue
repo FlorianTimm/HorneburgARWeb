@@ -5,7 +5,9 @@
                 <ion-buttons slot="start">
                     <ion-back-button default-href="/orbit"></ion-back-button>
                 </ion-buttons>
-                <ion-title>{{ modelle ? (model == 'alle' ? 'Alle Modelle' : modelle[model]?.name) : '' }}</ion-title>
+                <ion-title>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
+                    ''
+                    }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -23,13 +25,11 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import get from 'axios';
 import { ref } from 'vue';
 import { load_json, ModelleJson } from '@/func/modelle_json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { addLight, frontSideOnly } from '@/func/threed';
-import { add } from 'ionicons/icons';
 
 const route = useRoute();
 const { model } = route.params as { model: string };

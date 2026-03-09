@@ -1,9 +1,13 @@
 {
-    "welcome": "Welcome to Burginsel",
+    "welcome": "Welcome to Burginsel Horneburg",
     "island": "Island Mode",
     "island_description": "On-site AR application",
     "island_content": "Experience Horneburg in Augmented Reality directly on-site at the island.",
     "single": "Single Mode",
     "single_description": "Buildings from all sides",
-    "single_content": "Explore the 3D models of Horneburg buildings interactively from all angles."
+    "single_content": "Explore the 3D models of Horneburg buildings interactively from all angles.",
+    "discovery_prompt": "How would you like to discover Burginsel? On-site or from home?",
+    "armode": "Burginsel in AR",
+    "all_models": "All Models",
+    "all_models_description": "Explore the 3D model of all models interactively from all angles."
 }

@@ -50,7 +50,34 @@
             "type": "object",
             "properties": {
               "name": {
-                "type": "string"
+                "type": "object",
+                "properties": {
+                  "de": {
+                    "type": "string"
+                  },
+                  "en": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "de",
+                  "en"
+                ]
+              },
+              "description": {
+                "type": "object",
+                "properties": {
+                  "de": {
+                    "type": "string"
+                  },
+                  "en": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "de",
+                  "en"
+                ]
               },
               "path": {
                 "type": "string"

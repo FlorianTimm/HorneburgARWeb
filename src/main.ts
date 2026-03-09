@@ -36,10 +36,12 @@ import './theme/variables.css';
 
 import en from './locales/en.json';
 import de from './locales/de.json';
+import es from './locales/es.json';
+import nds from './locales/nds.json';
 
 import { createI18n } from 'vue-i18n';
 
-export const SUPPORT_LOCALES = ['en', 'de']
+export const SUPPORT_LOCALES = ['en', 'de', 'es', 'nds'];
 
 const i18n = createI18n({
   // @ts-ignore
@@ -47,7 +49,9 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: {
     en: en,
-    de: de
+    de: de,
+    es: es,
+    nds: nds
   },
 });
 

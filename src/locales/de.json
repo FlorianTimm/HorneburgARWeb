@@ -1,9 +1,13 @@
 {
-    "welcome": "Willkommen auf der Burginsel",
+    "welcome": "Willkommen auf der Burginsel Horneburg",
     "island": "Inselmodus",
     "island_description": "AR-Anwendung vor Ort",
     "island_content": "Erlebe Horneburg in Augmented Reality direkt vor Ort auf der Insel.",
     "single": "Einzelmodus",
     "single_description": "Gebäude von allen Seiten",
-    "single_content": "Erkunde die 3D-Modelle der Horneburger Gebäude interaktiv aus allen Blickwinkeln."
+    "single_content": "Erkunde die 3D-Modelle der Horneburger Gebäude interaktiv aus allen Blickwinkeln.",
+    "discovery_prompt": "Wie möchtest du die Burginsel entdecken? Vor Ort oder von zuhause aus?",
+    "armode": "Burginsel in AR",
+    "all_models": "Alle Modelle",
+    "all_models_description": "Erkunde das 3D-Modell aller Modelle interaktiv aus allen Blickwinkeln."
 }

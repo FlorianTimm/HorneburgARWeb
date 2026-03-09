@@ -13,8 +13,8 @@
 
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>{{ $t('welcome') }} Horneburg<br />
-          <span style="font-size: 1rem;">Wie möchtest du die Burginsel entdecken? Vor Ort oder von zuhause aus?</span>
+        <ion-title>{{ $t('welcome') }}<br />
+          <span style="font-size: 1rem;">{{ $t('discovery_prompt') }}</span>
         </ion-title>
       </ion-toolbar>
     </ion-header>
@@ -22,7 +22,7 @@
     <ion-content :fullscreen="true" :scroll-events="true" @ionScroll="handleScroll">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">{{ $t('welcome') }} Horneburg</ion-title>
+          <ion-title size="large">{{ $t('welcome') }}</ion-title>
         </ion-toolbar>
       </ion-header>
 

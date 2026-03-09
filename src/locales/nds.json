@@ -1,0 +1,13 @@
+{
+    "welcome": "Willkamen up de Borgeiland Hornborg",
+    "island": "Eilandmodus",
+    "island_description": "AR-Anwennen vör Ort",
+    "island_content": "Erleef Hornborg in Augmented Reality vör Ort up de Eiland.",
+    "single": "een bi een",
+    "single_description": "Gebüüd vun all Sieten",
+    "single_content": "Kiek di de 3D-Modellen vun de Horneborger Gebäuden ut all Winkeln an.",
+    "discovery_prompt": "Wullt du de Borginsel vör Ort oder vun to Huus entdecken?",
+    "armode": "Borgeiland in AR",
+    "all_models": "All Modellen",
+    "all_models_description": "Kiek di dat 3D-Modell vun all Modellen ut all Winkeln an."
+}
