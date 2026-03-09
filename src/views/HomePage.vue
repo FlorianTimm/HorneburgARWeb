@@ -5,7 +5,7 @@
         <img src="../assets/storch.png" alt="Storch" />
         <div class="splash-content">
           <ion-icon :icon="homeOutline" size="large" />
-          <h1>Willkommen auf der Burginsel</h1>
+          <h1>{{ $t('welcome') }}</h1>
           <!--<p><ion-icon :icon="arrowDownOutline" size="large" /></p>-->
         </div>
       </div>
@@ -13,40 +13,45 @@
 
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>Willkommen auf der Burginsel Horneburg<br />
+        <ion-title>{{ $t('welcome') }} Horneburg<br />
           <span style="font-size: 1rem;">Wie möchtest du die Burginsel entdecken? Vor Ort oder von zuhause aus?</span>
         </ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true" :scroll-events="true" @ionScroll="handleScroll">
-
+      <div class="locale-changer">
+        <select v-model="$i18n.locale">
+          <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}
+          </option>
+        </select>
+      </div>
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">HorneburgAR</ion-title>
+          <ion-title size="large">{{ $t('welcome') }} Horneburg</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-card router-link="/ar">
         <ion-card-header>
-          <ion-card-title>Inselmodus</ion-card-title>
-          <ion-card-subtitle>AR-Anwendung vor Ort</ion-card-subtitle>
+          <ion-card-title>{{ $t('island') }}</ion-card-title>
+          <ion-card-subtitle>{{ $t('island_description') }}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
-          Erlebe Horneburg in Augmented Reality direkt vor Ort auf der Insel.
+          {{ $t('island_content') }}
         </ion-card-content>
         <img src="../assets/inselansicht.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
       </ion-card>
 
       <ion-card router-link="/orbit">
         <ion-card-header>
-          <ion-card-title>Einzelmodus</ion-card-title>
-          <ion-card-subtitle>Gebäude von allen Seiten</ion-card-subtitle>
+          <ion-card-title>{{ $t('single') }}</ion-card-title>
+          <ion-card-subtitle>{{ $t('single_description') }}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
-          Erkunde die 3D-Modelle der Horneburger Gebäude interaktiv aus allen Blickwinkeln.
+          {{ $t('single_content') }}
         </ion-card-content>
         <img src="../assets/einzelansicht2.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
       </ion-card>

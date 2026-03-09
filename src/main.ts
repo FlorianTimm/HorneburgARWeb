@@ -34,9 +34,27 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import en from './locales/en.json';
+import de from './locales/de.json';
+
+import { createI18n } from 'vue-i18n';
+
+export const SUPPORT_LOCALES = ['en', 'de']
+
+const i18n = createI18n({
+  locale: 'de',
+  fallbackLocale: 'en',
+  messages: {
+    en: en,
+    de: de
+  },
+});
+
+
 const app = createApp(App)
   .use(IonicVue)
-  .use(router);
+  .use(router)
+  .use(i18n);
 
 router.isReady().then(() => {
   app.mount('#app');

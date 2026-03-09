@@ -4,7 +4,7 @@
             <div v-if="showSplash" class="splash-overlay">
                 <div class="splash-content">
                     <ion-icon :icon="logoIonic" size="large"></ion-icon>
-                    <h1>Willkommen</h1>
+                    <h1>{{ $t('welcome') }}</h1>
                     <p>Scrolle oder warte kurz...</p>
                 </div>
             </div>
@@ -12,7 +12,7 @@
 
         <ion-header>
             <ion-toolbar>
-                <ion-title>App Content</ion-title>
+                <ion-title>{{ $t('welcome') }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
