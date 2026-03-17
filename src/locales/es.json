@@ -1,13 +1,16 @@
 {
     "welcome": "Bienvenido a la isla del castillo de Horneburg",
     "island": "Modo isla",
-    "island_description": "Aplicación AR en el lugar",
-    "island_content": "Experimenta Horneburg en realidad aumentada directamente en la isla.",
-    "single": "Modo individual",
-    "single_description": "Edificios desde todos los ángulos",
-    "single_content": "Explora los modelos 3D de los edificios de Horneburg interactivamente desde todas las perspectivas.",
+    "island_description": "Descubre la isla del castillo en el lugar en modo de realidad aumentada a través de tu cámara.",
+    "single": "Modelos de edificios",
+    "single_description": "Aprende más sobre los edificios individuales de la isla del castillo, también cómodamente desde casa.",
+    "welcome_text": "La visualización del desaparecido complejo del castillo de Horneburg se creó en colaboración con el municipio de Horneburg, el distrito de Stade y la HafenCity University Hamburg. Descubre los diferentes edificios que una vez estuvieron aquí y sumérgete en la vida de hace 450 años.",
     "discovery_prompt": "¿Cómo te gustaría descubrir la isla del castillo? ¿En el lugar o desde casa?",
     "armode": "Isla del castillo en AR",
     "all_models": "Todos los modelos",
-    "all_models_description": "Explora el modelo 3D de todos los modelos interactivamente desde todas las perspectivas."
+    "all_models_description": "Explora el modelo 3D de todos los modelos interactivamente desde todas las perspectivas.",
+    "footer_line1": "Un proyecto del municipio de Horneburg en",
+    "footer_line2": "colaboración con la HCU Hamburgo",
+    "imprint": "Aviso legal",
+    "privacy": "Política de privacidad"
 }

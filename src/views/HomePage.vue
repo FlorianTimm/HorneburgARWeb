@@ -11,10 +11,9 @@
       </div>
     </transition>
 
-    <ion-header :translucent="true">
+    <ion-header :translucent="true" class="ion-no-border">
       <ion-toolbar>
-        <ion-title>{{ $t('welcome') }}<br />
-          <span style="font-size: 1rem;">{{ $t('discovery_prompt') }}</span>
+        <ion-title>{{ $t('welcome') }}
         </ion-title>
       </ion-toolbar>
     </ion-header>
@@ -26,31 +25,39 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-card router-link="/ar">
-        <ion-card-header>
-          <ion-card-title>{{ $t('island') }}</ion-card-title>
-          <ion-card-subtitle>{{ $t('island_description') }}</ion-card-subtitle>
-        </ion-card-header>
+      <div class="main-content">
+        <p style="margin: 20px; font-size: 1.2em;">{{ $t('welcome_text') }}</p>
+        <p style="margin: 20px; font-size: 1.2em;">{{ $t('discovery_prompt') }}</p>
+      </div>
 
-        <ion-card-content>
-          {{ $t('island_content') }}
-        </ion-card-content>
-        <img src="../assets/inselansicht.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
-      </ion-card>
+      <div class="cards-content">
 
-      <ion-card router-link="/orbit">
-        <ion-card-header>
-          <ion-card-title>{{ $t('single') }}</ion-card-title>
-          <ion-card-subtitle>{{ $t('single_description') }}</ion-card-subtitle>
-        </ion-card-header>
+        <ion-card router-link="/ar">
+          <ion-card-header>
+            <ion-card-title>{{ $t('island') }}</ion-card-title>
+          </ion-card-header>
 
-        <ion-card-content>
-          {{ $t('single_content') }}
-        </ion-card-content>
-        <img src="../assets/einzelansicht2.svg" alt="Horneburg Orbit Vorschau" style="width: 100%; margin-top: 10px;" />
-      </ion-card>
+          <ion-card-content>
+            {{ $t('island_description') }}
+          </ion-card-content>
+          <img src="../assets/inselansicht.svg" :alt="$t('island')" style="width: 100%; margin-top: 10px;" />
+        </ion-card>
+
+        <ion-card router-link="/orbit">
+          <ion-card-header>
+            <ion-card-title>{{ $t('single') }}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            {{ $t('single_description') }}
+          </ion-card-content>
+          <img src="../assets/einzelansicht2.svg" :alt="$t('single')" style="width: 100%; margin-top: 10px;" />
+        </ion-card>
+
+      </div>
 
     </ion-content>
+    <Footer />
   </ion-page>
 </template>
 
@@ -60,6 +67,7 @@ import { ref, onMounted } from 'vue';
 import { IonIcon } from '@ionic/vue';
 import { arrowDownOutline, homeOutline } from 'ionicons/icons';
 import type { ScrollDetail } from '@ionic/vue';
+import Footer from '@/components/Footer.vue';
 
 const showSplash = ref(true);
 
@@ -125,5 +133,9 @@ const handleScroll = (event: CustomEvent<ScrollDetail>) => {
 
 .main-content {
   padding: 16px;
+}
+
+ion-header ion-title {
+  font-size: 2em;
 }
 </style>

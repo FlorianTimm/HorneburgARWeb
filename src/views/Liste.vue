@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <ion-header :translucent="true">
+        <ion-header :translucent="true" class="ion-no-border">
             <ion-toolbar>
                 <ion-buttons slot="start">
                     <ion-back-button default-href="/"></ion-back-button>
@@ -16,30 +16,31 @@
                 </ion-toolbar>
             </ion-header>
 
-            <ion-card :router-link="`/orbit/alle`" :key="'alle'">
-                <img src="../assets/inselansicht.svg" alt="Alle Modelle Vorschau"
-                    style="width: 100%; margin-top: 10px;" />
-                <ion-card-header>
-                    <ion-card-title>{{ $t('all_models') }}</ion-card-title>
-                </ion-card-header>
+            <div class="cards-content">
+                <ion-card :router-link="`/orbit/alle`" :key="'alle'">
+                    <img src="../assets/inselansicht.svg" alt="Alle Modelle Vorschau"
+                        style="width: 100%; margin-top: 10px;" />
+                    <ion-card-header>
+                        <ion-card-title>{{ $t('all_models') }}</ion-card-title>
+                    </ion-card-header>
 
-                <ion-card-content>
-                    {{ $t('all_models_description') }}
-                </ion-card-content>
-            </ion-card>
+                    <ion-card-content>
+                        {{ $t('all_models_description') }}
+                    </ion-card-content>
+                </ion-card>
 
-            <ion-card :router-link="`/orbit/${key}`" v-for="(model, key) in filteredModelle" :key="key">
-                <img src="../assets/beispielhaus.svg" :alt="`${model.getName($i18n.locale)} Vorschau`"
-                    style="width: 100%; margin-top: 10px;" />
-                <ion-card-header>
-                    <ion-card-title>{{ model.getName($i18n.locale) }}</ion-card-title>
-                </ion-card-header>
+                <ion-card :router-link="`/orbit/${key}`" v-for="(model, key) in filteredModelle" :key="key">
+                    <img src="../assets/beispielhaus.svg" :alt="`${model.getName($i18n.locale)} Vorschau`"
+                        style="width: 100%; margin-top: 10px;" />
+                    <ion-card-header>
+                        <ion-card-title>{{ model.getName($i18n.locale) }}</ion-card-title>
+                    </ion-card-header>
 
-                <ion-card-content>{{ model.getDescription($i18n.locale) }}</ion-card-content>
-            </ion-card>
-
-
+                    <ion-card-content>{{ model.getDescription($i18n.locale) }}</ion-card-content>
+                </ion-card>
+            </div>
         </ion-content>
+        <Footer />
     </ion-page>
 </template>
 
@@ -49,6 +50,7 @@ import { ref, onMounted, computed } from 'vue';
 import { load_json, ModelleJson } from '@/func/modelle_json';
 
 import type { Ref } from 'vue';
+import Footer from '@/components/Footer.vue';
 const modelle: Ref<ModelleJson> = ref({});
 
 onMounted(async () => {

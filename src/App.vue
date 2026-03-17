@@ -9,19 +9,14 @@ import { IonApp, IonRouterOutlet } from '@ionic/vue';
 </script>
 
 <style>
-:root {
-  --ion-background-color: #DDE3DD;
-}
-
 ion-card {
-  background-color: #FFFFFF;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 ion-card:hover {
   cursor: pointer;
-  background-color: #f0f0f0;
+  background-color: var(--ion-color-light-tint);
 }
 
 ion-card {
@@ -31,13 +26,9 @@ ion-card {
   transition: background-color 0.3s ease;
 }
 
-.header-md {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
 
 @media (min-width: 800px) {
-  ion-content {
+  div.cards-content {
     text-align: center;
     padding: 30px;
   }
@@ -48,5 +39,21 @@ ion-card {
     margin: 30px;
     width: 380px;
   }
+}
+
+/* Desktop */
+@media (min-width: 1000px) {
+  div.main-content {
+    width: 800px;
+    margin: auto;
+    margin-top: 40px;
+    position: relative;
+  }
+
+  ion-header {
+    margin: auto;
+    width: 800px;
+  }
+
 }
 </style>
