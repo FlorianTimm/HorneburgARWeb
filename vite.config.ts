@@ -12,7 +12,17 @@ export default defineConfig({
   plugins: [
     vue(),
     //legacy(),
-    VitePWA({ registerType: 'autoUpdate' }),
+    VitePWA({
+      registerType: 'autoUpdate',
+      workbox: {
+        globPatterns: ['**/*.{js,css,html}',
+          'assets/**/*.{js,css,html,png,jpg,svg}',
+          '**/*.{gltf, bin, jpg, png, svg, json, webp}',
+        ],
+        maximumFileSizeToCacheInBytes: 30 * 1024 * 1024, // 30 MB
+      }
+
+    }),
     basicSsl()
   ],
   resolve: {
