@@ -1,9 +1,7 @@
 import get from 'axios';
+import { JsonEntry, JsonFile } from './json';
 
-export class ModelJson {
-    private _name: { [key: string]: string };
-    private _description: { [key: string]: string };
-    private _path: string;
+export class ModelJson extends JsonEntry {
     private _longitude: number;
     private _latitude: number;
     private _rotation: number;
@@ -13,9 +11,7 @@ export class ModelJson {
     private _show_in_list: boolean = true;
 
     constructor(name: { [key: string]: string }, description: { [key: string]: string }, path: string, longitude: number, latitude: number, rotation: number, breite: number, tiefe: number, hoehe: number, show_in_list: boolean = true) {
-        this._name = name;
-        this._description = description;
-        this._path = path;
+        super(name, description, path);
         this._longitude = longitude;
         this._latitude = latitude;
         this._rotation = rotation;
@@ -23,20 +19,6 @@ export class ModelJson {
         this._tiefe = tiefe;
         this._hoehe = hoehe;
         this._show_in_list = show_in_list;
-    }
-
-    getName(locale: string = 'en'): string {
-        locale = locale.split('-')[0]; // Nur die Sprache, ohne Region
-        return this._name[locale] || this._name['en'] || Object.values(this._name)[0] || 'Unknown';
-    }
-
-    getDescription(locale: string = 'en'): string {
-        locale = locale.split('-')[0]; // Nur die Sprache, ohne Region
-        return this._description[locale] || this._description['en'] || Object.values(this._description)[0] || 'No description available.';
-    }
-
-    get path(): string {
-        return this._path;
     }
 
     get longitude(): number {
@@ -66,6 +48,28 @@ export class ModelJson {
     get show_in_list(): boolean {
         return this._show_in_list;
     }
+
+    public static async load_json(): Promise<JsonFile<ModelJson>> {
+        let data: GeoJson = await get('/modelle/modelle.geojson').then(response => response.data);
+        let liste: JsonFile<ModelJson> = {};
+        for (let feature of data.features) {
+            let prop = feature.properties;
+            let geom = feature.geometry;
+            liste[prop.id] = new ModelJson(
+                prop.name,
+                prop.description,
+                prop.path,
+                geom.coordinates[0],
+                geom.coordinates[1],
+                prop.rotation,
+                prop.breite,
+                prop.tiefe,
+                prop.hoehe,
+                prop.show_in_list
+            );
+        }
+        return liste;
+    }
 };
 
 export type GeoJsonFeature = {
@@ -91,27 +95,3 @@ export type GeoJson = {
     type: string;
     features: GeoJsonFeature[];
 };
-
-export type ModelleJson = { [key: string]: ModelJson };
-
-export async function load_json(): Promise<ModelleJson> {
-    let data: GeoJson = await get('/modelle/modelle.geojson').then(response => response.data);
-    let liste: ModelleJson = {};
-    for (let feature of data.features) {
-        let prop = feature.properties;
-        let geom = feature.geometry;
-        liste[prop.id] = new ModelJson(
-            prop.name,
-            prop.description,
-            prop.path,
-            geom.coordinates[0],
-            geom.coordinates[1],
-            prop.rotation,
-            prop.breite,
-            prop.tiefe,
-            prop.hoehe,
-            prop.show_in_list
-        );
-    }
-    return liste;
-}

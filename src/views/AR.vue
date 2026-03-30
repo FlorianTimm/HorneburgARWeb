@@ -22,7 +22,7 @@ import * as LocAR from 'locar';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { onMounted, onUnmounted } from 'vue';
-import { load_json } from '@/func/modelle_json';
+import { ModelJson } from '@/func/modelle_json';
 import { toast } from '@/func/toast';
 import { addLight, frontSideOnly, getDistance } from '@/func/threed';
 
@@ -112,7 +112,7 @@ onMounted(() => {
 
             const loader = new GLTFLoader();
 
-            let liste = await load_json()
+            let liste = await ModelJson.load_json()
 
             const userLat = ev.position.coords.latitude;
             const userLon = ev.position.coords.longitude;

@@ -26,19 +26,20 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { ref } from 'vue';
-import { load_json, ModelleJson } from '@/func/modelle_json';
+import { ModelJson } from '@/func/modelle_json';
+import { JsonFile } from '@/func/json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { addLight, frontSideOnly } from '@/func/threed';
 
 const route = useRoute();
 const { model } = route.params as { model: string };
-const modelle: Ref<ModelleJson> = ref({});
+const modelle: Ref<JsonFile<ModelJson>> = ref({});
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
 onMounted(async () => {
-    modelle.value = await load_json();
+    modelle.value = await ModelJson.load_json();
 
     console.log("Orbit.vue mounted");
 

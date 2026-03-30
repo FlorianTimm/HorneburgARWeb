@@ -47,20 +47,22 @@
 <script setup lang="ts">
 import { IonCard, IonCardContent, IonCardHeader, IonButtons, IonBackButton, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { ref, onMounted, computed } from 'vue';
-import { load_json, ModelleJson } from '@/func/modelle_json';
+import { ModelJson } from '@/func/modelle_json';
+import { JsonFile } from '@/func/json';
 
 import type { Ref } from 'vue';
 import Footer from '@/components/Footer.vue';
-const modelle: Ref<ModelleJson> = ref({});
+const modelle: Ref<JsonFile<ModelJson>> = ref({});
+
 
 onMounted(async () => {
-    modelle.value = await load_json();
+    modelle.value = await ModelJson.load_json();
     console.log("Liste.vue mounted");
 });
 
 // filter models to only those that should be shown in the list
 const filteredModelle = computed(() => {
-    const result: ModelleJson = {};
+    const result: JsonFile<ModelJson> = {};
     for (const key in modelle.value) {
         const model = modelle.value[key];
         if (model.show_in_list) {

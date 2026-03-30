@@ -25,9 +25,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <div class="main-content">
-        <p style="margin: 20px; font-size: 1.2em;">{{ $t('welcome_text') }}</p>
-        <p style="margin: 20px; font-size: 1.2em;">{{ $t('discovery_prompt') }}</p>
+      <div class="main-content">{{ $t('welcome_text') }}
       </div>
 
       <div class="cards-content">
@@ -54,18 +52,32 @@
           <img src="../assets/einzelansicht2.svg" :alt="$t('single')" style="width: 100%; margin-top: 10px;" />
         </ion-card>
 
-      </div>
+        <ion-card router-link="/artifacts">
+          <ion-card-header>
+            <ion-card-title>{{ $t('artifacts') }}</ion-card-title>
+          </ion-card-header>
 
+          <ion-card-content>
+            {{ $t('artifacts_description') }}
+          </ion-card-content>
+          <img src="../assets/artifacts.svg" :alt="$t('artifacts')"
+            style="width: 100%; margin-top: 10px; max-height: 152px;" />
+        </ion-card>
+
+      </div>
+      <hr />
+      <div class="main-content">{{ $t('welcome_text') }}
+      </div>
     </ion-content>
     <Footer />
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { ref, onMounted } from 'vue';
 import { IonIcon } from '@ionic/vue';
-import { arrowDownOutline, homeOutline } from 'ionicons/icons';
+import { homeOutline } from 'ionicons/icons';
 import type { ScrollDetail } from '@ionic/vue';
 import Footer from '@/components/Footer.vue';
 

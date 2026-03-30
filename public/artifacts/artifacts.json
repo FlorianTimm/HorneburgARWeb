@@ -1,0 +1,13 @@
+{
+    "schwertgurtanhaenger": {
+        "name": {
+            "de": "Schwertgurtanhänger",
+            "en": "Sword Belt Pendant"
+        },
+        "description": {
+            "de": "Beschreibung auf Deutsch",
+            "en": "Description in English"
+        },
+        "path": "/artifacts/schwertgurtanhaenger.jpg"
+    }
+}

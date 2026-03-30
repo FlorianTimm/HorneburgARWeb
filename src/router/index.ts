@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import HomePage from '../views/HomePage.vue'
 import AR from '../views/AR.vue';
-import Liste from '../views/Liste.vue';
-import Orbit from '../views/Orbit.vue';
+import Liste from '../views/ModelList.vue';
+import Orbit from '../views/ModelOrbit.vue';
+import Artifacts from '@/views/ArtifactsList.vue';
+import ArtifactsViewer from '@/views/ArtifactsViewer.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -29,7 +31,17 @@ const routes: Array<RouteRecordRaw> = [
     path: '/orbit/:model',
     name: 'Orbit',
     component: Orbit,
-  }
+  },
+  {
+    path: '/artifacts',
+    name: 'Artifacts',
+    component: Artifacts,
+  },
+  {
+    path: '/artifacts/:artifact',
+    name: 'ArtifactDetail',
+    component: ArtifactsViewer,
+  },
 ]
 
 const router = createRouter({
