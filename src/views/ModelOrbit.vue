@@ -64,7 +64,7 @@ onMounted(async () => {
     });
 
     let cameraControls = new OrbitControls(camera, renderer.domElement);
-    camera.position.set(10, 2, 12);
+
     //cameraControls.update();
 
     const loader = new GLTFLoader();
@@ -132,17 +132,16 @@ onMounted(async () => {
 
             frontSideOnly(object);
 
-            object.translateX(-entry.tiefe / 0.7);
-            object.translateZ(-entry.breite / 2);
-            object.translateY(-entry.hoehe / 2);
             scene.add(object);
         })
+        cameraControls.target.set(entry.breite / 2, entry.hoehe / 2, -entry.tiefe / 2);
+        camera.position.set(entry.breite * 2, entry.hoehe * .6, entry.tiefe);
     }
     // Add illumination to the scene
 
     addLight(scene)
 
-    scene.background = new THREE.Color(0xAAAAAA);
+    scene.background = new THREE.Color(0xdde3dd);
 
     renderer.setAnimationLoop(animate);
     cameraControls.update();

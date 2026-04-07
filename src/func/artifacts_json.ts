@@ -3,8 +3,8 @@ import get from 'axios';
 
 export class ArtifactJson extends JsonEntry {
 
-    constructor(name: { [key: string]: string }, description: { [key: string]: string }, img_path: string) {
-        super(name, description, img_path);
+    constructor(name: { [key: string]: string }, description: { [key: string]: string }, img_path: string, svg_path: string) {
+        super(name, description, img_path, svg_path);
 
     }
 
@@ -16,7 +16,8 @@ export class ArtifactJson extends JsonEntry {
             liste[key] = new ArtifactJson(
                 entry.name,
                 entry.description,
-                entry.img_path
+                entry.img_path,
+                entry.svg_path
             );
         }
         return liste;

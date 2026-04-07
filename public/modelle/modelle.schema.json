@@ -82,6 +82,9 @@
               "path": {
                 "type": "string"
               },
+              "svg_path": {
+                "type": "string"
+              },
               "rotation": {
                 "type": "number",
                 "minimum": 0,

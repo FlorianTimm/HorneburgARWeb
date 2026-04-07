@@ -2,11 +2,13 @@ export class JsonEntry {
     private _name: { [key: string]: string };
     private _description: { [key: string]: string };
     private _path: string;
+    private _svgPath: string;
 
-    constructor(name: { [key: string]: string }, description: { [key: string]: string }, path: string) {
+    constructor(name: { [key: string]: string }, description: { [key: string]: string }, path: string, svgPath: string) {
         this._name = name;
         this._description = description;
         this._path = path;
+        this._svgPath = svgPath;
     }
 
     getName(locale: string = 'en'): string {
@@ -21,6 +23,10 @@ export class JsonEntry {
 
     get path(): string {
         return this._path;
+    }
+
+    get svg_path(): string {
+        return this._svgPath;
     }
 
 }

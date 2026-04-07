@@ -10,8 +10,8 @@ export class ModelJson extends JsonEntry {
     private _hoehe: number;
     private _show_in_list: boolean = true;
 
-    constructor(name: { [key: string]: string }, description: { [key: string]: string }, path: string, longitude: number, latitude: number, rotation: number, breite: number, tiefe: number, hoehe: number, show_in_list: boolean = true) {
-        super(name, description, path);
+    constructor(name: { [key: string]: string }, description: { [key: string]: string }, path: string, svg_path: string, longitude: number, latitude: number, rotation: number, breite: number, tiefe: number, hoehe: number, show_in_list: boolean = true) {
+        super(name, description, path, svg_path);
         this._longitude = longitude;
         this._latitude = latitude;
         this._rotation = rotation;
@@ -59,6 +59,7 @@ export class ModelJson extends JsonEntry {
                 prop.name,
                 prop.description,
                 prop.path,
+                prop.svg_path,
                 geom.coordinates[0],
                 geom.coordinates[1],
                 prop.rotation,
@@ -84,6 +85,7 @@ export type GeoJsonFeature = {
         tiefe: number;
         hoehe: number;
         show_in_list: boolean;
+        svg_path: string;
     },
     geometry: {
         type: string;
