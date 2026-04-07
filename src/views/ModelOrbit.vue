@@ -14,6 +14,18 @@
         <ion-content :fullscreen="true">
             <div id="orbit-container"></div>
         </ion-content>
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button>
+                {{
+                    modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
+                        ''
+                }}<ion-icon :icon="chevronUp"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="top">
+                {{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getDescription($i18n.locale)) :
+                    '' }}
+            </ion-fab-list>
+        </ion-fab>
     </ion-page>
 </template>
 
@@ -31,6 +43,7 @@ import { JsonFile } from '@/func/json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { addLight, frontSideOnly } from '@/func/threed';
+import { chevronUp, chevronDown } from 'ionicons/icons';
 
 const route = useRoute();
 const { model } = route.params as { model: string };
@@ -57,10 +70,20 @@ onMounted(async () => {
 
     const scene = new THREE.Scene();
 
+    function freeSpaceForOverlay() {
+        if (window.innerWidth > 1000)
+            camera.setViewOffset(window.innerWidth, window.innerHeight, 0 + window.innerWidth / 10, 0, window.innerWidth + window.innerWidth / 10, window.innerHeight);
+        else
+            camera.setViewOffset(window.innerWidth, window.innerHeight, 0, 0, window.innerWidth, window.innerHeight);
+    }
+
+    freeSpaceForOverlay();
+
     window.addEventListener("resize", e => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
+        freeSpaceForOverlay();
     });
 
     let cameraControls = new OrbitControls(camera, renderer.domElement);
@@ -136,20 +159,24 @@ onMounted(async () => {
         })
         cameraControls.target.set(entry.breite / 2, entry.hoehe / 2, -entry.tiefe / 2);
         camera.position.set(entry.breite * 2, entry.hoehe * .6, entry.tiefe);
+
+
     }
     // Add illumination to the scene
 
     addLight(scene)
 
+
+
     scene.background = new THREE.Color(0xdde3dd);
+
+
 
     renderer.setAnimationLoop(animate);
     cameraControls.update();
 
     function animate() {
         cameraControls.update();
-        console.log(camera.position);
-        console.log(cameraControls.target);
         renderer.render(scene, camera);
     }
 });
@@ -173,5 +200,11 @@ onUnmounted(() => {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+ion-fab-button::part(native) {
+    background-color: white;
+    color: black;
+    border-radius: 15px;
 }
 </style>
