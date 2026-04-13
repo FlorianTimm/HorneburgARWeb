@@ -17,7 +17,7 @@
             </ion-header>
 
             <div class="cards-content">
-                <ion-card :router-link="`/orbit/alle`" :key="'alle'">
+                <ion-card :router-link="`/orbit/alle`" :key="'alle'" class="cards">
                     <img src="../assets/alle_gebaeude.svg" alt="Alle Modelle Vorschau"
                         style="width: 100%; margin-top: 10px;" />
                     <ion-card-header>
@@ -29,7 +29,8 @@
                     </ion-card-content>
                 </ion-card>
 
-                <ion-card :router-link="`/orbit/${key}`" v-for="(model, key) in filteredModelle" :key="key">
+                <ion-card :router-link="`/orbit/${key}`" v-for="(model, key) in filteredModelle" :key="key"
+                    class="cards">
                     <img :src="model.svg_path" :alt="`${model.getName($i18n.locale)} Vorschau`"
                         style="width: 100%; margin-top: 10px;" />
                     <ion-card-header>

@@ -17,7 +17,8 @@
             </ion-header>
 
             <div class="cards-content">
-                <ion-card :router-link="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key">
+                <ion-card :router-link="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key"
+                    class="cards">
                     <img src="../assets/beispielhaus.svg" :alt="`${artifact.getName($i18n.locale)} Vorschau`"
                         style="width: 100%; margin-top: 10px;" />
                     <ion-card-header>

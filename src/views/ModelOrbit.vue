@@ -15,17 +15,16 @@
             <div id="orbit-container"></div>
         </ion-content>
         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button>
-                {{
-                    modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
-                        ''
-                }}<ion-icon :icon="chevronUp"></ion-icon>
+            <ion-fab-button @click="infobox = !infobox">
+                <ion-icon v-if="infobox" :icon="chevronDown"></ion-icon>
+                <ion-icon v-else :icon="chevronUp"></ion-icon>
             </ion-fab-button>
-            <ion-fab-list side="top">
-                {{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getDescription($i18n.locale)) :
-                    '' }}
-            </ion-fab-list>
         </ion-fab>
+        <ion-card v-if="infobox"
+            style="position:absolute; bottom: 80px; top: 70px;  right: 0px; padding: 12px; width: 300px; max-width: 90%; z-index: 1000; background-color: rgba(255, 255, 255, 0.9);">
+            {{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getDescription($i18n.locale)) :
+                '' }}
+        </ion-card>
     </ion-page>
 </template>
 
@@ -48,6 +47,7 @@ import { chevronUp, chevronDown } from 'ionicons/icons';
 const route = useRoute();
 const { model } = route.params as { model: string };
 const modelle: Ref<JsonFile<ModelJson>> = ref({});
+let infobox = ref(false);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
@@ -71,10 +71,13 @@ onMounted(async () => {
     const scene = new THREE.Scene();
 
     function freeSpaceForOverlay() {
-        if (window.innerWidth > 1000)
+        if (window.innerWidth > 1000) {
+            infobox.value = true;
             camera.setViewOffset(window.innerWidth, window.innerHeight, 0 + window.innerWidth / 10, 0, window.innerWidth + window.innerWidth / 10, window.innerHeight);
-        else
+        }
+        else {
             camera.setViewOffset(window.innerWidth, window.innerHeight, 0, 0, window.innerWidth, window.innerHeight);
+        }
     }
 
     freeSpaceForOverlay();
@@ -200,11 +203,5 @@ onUnmounted(() => {
     position: absolute;
     top: 0;
     left: 0;
-}
-
-ion-fab-button::part(native) {
-    background-color: white;
-    color: black;
-    border-radius: 15px;
 }
 </style>

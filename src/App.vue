@@ -13,21 +13,18 @@ ion-content {
   font-size: 1.2em;
 }
 
-ion-card {
+ion-card.cards {
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-ion-card:hover {
-  cursor: pointer;
-  background-color: var(--ion-color-light-tint);
-}
-
-ion-card {
   max-width: 400px;
   margin: 30px auto;
   display: block;
   transition: background-color 0.3s ease;
+}
+
+ion-card.cards:hover {
+  cursor: pointer;
+  background-color: var(--ion-color-light-tint);
 }
 
 
@@ -37,7 +34,7 @@ ion-card {
     padding: 30px;
   }
 
-  ion-card {
+  ion-card.cards {
     display: inline-block;
     vertical-align: top;
     margin: 30px;

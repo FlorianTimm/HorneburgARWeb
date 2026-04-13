@@ -30,7 +30,7 @@
 
       <div class="cards-content">
 
-        <ion-card router-link="/ar">
+        <ion-card router-link="/ar" class="cards">
           <ion-card-header>
             <ion-card-title>{{ $t('island') }}</ion-card-title>
           </ion-card-header>
@@ -41,7 +41,7 @@
           <img src="../assets/inselansicht.svg" :alt="$t('island')" style="width: 100%; margin-top: 10px;" />
         </ion-card>
 
-        <ion-card router-link="/orbit">
+        <ion-card router-link="/orbit" class="cards">
           <ion-card-header>
             <ion-card-title>{{ $t('single') }}</ion-card-title>
           </ion-card-header>
@@ -52,7 +52,7 @@
           <img src="../assets/einzelansicht2.svg" :alt="$t('single')" style="width: 100%; margin-top: 10px;" />
         </ion-card>
 
-        <ion-card router-link="/artifacts">
+        <ion-card router-link="/artifacts" class="cards">
           <ion-card-header>
             <ion-card-title>{{ $t('artifacts') }}</ion-card-title>
           </ion-card-header>
