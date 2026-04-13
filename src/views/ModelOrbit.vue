@@ -7,7 +7,7 @@
                 </ion-buttons>
                 <ion-title>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
                     ''
-                }}</ion-title>
+                    }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -210,7 +210,7 @@ onMounted(async () => {
                                     stdMat.emissive.setHex(0x775555);
                                 }
                             });
-                        } else if ('emissive' in material && typeof material.emissive?.setHex === 'function') {
+                        } else if ('emissive' in material && typeof (material as any).emissive?.setHex === 'function') {
                             const stdMat = material as THREE.MeshStandardMaterial;
                             if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
                                 stdMat.emissive.setHex(0x775555);

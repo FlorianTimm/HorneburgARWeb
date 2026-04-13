@@ -173,7 +173,18 @@ onMounted(() => {
                 scene.traverse((child) => {
                     if ((child as THREE.Mesh).isMesh) {
                         meshes.push(child as THREE.Mesh);
-                        (child as THREE.Mesh).material.emissive.setHex(null);
+                        const mesh = child as THREE.Mesh;
+                        const material = mesh.material;
+                        if (Array.isArray(material)) {
+                            material.forEach(mat => {
+                                const stdMat = mat as THREE.MeshStandardMaterial;
+                                if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
+                                    stdMat.emissive.setHex(0x000000);
+                                }
+                            });
+                        } else if (material && 'emissive' in material && typeof (material as any).emissive?.setHex === 'function') {
+                            (material as THREE.MeshStandardMaterial).emissive.setHex(0x000000);
+                        }
                     }
                 });
 
@@ -195,7 +206,7 @@ onMounted(() => {
                                         stdMat.emissive.setHex(0x775555);
                                     }
                                 });
-                            } else if ('emissive' in material && typeof material.emissive?.setHex === 'function') {
+                            } else if ('emissive' in material && typeof (material as any).emissive?.setHex === 'function') {
                                 const stdMat = material as THREE.MeshStandardMaterial;
                                 if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
                                     stdMat.emissive.setHex(0x775555);
