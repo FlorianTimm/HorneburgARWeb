@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 
-export function frontSideOnly(object: THREE.Object3D) {
+export function frontSideOnly(object: THREE.Object3D, name?: string) {
     object.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
             const mesh = child as THREE.Mesh;
+            child.name = name || child.name;
             if (Array.isArray(mesh.material)) {
                 mesh.material.forEach((material) => {
                     material.side = THREE.FrontSide;

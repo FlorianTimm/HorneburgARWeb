@@ -7,7 +7,7 @@
                 </ion-buttons>
                 <ion-title>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
                     ''
-                    }}</ion-title>
+                }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -22,8 +22,7 @@
         </ion-fab>
         <ion-card v-if="infobox"
             style="position:absolute; bottom: 80px; top: 70px;  right: 0px; padding: 12px; width: 300px; max-width: 90%; z-index: 1000; background-color: rgba(255, 255, 255, 0.9);">
-            {{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getDescription($i18n.locale)) :
-                '' }}
+            <div v-html="infotext"></div>
         </ion-card>
     </ion-page>
 </template>
@@ -43,11 +42,15 @@ import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { addLight, frontSideOnly } from '@/func/threed';
 import { chevronUp, chevronDown } from 'ionicons/icons';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
 
 const route = useRoute();
 const { model } = route.params as { model: string };
 const modelle: Ref<JsonFile<ModelJson>> = ref({});
 let infobox = ref(false);
+let infotext = ref("");
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
@@ -69,6 +72,10 @@ onMounted(async () => {
     container.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
+
+
+
+
 
     function freeSpaceForOverlay() {
         if (window.innerWidth > 1000) {
@@ -123,7 +130,7 @@ onMounted(async () => {
             await loader.loadAsync(file).then((gltf: GLTF) => {
                 let object = gltf.scene;
 
-                frontSideOnly(object);
+                frontSideOnly(object, key);
 
                 // Positioning logic for grid layout
                 let lat = -(modelle.value[key].latitude - latAvg) * latFactor;
@@ -135,11 +142,14 @@ onMounted(async () => {
                 object.rotateY(rot);
 
                 scene.add(object);
+
+                /*
                 let sphere = new THREE.SphereGeometry(0.1, 16, 16);
                 let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
                 let marker = new THREE.Mesh(sphere, material);
                 marker.position.set(lng, 0, lat);
                 scene.add(marker);
+                */
             });
         }
         camera.position.set(-20, 33, -90);
@@ -150,6 +160,79 @@ onMounted(async () => {
         //let marker = new THREE.Mesh(sphere, material);
         //marker.position.set(0, 0, 0);
         //scene.add(marker);
+
+        document.addEventListener("click", (event) => {
+            let pointer = new THREE.Vector2();
+            let raycaster = new THREE.Raycaster();
+            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(pointer, camera);
+
+            let meshes: THREE.Mesh[] = [];
+            scene.traverse((child) => {
+                if ((child as THREE.Mesh).isMesh) {
+                    meshes.push(child as THREE.Mesh);
+                    const mesh = child as THREE.Mesh;
+                    // Only reset emissive if material supports it
+                    const material = mesh.material;
+                    if (Array.isArray(material)) {
+                        material.forEach(mat => {
+                            // Typisierung für mat als MeshStandardMaterial erzwingen
+                            const stdMat = mat as THREE.MeshStandardMaterial;
+                            if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
+                                stdMat.emissive.setHex(0x000000);
+                            }
+                        });
+                    } else {
+                        const stdMat = material as THREE.MeshStandardMaterial;
+                        if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
+                            stdMat.emissive.setHex(0x000000);
+                        }
+                    }
+                }
+            });
+
+            const intersects = raycaster.intersectObjects(meshes, false);
+            console.log("Raycaster checked for intersections, found", intersects.length);
+            if (intersects.length > 0) {
+                let name = intersects[0].object.name;
+                console.log("Object name:", name);
+
+                intersects[0].object.parent?.traverse((child) => {
+                    if ((child as THREE.Mesh).isMesh) {
+                        const mesh = child as THREE.Mesh;
+                        // Only set emissive if material supports it
+                        const material = mesh.material;
+                        if (Array.isArray(material)) {
+                            material.forEach(mat => {
+                                const stdMat = mat as THREE.MeshStandardMaterial;
+                                if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
+                                    stdMat.emissive.setHex(0x775555);
+                                }
+                            });
+                        } else if ('emissive' in material && typeof material.emissive?.setHex === 'function') {
+                            const stdMat = material as THREE.MeshStandardMaterial;
+                            if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
+                                stdMat.emissive.setHex(0x775555);
+                            }
+                        }
+                    }
+                });
+                infotext.value = (modelle.value[name]?.getName(locale.value) + '<br /><br />' + modelle.value[name]?.getDescription(locale.value))
+                    || t('all_models_description');
+            } else {
+                console.log("No intersections found");
+                infotext.value = t('all_models_description');
+            }
+        });
+
+        infotext.value = t('all_models_description');
+        // Add useI18n import and t extraction at the top of the script setup
+        // (Assuming <script setup lang="ts">)
+
+
+
+
     } else {
         let entry = modelle.value[model];
         let file = entry.path;
@@ -163,17 +246,14 @@ onMounted(async () => {
         cameraControls.target.set(entry.breite / 2, entry.hoehe / 2, -entry.tiefe / 2);
         camera.position.set(entry.breite * 2, entry.hoehe * .6, entry.tiefe);
 
+        infotext.value = modelle.value[model].getDescription(locale.value);
 
     }
     // Add illumination to the scene
 
     addLight(scene)
 
-
-
     scene.background = new THREE.Color(0xdde3dd);
-
-
 
     renderer.setAnimationLoop(animate);
     cameraControls.update();

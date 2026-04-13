@@ -25,6 +25,10 @@ import { onMounted, onUnmounted } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
 import { toast } from '@/func/toast';
 import { addLight, frontSideOnly, getDistance } from '@/func/threed';
+import { useI18n } from 'vue-i18n';
+import { ref } from 'vue';
+
+const { t, locale } = useI18n();
 
 const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.001, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -35,6 +39,9 @@ const cam = new LocAR.Webcam({
         facingMode: "environment"
     }
 });
+
+let infobox = ref(false);
+let infotext = ref("");
 
 onMounted(() => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -141,7 +148,7 @@ onMounted(() => {
 
                 await loader.loadAsync(obj.path).then((gltf: GLTF) => {
                     let object = gltf.scene;
-                    frontSideOnly(object);
+                    frontSideOnly(object, name);
                     object.rotation.y = Math.PI * obj.rotation / 180;
 
                     locar.add(object,
@@ -154,6 +161,58 @@ onMounted(() => {
             }
             // Add illumination to the scene
             addLight(scene)
+
+            document.addEventListener("click", (event) => {
+                let pointer = new THREE.Vector2();
+                let raycaster = new THREE.Raycaster();
+                pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+                pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                raycaster.setFromCamera(pointer, camera);
+
+                let meshes: THREE.Mesh[] = [];
+                scene.traverse((child) => {
+                    if ((child as THREE.Mesh).isMesh) {
+                        meshes.push(child as THREE.Mesh);
+                        (child as THREE.Mesh).material.emissive.setHex(null);
+                    }
+                });
+
+                const intersects = raycaster.intersectObjects(meshes, false);
+                console.log("Raycaster checked for intersections, found", intersects.length);
+                if (intersects.length > 0) {
+                    let name = intersects[0].object.name;
+                    console.log("Object name:", name);
+
+                    intersects[0].object.parent?.traverse((child) => {
+                        if ((child as THREE.Mesh).isMesh) {
+                            const mesh = child as THREE.Mesh;
+                            // Only set emissive if material supports it
+                            const material = mesh.material;
+                            if (Array.isArray(material)) {
+                                material.forEach(mat => {
+                                    const stdMat = mat as THREE.MeshStandardMaterial;
+                                    if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
+                                        stdMat.emissive.setHex(0x775555);
+                                    }
+                                });
+                            } else if ('emissive' in material && typeof material.emissive?.setHex === 'function') {
+                                const stdMat = material as THREE.MeshStandardMaterial;
+                                if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
+                                    stdMat.emissive.setHex(0x775555);
+                                }
+                            }
+                        }
+                    });
+                    //infotext.value = liste[name]?.getDescription(locale.value) || t('all_models_description');
+                    let ganzerName = liste[name]?.getName(locale.value);
+                    if (ganzerName) {
+                        toast(ganzerName);
+                    }
+                } else {
+                    console.log("No intersections found");
+                    infotext.value = t('all_models_description');
+                }
+            });
         }
     });
 
