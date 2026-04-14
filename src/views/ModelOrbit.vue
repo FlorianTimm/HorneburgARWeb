@@ -7,7 +7,7 @@
                 </ion-buttons>
                 <ion-title>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
                     ''
-                }}</ion-title>
+                    }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -15,7 +15,7 @@
             <div id="orbit-container"></div>
         </ion-content>
         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button @click="infobox = !infobox">
+            <ion-fab-button @click="infobox = !infobox; autoActivated = false;">
                 <ion-icon v-if="infobox" :icon="chevronDown"></ion-icon>
                 <ion-icon v-else :icon="chevronUp"></ion-icon>
             </ion-fab-button>
@@ -49,6 +49,7 @@ const route = useRoute();
 const { model } = route.params as { model: string };
 const modelle: Ref<JsonFile<ModelJson>> = ref({});
 let infobox = ref(false);
+let autoActivated = ref(false);
 let infotext = ref("");
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -156,8 +157,16 @@ onMounted(async () => {
             console.log("Model selected:", name);
             infotext.value = (modelle.value[name]?.getName(locale.value) + '<br /><br />' +
                 modelle.value[name]?.getDescription(locale.value)) || t('all_models_description');
+            if (!infobox.value) {
+                infobox.value = true;
+                autoActivated.value = true;
+            }
         }, () => {
             infotext.value = t('all_models_description');
+            if (autoActivated.value) {
+                infobox.value = false;
+                autoActivated.value = false;
+            }
         });
 
 
