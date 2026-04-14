@@ -8,7 +8,6 @@
                 <ion-title>{{ $t('armode') }}</ion-title>
             </ion-toolbar>
         </ion-header>
-
         <ion-content :fullscreen="true">
             <div id="ar-container"></div>
         </ion-content>
@@ -22,10 +21,11 @@ import * as LocAR from 'locar';
 import { onMounted, onUnmounted } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
 import { toast } from '@/func/toast';
-import { addLight, getDistance } from '@/func/threed';
+import { addLight, getDistance, modelSelector } from '@/func/threed';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import { ModelFetcher } from '@/func/modelFetcher';
+import { alertController } from '@ionic/vue';
 
 const { t, locale } = useI18n();
 
@@ -43,6 +43,13 @@ let infobox = ref(false);
 let infotext = ref("");
 
 onMounted(() => {
+    alertController.create({
+        header: 'AR-Modus',
+        subHeader: 'Dieser Modus ist für die Nutzung auf einem Smartphone gedacht. Bitte wechsle zu einem mobilen Gerät, um die AR-Funktionalität zu nutzen.',
+        message: 'Falls du bereits auf einem Smartphone bist, könnte es sein, dass die Kamera-Berechtigungen nicht erteilt wurden. Bitte erlaube den Zugriff auf die Kamera, um fortzufahren.',
+        buttons: ['Loslegen'],
+    }).then(alert => alert.present());
+
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('ar-container')?.appendChild(renderer.domElement);
 
@@ -86,6 +93,12 @@ onMounted(() => {
 
     locar.on("gpserror", error => {
         toast(`GPS Fehler: Code ${error.code}`);
+        alertController.create({
+            header: 'GPS-Fehler',
+            subHeader: 'Es gab ein Problem mit der GPS-Verbindung.',
+            message: 'Bitte stelle sicher, dass GPS aktiviert ist und die App die notwendigen Berechtigungen hat.',
+            buttons: ['OK']
+        }).then(alert => alert.present());
     });
 
     locar.on("gpsupdate", async ev => {
@@ -158,67 +171,15 @@ onMounted(() => {
             // Add illumination to the scene
             addLight(scene)
 
-            document.addEventListener("click", (event) => {
-                let pointer = new THREE.Vector2();
-                let raycaster = new THREE.Raycaster();
-                pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-                pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-                raycaster.setFromCamera(pointer, camera);
-
-                let meshes: THREE.Mesh[] = [];
-                scene.traverse((child) => {
-                    if ((child as THREE.Mesh).isMesh) {
-                        meshes.push(child as THREE.Mesh);
-                        const mesh = child as THREE.Mesh;
-                        const material = mesh.material;
-                        if (Array.isArray(material)) {
-                            material.forEach(mat => {
-                                const stdMat = mat as THREE.MeshStandardMaterial;
-                                if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
-                                    stdMat.emissive.setHex(0x000000);
-                                }
-                            });
-                        } else if (material && 'emissive' in material && typeof (material as any).emissive?.setHex === 'function') {
-                            (material as THREE.MeshStandardMaterial).emissive.setHex(0x000000);
-                        }
-                    }
-                });
-
-                const intersects = raycaster.intersectObjects(meshes, false);
-                console.log("Raycaster checked for intersections, found", intersects.length);
-                if (intersects.length > 0) {
-                    let name = intersects[0].object.name;
-                    console.log("Object name:", name);
-
-                    intersects[0].object.parent?.traverse((child) => {
-                        if ((child as THREE.Mesh).isMesh) {
-                            const mesh = child as THREE.Mesh;
-                            // Only set emissive if material supports it
-                            const material = mesh.material;
-                            if (Array.isArray(material)) {
-                                material.forEach(mat => {
-                                    const stdMat = mat as THREE.MeshStandardMaterial;
-                                    if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
-                                        stdMat.emissive.setHex(0x775555);
-                                    }
-                                });
-                            } else if ('emissive' in material && typeof (material as any).emissive?.setHex === 'function') {
-                                const stdMat = material as THREE.MeshStandardMaterial;
-                                if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
-                                    stdMat.emissive.setHex(0x775555);
-                                }
-                            }
-                        }
-                    });
-                    //infotext.value = liste[name]?.getDescription(locale.value) || t('all_models_description');
-                    let ganzerName = liste[name]?.getName(locale.value);
-                    if (ganzerName) {
-                        toast(ganzerName);
-                    }
-                } else {
-                    console.log("No intersections found");
-                    infotext.value = t('all_models_description');
+            modelSelector(document.getElementById('ar-container')!, camera, scene, (name) => {
+                console.log("Model selected:", name);
+                let ganzerName = liste[name]?.getName(locale.value);
+                if (ganzerName) {
+                    toast(ganzerName);
                 }
+            }, () => {
+                console.log("No model selected");
+                infotext.value = t('all_models_description');
             });
         }
     });

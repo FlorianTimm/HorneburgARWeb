@@ -32,15 +32,13 @@ import { IonButtons, IonBackButton, IonContent, IonHeader, IonPage, IonTitle, Io
 
 import { onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { ref } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
 import { JsonFile } from '@/func/json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { addLight, frontSideOnly } from '@/func/threed';
+import { addLight, modelSelector } from '@/func/threed';
 import { chevronUp, chevronDown } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
 import { ModelFetcher } from '@/func/modelFetcher';
@@ -157,70 +155,14 @@ onMounted(async () => {
         //marker.position.set(0, 0, 0);
         //scene.add(marker);
 
-        document.addEventListener("click", (event) => {
-            let pointer = new THREE.Vector2();
-            let raycaster = new THREE.Raycaster();
-            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-            pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-            raycaster.setFromCamera(pointer, camera);
-
-            let meshes: THREE.Mesh[] = [];
-            scene.traverse((child) => {
-                if ((child as THREE.Mesh).isMesh) {
-                    meshes.push(child as THREE.Mesh);
-                    const mesh = child as THREE.Mesh;
-                    // Only reset emissive if material supports it
-                    const material = mesh.material;
-                    if (Array.isArray(material)) {
-                        material.forEach(mat => {
-                            // Typisierung für mat als MeshStandardMaterial erzwingen
-                            const stdMat = mat as THREE.MeshStandardMaterial;
-                            if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
-                                stdMat.emissive.setHex(0x000000);
-                            }
-                        });
-                    } else {
-                        const stdMat = material as THREE.MeshStandardMaterial;
-                        if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
-                            stdMat.emissive.setHex(0x000000);
-                        }
-                    }
-                }
-            });
-
-            const intersects = raycaster.intersectObjects(meshes, false);
-            console.log("Raycaster checked for intersections, found", intersects.length);
-            if (intersects.length > 0) {
-                let name = intersects[0].object.name;
-                console.log("Object name:", name);
-
-                intersects[0].object.parent?.traverse((child) => {
-                    if ((child as THREE.Mesh).isMesh) {
-                        const mesh = child as THREE.Mesh;
-                        // Only set emissive if material supports it
-                        const material = mesh.material;
-                        if (Array.isArray(material)) {
-                            material.forEach(mat => {
-                                const stdMat = mat as THREE.MeshStandardMaterial;
-                                if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
-                                    stdMat.emissive.setHex(0x775555);
-                                }
-                            });
-                        } else if ('emissive' in material && typeof (material as any).emissive?.setHex === 'function') {
-                            const stdMat = material as THREE.MeshStandardMaterial;
-                            if (stdMat.emissive && typeof stdMat.emissive.setHex === 'function') {
-                                stdMat.emissive.setHex(0x775555);
-                            }
-                        }
-                    }
-                });
-                infotext.value = (modelle.value[name]?.getName(locale.value) + '<br /><br />' + modelle.value[name]?.getDescription(locale.value))
-                    || t('all_models_description');
-            } else {
-                console.log("No intersections found");
-                infotext.value = t('all_models_description');
-            }
+        modelSelector(container, camera, scene, (name) => {
+            console.log("Model selected:", name);
+            infotext.value = (modelle.value[name]?.getName(locale.value) + '<br /><br />' +
+                modelle.value[name]?.getDescription(locale.value)) || t('all_models_description');
+        }, () => {
+            infotext.value = t('all_models_description');
         });
+
 
         infotext.value = t('all_models_description');
         // Add useI18n import and t extraction at the top of the script setup
