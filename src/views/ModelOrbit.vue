@@ -7,7 +7,7 @@
                 </ion-buttons>
                 <ion-title>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
                     ''
-                    }}</ion-title>
+                }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -71,9 +71,6 @@ onMounted(async () => {
     container.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-
-
-
 
 
     function freeSpaceForOverlay() {

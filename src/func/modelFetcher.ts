@@ -28,6 +28,10 @@ export class ModelFetcher {
                 names.push(key);
                 queue.push(loader.loadAsync(feature.path).then(gltf => {
                     let object = gltf.scene;
+                    if (object.children.length == 1 && (object.children[0] as THREE.Group).isGroup) {
+                        object = object.children[0] as THREE.Group;
+                        console.log('Modell vereinfacht:', key);
+                    }
                     return frontSideOnly(object, key);
                 }));
             }
