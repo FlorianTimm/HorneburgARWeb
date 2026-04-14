@@ -19,14 +19,13 @@
 import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import * as THREE from 'three';
 import * as LocAR from 'locar';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { onMounted, onUnmounted } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
 import { toast } from '@/func/toast';
-import { addLight, frontSideOnly, getDistance } from '@/func/threed';
+import { addLight, getDistance } from '@/func/threed';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
+import { ModelFetcher } from '@/func/modelFetcher';
 
 const { t, locale } = useI18n();
 
@@ -117,8 +116,6 @@ onMounted(() => {
                 }
             ];
 
-            const loader = new GLTFLoader();
-
             let liste = await ModelJson.load_json()
 
             const userLat = ev.position.coords.latitude;
@@ -143,22 +140,21 @@ onMounted(() => {
 
             toast(`Nächster Standort: ${nearest.name}`);
 
-            for (let name in liste) {
-                let obj = liste[name];
+            ModelFetcher.getModels().then(models => {
+                for (let name in liste) {
+                    let obj = liste[name];
 
-                await loader.loadAsync(obj.path).then((gltf: GLTF) => {
-                    let object = gltf.scene;
-                    frontSideOnly(object, name);
+
+                    let object = models[name];
                     object.rotation.y = Math.PI * obj.rotation / 180;
 
                     locar.add(object,
                         obj.longitude + diffLong,
                         obj.latitude + diffLat,
                         -1.5);
-                }).catch((err: Error) => {
-                    console.error('An error happened while loading the FBX model.', err);
-                });
-            }
+
+                }
+            });
             // Add illumination to the scene
             addLight(scene)
 

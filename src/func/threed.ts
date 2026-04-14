@@ -14,6 +14,8 @@ export function frontSideOnly(object: THREE.Object3D, name?: string) {
             }
         }
     });
+    object.name = name || object.name;
+    return object;
 }
 
 

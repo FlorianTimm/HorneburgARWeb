@@ -43,6 +43,7 @@ import { useRoute } from 'vue-router';
 import { addLight, frontSideOnly } from '@/func/threed';
 import { chevronUp, chevronDown } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
+import { ModelFetcher } from '@/func/modelFetcher';
 
 const { t, locale } = useI18n();
 
@@ -100,7 +101,6 @@ onMounted(async () => {
 
     //cameraControls.update();
 
-    const loader = new GLTFLoader();
     if (model == 'alle') {
 
         // Mittelwert von allen Breiten (latitude) und Längengeraden (longitude) berechnen
@@ -121,16 +121,11 @@ onMounted(async () => {
 
         //console.log('Längengrad Faktor:', lngFactor, 'Breitengrad Faktor:', latFactor);
 
+        ModelFetcher.getModels().then(models => {
 
-        for (let key in modelle.value) {
+            for (let key in modelle.value) {
 
-            let file = modelle.value[key].path
-            //console.log(modelle.value);
-            // Load each model and position them in a grid
-            await loader.loadAsync(file).then((gltf: GLTF) => {
-                let object = gltf.scene;
-
-                frontSideOnly(object, key);
+                let object = models[key];
 
                 // Positioning logic for grid layout
                 let lat = -(modelle.value[key].latitude - latAvg) * latFactor;
@@ -150,8 +145,9 @@ onMounted(async () => {
                 marker.position.set(lng, 0, lat);
                 scene.add(marker);
                 */
-            });
-        }
+
+            }
+        });
         camera.position.set(-20, 33, -90);
         //cameraControls.target.set(0, 0, 0);
 
@@ -235,12 +231,8 @@ onMounted(async () => {
 
     } else {
         let entry = modelle.value[model];
-        let file = entry.path;
-        loader.loadAsync(file).then((gltf: GLTF) => {
-            let object = gltf.scene;
-
-            frontSideOnly(object);
-
+        ModelFetcher.getModels().then(models => {
+            let object = models[model];
             scene.add(object);
         })
         cameraControls.target.set(entry.breite / 2, entry.hoehe / 2, -entry.tiefe / 2);

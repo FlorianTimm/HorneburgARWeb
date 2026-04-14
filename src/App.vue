@@ -6,6 +6,9 @@
 
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
+import { ModelFetcher } from './func/modelFetcher';
+
+ModelFetcher.preload();
 </script>
 
 <style>

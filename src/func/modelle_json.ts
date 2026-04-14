@@ -10,6 +10,8 @@ export class ModelJson extends JsonEntry {
     private _hoehe: number;
     private _show_in_list: boolean = true;
 
+    private static _cache?: Promise<JsonFile<ModelJson>>;
+
     constructor(name: { [key: string]: string }, description: { [key: string]: string }, path: string, svg_path: string, longitude: number, latitude: number, rotation: number, breite: number, tiefe: number, hoehe: number, show_in_list: boolean = true) {
         super(name, description, path, svg_path);
         this._longitude = longitude;
@@ -50,26 +52,32 @@ export class ModelJson extends JsonEntry {
     }
 
     public static async load_json(): Promise<JsonFile<ModelJson>> {
-        let data: GeoJson = await get('/modelle/modelle.geojson').then(response => response.data);
-        let liste: JsonFile<ModelJson> = {};
-        for (let feature of data.features) {
-            let prop = feature.properties;
-            let geom = feature.geometry;
-            liste[prop.id] = new ModelJson(
-                prop.name,
-                prop.description,
-                prop.path,
-                prop.svg_path,
-                geom.coordinates[0],
-                geom.coordinates[1],
-                prop.rotation,
-                prop.breite,
-                prop.tiefe,
-                prop.hoehe,
-                prop.show_in_list
-            );
+        if (!this._cache) {
+            this._cache = get('/modelle/modelle.geojson')
+                .then(response => response.data as GeoJson)
+                .then(data => {
+                    let liste: JsonFile<ModelJson> = {};
+                    for (let feature of data.features) {
+                        let prop = feature.properties;
+                        let geom = feature.geometry;
+                        liste[prop.id] = new ModelJson(
+                            prop.name,
+                            prop.description,
+                            prop.path,
+                            prop.svg_path,
+                            geom.coordinates[0],
+                            geom.coordinates[1],
+                            prop.rotation,
+                            prop.breite,
+                            prop.tiefe,
+                            prop.hoehe,
+                            prop.show_in_list
+                        );
+                    }
+                    return liste;
+                });
         }
-        return liste;
+        return this._cache;
     }
 };
 
