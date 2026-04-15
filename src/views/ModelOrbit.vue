@@ -7,7 +7,7 @@
                 </ion-buttons>
                 <ion-title>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
                     ''
-                    }}</ion-title>
+                }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonBackButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonButtons, IonBackButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonCard, IonFabButton, IonIcon } from '@ionic/vue';
 
 import { onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';

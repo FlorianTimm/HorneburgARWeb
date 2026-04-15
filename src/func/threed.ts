@@ -1,24 +1,5 @@
 import * as THREE from 'three';
 
-export function frontSideOnly(object: THREE.Object3D, name?: string) {
-    object.traverse((child) => {
-        if ((child as THREE.Mesh).isMesh) {
-            const mesh = child as THREE.Mesh;
-            child.name = name || child.name;
-            if (Array.isArray(mesh.material)) {
-                mesh.material.forEach((material) => {
-                    material.side = THREE.FrontSide;
-                });
-            } else {
-                mesh.material.side = THREE.FrontSide;
-            }
-        }
-    });
-    object.name = name || object.name;
-    return object;
-}
-
-
 export function addLight(scene: THREE.Scene) {
     const ambientLight = new THREE.AmbientLight(0xffeecc, 2.5);
     scene.add(ambientLight);

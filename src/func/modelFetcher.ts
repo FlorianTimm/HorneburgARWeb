@@ -1,11 +1,12 @@
 import { ModelJson } from "./modelle_json";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { frontSideOnly } from '@/func/threed';
 import * as THREE from 'three';
 
 export class ModelFetcher {
     static instance: ModelFetcher;
-    private values: Promise<{ [key: string]: THREE.Object3D }>;
+    private values: Promise<{ [key: string]: Promise<THREE.Object3D> }>;
+    private fortschritt: number = 0;
+
 
     private constructor() {
         this.values = this.fetchModel();
@@ -20,30 +21,27 @@ export class ModelFetcher {
 
     private async fetchModel() {
         const loader = new GLTFLoader();
-        const names: string[] = [];
-        return ModelJson.load_json().then(modelle => {
-            let queue = [];
-            for (let key in modelle) {
-                const feature = modelle[key];
-                names.push(key);
-                queue.push(loader.loadAsync(feature.path).then(gltf => {
-                    let object = gltf.scene;
-                    if (object.children.length == 1 && (object.children[0] as THREE.Group).isGroup) {
-                        object = object.children[0] as THREE.Group;
-                        console.log('Modell vereinfacht:', key);
-                    }
-                    return frontSideOnly(object, key);
-                }));
-            }
-            return Promise.all(queue);
-        }).then(objects => {
-            console.log('Modelle geladen:', objects);
-            const d: { [key: string]: THREE.Object3D } = {};
-            for (let i = 0; i < objects.length; i++) {
-                d[names[i]] = objects[i];
-            }
-            return d;
-        });
+        const values: { [key: string]: Promise<THREE.Object3D> } = {};
+        let modellListe = await ModelJson.load_json();
+
+        const count = Object.keys(modellListe).length;
+
+        for (let key in modellListe) {
+            const feature = modellListe[key];
+
+            values[key] = loader.loadAsync(feature.path).then(gltf => {
+                let object = gltf.scene;
+                if (object.children.length == 1 && (object.children[0] as THREE.Group).isGroup) {
+                    object = object.children[0] as THREE.Group;
+                }
+                return this.frontSideOnlyAndName(object, key);
+            }).finally(() => {
+                this.fortschritt++;
+                console.log(`Fortschritt: ${this.fortschritt}/${count} (${key})`);
+            });
+        }
+
+        return values;
     }
 
     static preload() {
@@ -51,6 +49,30 @@ export class ModelFetcher {
     }
 
     static async getModel(name: string): Promise<THREE.Object3D<THREE.Object3DEventMap>> {
-        return ModelFetcher.getInstance().values.then(models => models[name].clone());
+        const instance = ModelFetcher.getInstance();
+        const model = await (await instance.values)[name];
+        return model.clone();
+    }
+
+    getProgress() {
+        return this.fortschritt / Object.keys(this.values).length;
+    }
+
+    private frontSideOnlyAndName(object: THREE.Object3D, name?: string) {
+        object.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+                const mesh = child as THREE.Mesh;
+                child.name = name || child.name;
+                if (Array.isArray(mesh.material)) {
+                    mesh.material.forEach((material) => {
+                        material.side = THREE.FrontSide;
+                    });
+                } else {
+                    mesh.material.side = THREE.FrontSide;
+                }
+            }
+        });
+        object.name = name || object.name;
+        return object;
     }
 }
