@@ -101,87 +101,29 @@ onMounted(() => {
         }).then(alert => alert.present());
     });
 
-    locar.on("gpsupdate", async ev => {
+    locar.on("gpsupdate", async (ev: { position: GeolocationPosition }, distMoved: number) => {
         toast(`GPS Update: Lat ${ev.position.coords.latitude.toFixed(6)}, Lon ${ev.position.coords.longitude.toFixed(6)}, Accuracy ${ev.position.coords.accuracy}m`);
         if (firstLocation) {
             firstLocation = false;
-            const locations = [
-                {
-                    name: 'Uni',
-                    longitude: 10.006360171632716,
-                    latitude: 53.54025627076634,
-                    diffLong: 10.006360171632716 - 9.5873684507624617,
-                    diffLat: 53.54025627076634 - 53.509736171441112
-                },
-                {
-                    name: 'Meckelfeld',
-                    longitude: 10.0282,
-                    latitude: 53.4174,
-                    diffLong: 10.0282 - 9.5873684507624617,
-                    diffLat: 53.4174 - 53.509736171441112
-                },
-                {
-                    name: 'Horneburg',
-                    longitude: 9.5873684507624617,
-                    latitude: 53.509736171441112,
-                    diffLong: 0,
-                    diffLat: 0
-                }
-            ];
-
-            let liste = await ModelJson.load_json()
-
-            const userLat = ev.position.coords.latitude;
-            const userLon = ev.position.coords.longitude;
-
-            let diffLat = 0;
-            let diffLong = 0;
-
-            // Find nearest location
-            let nearest = locations[0];
-            let minDist = getDistance(userLat, userLon, locations[0].latitude, locations[0].longitude);
-            for (let i = 1; i < locations.length; i++) {
-                const dist = getDistance(userLat, userLon, locations[i].latitude, locations[i].longitude);
-                if (dist < minDist) {
-                    minDist = dist;
-                    nearest = locations[i];
-                }
-            }
-
-            diffLat = nearest.diffLat;
-            diffLong = nearest.diffLong;
-
-            toast(`Nächster Standort: ${nearest.name}`);
-
-            ModelFetcher.getModels().then(models => {
-                for (let name in liste) {
-                    let obj = liste[name];
-
-
-                    let object = models[name];
-                    object.rotation.y = Math.PI * obj.rotation / 180;
-
-                    locar.add(object,
-                        obj.longitude + diffLong,
-                        obj.latitude + diffLat,
-                        -1.5);
-
-                }
-            });
-            // Add illumination to the scene
-            addLight(scene)
-
-            modelSelector(document.getElementById('ar-container')!, camera, scene, (name) => {
-                console.log("Model selected:", name);
-                let ganzerName = liste[name]?.getName(locale.value);
-                if (ganzerName) {
-                    toast(ganzerName);
-                }
-            }, () => {
-                console.log("No model selected");
-                infotext.value = t('all_models_description');
-            });
+            loadModels(ev);
         }
+    });
+
+    if (window.location.search.includes("debug")) {
+        console.debug("Debug mode: Simulating GPS location");
+        locar.fakeGps(53.54025627076634, 10.006360171632716);
+    }
+
+    modelSelector(document.getElementById('ar-container')!, camera, scene, async (name) => {
+        console.log("Model selected:", name);
+        let liste = await ModelJson.load_json()
+        let ganzerName = liste[name]?.getName(locale.value);
+        if (ganzerName) {
+            toast(ganzerName);
+        }
+    }, () => {
+        console.log("No model selected");
+        infotext.value = t('all_models_description');
     });
 
 
@@ -192,6 +134,77 @@ onMounted(() => {
     function animate() {
         deviceOrientationControls.update();
         renderer.render(scene, camera);
+    }
+
+    async function loadModels(ev: { position: GeolocationPosition }) {
+        let liste = await ModelJson.load_json();
+
+        const { diffLat, diffLong, nearest } = debugPositions(ev);
+        toast(`Nächster Standort: ${nearest.name}`);
+
+        for (let name in liste) {
+            let obj = liste[name];
+
+
+            let object = await ModelFetcher.getModel(name);
+            object.rotation.y = Math.PI * obj.rotation / 180;
+
+            locar.add(object,
+                obj.longitude + diffLong,
+                obj.latitude + diffLat,
+                -1.5);
+        }
+        ;
+        // Add illumination to the scene
+        addLight(scene)
+    }
+
+    function debugPositions(ev: { position: GeolocationPosition }) {
+        const locations = [
+            {
+                name: 'Uni',
+                longitude: 10.006360171632716,
+                latitude: 53.54025627076634,
+                diffLong: 10.006360171632716 - 9.5873684507624617,
+                diffLat: 53.54025627076634 - 53.509736171441112
+            },
+            {
+                name: 'Meckelfeld',
+                longitude: 10.0282,
+                latitude: 53.4174,
+                diffLong: 10.0282 - 9.5873684507624617,
+                diffLat: 53.4174 - 53.509736171441112
+            },
+            {
+                name: 'Horneburg',
+                longitude: 9.5873684507624617,
+                latitude: 53.509736171441112,
+                diffLong: 0,
+                diffLat: 0
+            }
+        ];
+
+        const userLat = ev.position.coords.latitude;
+        const userLon = ev.position.coords.longitude;
+
+        let diffLat = 0;
+        let diffLong = 0;
+
+        // Find nearest location
+        let nearest = locations[0];
+        let minDist = getDistance(userLat, userLon, locations[0].latitude, locations[0].longitude);
+        for (let i = 1; i < locations.length; i++) {
+            const dist = getDistance(userLat, userLon, locations[i].latitude, locations[i].longitude);
+            if (dist < minDist) {
+                minDist = dist;
+                nearest = locations[i];
+            }
+        }
+
+        diffLat = nearest.diffLat;
+        diffLong = nearest.diffLong;
+
+        return { diffLat, diffLong, nearest };
     }
 });
 

@@ -117,33 +117,31 @@ onMounted(async () => {
 
         //console.log('Längengrad Faktor:', lngFactor, 'Breitengrad Faktor:', latFactor);
 
-        ModelFetcher.getModels().then(models => {
 
-            for (let key in modelle.value) {
+        for (let key in modelle.value) {
+            let object = await ModelFetcher.getModel(key);
 
-                let object = models[key];
+            // Positioning logic for grid layout
+            let lat = -(modelle.value[key].latitude - latAvg) * latFactor;
+            let lng = (modelle.value[key].longitude - lngAvg) * lngFactor;
+            let rot = Math.PI * modelle.value[key].rotation / 180.;
 
-                // Positioning logic for grid layout
-                let lat = -(modelle.value[key].latitude - latAvg) * latFactor;
-                let lng = (modelle.value[key].longitude - lngAvg) * lngFactor;
-                let rot = Math.PI * modelle.value[key].rotation / 180.;
+            object.translateX(lng);
+            object.translateZ(lat);
+            object.rotateY(rot);
 
-                object.translateX(lng);
-                object.translateZ(lat);
-                object.rotateY(rot);
+            scene.add(object);
 
-                scene.add(object);
+            /*
+            let sphere = new THREE.SphereGeometry(0.1, 16, 16);
+            let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            let marker = new THREE.Mesh(sphere, material);
+            marker.position.set(lng, 0, lat);
+            scene.add(marker);
+            */
 
-                /*
-                let sphere = new THREE.SphereGeometry(0.1, 16, 16);
-                let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-                let marker = new THREE.Mesh(sphere, material);
-                marker.position.set(lng, 0, lat);
-                scene.add(marker);
-                */
 
-            }
-        });
+        };
         camera.position.set(-20, 33, -90);
         //cameraControls.target.set(0, 0, 0);
 
@@ -169,18 +167,12 @@ onMounted(async () => {
             }
         });
 
-
         infotext.value = t('all_models_description');
-        // Add useI18n import and t extraction at the top of the script setup
-        // (Assuming <script setup lang="ts">)
-
-
 
 
     } else {
         let entry = modelle.value[model];
-        ModelFetcher.getModels().then(models => {
-            let object = models[model];
+        ModelFetcher.getModel(model).then(object => {
             scene.add(object);
         })
         cameraControls.target.set(entry.breite / 2, entry.hoehe / 2, -entry.tiefe / 2);
@@ -189,7 +181,6 @@ onMounted(async () => {
         infotext.value = modelle.value[model].getDescription(locale.value);
 
     }
-    // Add illumination to the scene
 
     addLight(scene)
 

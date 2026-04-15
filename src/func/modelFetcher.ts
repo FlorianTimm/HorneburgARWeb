@@ -5,7 +5,7 @@ import * as THREE from 'three';
 
 export class ModelFetcher {
     static instance: ModelFetcher;
-    values: Promise<{ [key: string]: THREE.Object3D }>;
+    private values: Promise<{ [key: string]: THREE.Object3D }>;
 
     private constructor() {
         this.values = this.fetchModel();
@@ -50,9 +50,7 @@ export class ModelFetcher {
         ModelFetcher.getInstance();
     }
 
-    static getModels() {
-        return ModelFetcher.getInstance().values;
+    static async getModel(name: string): Promise<THREE.Object3D<THREE.Object3DEventMap>> {
+        return ModelFetcher.getInstance().values.then(models => models[name].clone());
     }
-
-
 }
