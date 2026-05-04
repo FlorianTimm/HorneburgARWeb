@@ -1,5 +1,7 @@
 {
     "welcome": "Willkommen auf der Burginsel Horneburg",
+    "name": "Burginsel Horneburg",
+    "about": "Über das Projekt",
     "island": "Inselansicht (AR)",
     "island_description": "Die Burg vor Ort in Augmended Reality erleben",
     "single": "Gebäudemodelle",

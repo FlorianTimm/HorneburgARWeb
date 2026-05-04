@@ -1,34 +1,48 @@
 <template>
-    <router-link v-if="link" :to="link" tag="div">
-        mit Link
-        <div>
-            <h2>{{ title }}</h2>
-            <p>{{ description }}</p>
-            <slot></slot>
-        </div>
-    </router-link>
+    <router-link :to="link">
 
-    <div v-else>
         <h2>{{ title }}</h2>
         <p>{{ description }}</p>
         <slot></slot>
-    </div>
+
+    </router-link>
+
 </template>
 
 <script setup lang="ts">
 defineProps<{
     title: string;
     description: string;
-    link?: string;
+    link: string;
 }>();
 </script>
 
 <style scoped>
-div,
-router-link {
-    border: 1px solid #ccc;
-    padding: 16px;
-    border-radius: 8px;
-    margin-bottom: 16px;
+a {
+    display: block;
+    float: inline-start;
+
+    text-decoration: none;
+    color: #333;
+
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 370px;
+    height: 390px;
+    margin: 20px;
+
+    transition: background-color 0.3s ease;
+    background-color: #fff;
+}
+
+a h2 {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+a:hover {
+    cursor: pointer;
+    background-color: #f0f0f0;
 }
 </style>

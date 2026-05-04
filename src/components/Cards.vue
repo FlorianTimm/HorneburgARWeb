@@ -1,13 +1,20 @@
 <template>
-    <div class="cards">
+    <div>
         <slot></slot>
     </div>
 </template>
 
 <style scoped>
-.cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+div {
+    text-align: center;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+@media (min-width: 800px) {
+    div {
+
+        padding: 30px;
+    }
 }
 </style>

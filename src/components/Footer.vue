@@ -1,7 +1,7 @@
 <template>
-    <footer class="ion-no-border">
-        <div class="ion-toolbar">
-            <div class="ion-buttons" slot="start">
+    <footer>
+        <div>
+            <div>
                 <a href="https://www.horneburg.de" target="_blank" title="Flecken Horneburg"><img
                         src="../assets/logo_horneburg.png" alt="Flecken Horneburg" /></a>
                 <a href="https://www.landkreis-stade.de" target="_blank" title="Landkreis Stade"><img
@@ -9,11 +9,11 @@
                 <a href="https://www.hcu-hamburg.de" target="_blank" title="HafenCity Universität Hamburg"><img
                         src="../assets/logo_hcu.png" alt="HafenCity Universität Hamburg" /></a>
             </div>
-            <div class="ion-title" slot="start">
+            <div>
                 {{ $t('footer_line1') }}<br />{{ $t('footer_line2') }}
             </div>
 
-            <div class="ion-buttons" slot="end">
+            <div>
                 <a href="https://www.horneburg.de/portal/seiten/Seite-900000001-20450.html" target="_blank"
                     class="footer-link">
                     {{ $t('imprint') }}
@@ -28,11 +28,15 @@
 
 </template>
 
-<script setup lang="ts">
-
-</script>
 
 <style lang="css" scoped>
+footer {
+    float: none;
+    clear: both;
+    text-align: center;
+}
+
+
 .footer-text {
     font-size: 0.8em;
     color: #555;
@@ -48,7 +52,7 @@
     text-decoration: underline;
 }
 
-ion-footer img {
+footer img {
     filter: grayscale(100%);
     transition: filter 0.3s;
     height: 35px;
