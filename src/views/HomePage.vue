@@ -1,85 +1,49 @@
 <template>
-  <ion-page>
-    <transition name="fade">
-      <div v-if="showSplash" class="splash-overlay">
-        <img src="../assets/storch.png" alt="Storch" />
-        <div class="splash-content">
-          <ion-icon :icon="homeOutline" size="large" />
-          <h1>{{ $t('welcome') }}</h1>
-          <!--<p><ion-icon :icon="arrowDownOutline" size="large" /></p>-->
-        </div>
-      </div>
-    </transition>
 
-    <ion-header :translucent="true" class="ion-no-border">
-      <ion-toolbar>
-        <ion-title>{{ $t('welcome') }}
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <div v-if="showSplash" class="splash-overlay">
+    <img src="../assets/storch.png" alt="Storch" />
+    <div class="splash-content">
+      <h1>{{ $t('welcome') }}</h1>
+      <!--<p><ion-icon :icon="arrowDownOutline" size="large" /></p>-->
+    </div>
+  </div>
 
-    <ion-content :fullscreen="true" :scroll-events="true" @ionScroll="handleScroll">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">{{ $t('welcome') }}</ion-title>
-        </ion-toolbar>
-      </ion-header>
+  <h1>{{ $t('welcome') }}</h1>
+  <p>{{ $t('welcome_text') }}</p>
 
-      <div class="main-content">{{ $t('welcome_text') }}
-      </div>
+  <Cards>
+    <router-link :to="'/ar'">
+      <Card :title="$t('island')" :description="$t('island_description')" link="/home">
+        <img src="../assets/inselansicht.svg" :alt="$t('island')" style="width: 100%; margin-top: 10px;" />
+      </Card>
+    </router-link>
 
-      <div class="cards-content">
+    <router-link :to="'/orbit'">
+      <Card :title="$t('single')" :description="$t('single_description')" link="/single">
+        <img src="../assets/einzelansicht2.svg" :alt="$t('single')" style="width: 100%; margin-top: 10px;" />
+      </Card>
+    </router-link>
 
-        <ion-card router-link="/ar" class="cards">
-          <ion-card-header>
-            <ion-card-title>{{ $t('island') }}</ion-card-title>
-          </ion-card-header>
+    <router-link :to="'/artifacts'">
+      <Card :title="$t('artifacts')" :description="$t('artifacts_description')" link="/artifacts">
+        <img src="../assets/artifacts.svg" :alt="$t('artifacts')"
+          style="width: 100%; margin-top: 10px; max-height: 152px;" />
+      </Card>
+    </router-link>
 
-          <ion-card-content>
-            {{ $t('island_description') }}
-          </ion-card-content>
-          <img src="../assets/inselansicht.svg" :alt="$t('island')" style="width: 100%; margin-top: 10px;" />
-        </ion-card>
+  </Cards>
+  <hr />
+  <div class="main-content">{{ $t('welcome_text') }}
+  </div>
 
-        <ion-card router-link="/orbit" class="cards">
-          <ion-card-header>
-            <ion-card-title>{{ $t('single') }}</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            {{ $t('single_description') }}
-          </ion-card-content>
-          <img src="../assets/einzelansicht2.svg" :alt="$t('single')" style="width: 100%; margin-top: 10px;" />
-        </ion-card>
-
-        <ion-card router-link="/artifacts" class="cards">
-          <ion-card-header>
-            <ion-card-title>{{ $t('artifacts') }}</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            {{ $t('artifacts_description') }}
-          </ion-card-content>
-          <img src="../assets/artifacts.svg" :alt="$t('artifacts')"
-            style="width: 100%; margin-top: 10px; max-height: 152px;" />
-        </ion-card>
-
-      </div>
-      <hr />
-      <div class="main-content">{{ $t('welcome_text') }}
-      </div>
-    </ion-content>
-    <Footer />
-  </ion-page>
+  <Footer />
 </template>
 
 <script setup lang="ts">
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { ref, onMounted } from 'vue';
-import { IonIcon } from '@ionic/vue';
-import { homeOutline } from 'ionicons/icons';
-import type { ScrollDetail } from '@ionic/vue';
 import Footer from '@/components/Footer.vue';
+import Card from '@/components/Card.vue';
+import Cards from '@/components/Cards.vue';
 
 const showSplash = ref(true);
 
@@ -94,15 +58,6 @@ onMounted(() => {
     dismissSplash();
   }, 3000);
 });
-
-// Scroll: Sobald der User scrollt, Splash entfernen
-const handleScroll = (event: CustomEvent<ScrollDetail>) => {
-  console.log("Scroll event detected, scrollTop:", event.detail.scrollTop);
-  if (showSplash.value && event.detail.scrollTop > 10) {
-    dismissSplash();
-  }
-};
-
 </script>
 
 <style scoped>

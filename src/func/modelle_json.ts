@@ -1,5 +1,6 @@
 import get from 'axios';
-import { JsonEntry, JsonFile } from './json';
+import { JsonEntry, type JsonFile } from './json';
+
 
 export class ModelJson extends JsonEntry {
     private _longitude: number;
@@ -65,8 +66,8 @@ export class ModelJson extends JsonEntry {
                             prop.description,
                             prop.path,
                             prop.svg_path,
-                            geom.coordinates[0],
-                            geom.coordinates[1],
+                            geom.coordinates[0]??0,
+                            geom.coordinates[1]??0,
                             prop.rotation,
                             prop.breite,
                             prop.tiefe,

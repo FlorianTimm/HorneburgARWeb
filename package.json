@@ -4,33 +4,35 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "vue-tsc && vite build",
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
-    "tsc": "vue-tsc --noEmit --watch"
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "@ionic/vue": "^8.8.4",
-    "@ionic/vue-router": "^8.8.4",
-    "axios": "^1.15.1",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.33",
+    "vue-router": "^5.0.6",
+    "vue-i18n": "^11.4.0",
+    "axios": "^1.16.0",
     "ionicons": "^8.0.13",
     "locar": "^0.1.9",
-    "three": "^0.184.0",
-    "vue": "^3.5.32",
-    "vue-i18n": "^11.3.2",
-    "vue-router": "^5.0.4"
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@types/three": "^0.184.0",
-    "@vitejs/plugin-legacy": "^7.2.1",
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^25.6.0",
     "@vitejs/plugin-vue": "^6.0.6",
-    "@vitejs/plugin-basic-ssl": "^2.3.0",
-    "@vue/cli-service": "5.0.9",
-    "@vue/eslint-config-typescript": "^14.7.0",
+    "@vue/tsconfig": "^0.9.1",
+    "npm-run-all2": "^8.0.4",
     "typescript": "~6.0.3",
-    "vite": "^7.3.2",
-    "vite-plugin-pwa": "^1.2.0",
-    "vue-tsc": "^3.2.7"
+    "vite": "^8.0.10",
+    "vue-tsc": "^3.2.8",
+    "vite-plugin-vue-devtools": "^8.1.1"
   },
-  "description": "Horneburg in AR"
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
 }

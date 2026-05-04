@@ -1,19 +1,9 @@
 <template>
-    <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-back-button default-href="/orbit"></ion-back-button>
-                </ion-buttons>
-                <ion-title>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
-                    ''
-                }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
-
-        <ion-content :fullscreen="true">
-            <div id="orbit-container"></div>
-        </ion-content>
+    <h2>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
+        ''
+    }}</h2>
+    <div id="orbit-container"></div>
+    <!--   </ion-content>
         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
             <ion-fab-button @click="infobox = !infobox; autoActivated = false;">
                 <ion-icon v-if="infobox" :icon="chevronDown"></ion-icon>
@@ -24,18 +14,16 @@
             style="position:absolute; bottom: 80px; top: 70px;  right: 0px; padding: 12px; width: 300px; max-width: 90%; z-index: 1000; background-color: rgba(255, 255, 255, 0.9);">
             <div v-html="infotext"></div>
         </ion-card>
-    </ion-page>
+    </ion-page> -->
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonBackButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonCard, IonFabButton, IonIcon } from '@ionic/vue';
-
 import { onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { ref } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
-import { JsonFile } from '@/func/json';
+import { type JsonFile } from '@/func/json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { addLight, modelSelector } from '@/func/threed';
@@ -104,8 +92,8 @@ onMounted(async () => {
         let lngSum = 0;
         let count = 0;
         for (let key in modelle.value) {
-            latSum += modelle.value[key].latitude;
-            lngSum += modelle.value[key].longitude;
+            latSum += modelle.value[key]?.latitude ?? 0;
+            lngSum += modelle.value[key]?.longitude ?? 0;
             count++;
         }
         const latAvg = count > 0 ? latSum / count : 0;
@@ -122,9 +110,9 @@ onMounted(async () => {
             let object = await ModelFetcher.getModel(key);
 
             // Positioning logic for grid layout
-            let lat = -(modelle.value[key].latitude - latAvg) * latFactor;
-            let lng = (modelle.value[key].longitude - lngAvg) * lngFactor;
-            let rot = Math.PI * modelle.value[key].rotation / 180.;
+            let lat = -(modelle.value[key]?.latitude ?? 0 - latAvg) * latFactor;
+            let lng = (modelle.value[key]?.longitude ?? 0 - lngAvg) * lngFactor;
+            let rot = Math.PI * (modelle.value[key]?.rotation ?? 0) / 180.;
 
             object.translateX(lng);
             object.translateZ(lat);
@@ -175,10 +163,10 @@ onMounted(async () => {
         ModelFetcher.getModel(model).then(object => {
             scene.add(object);
         })
-        cameraControls.target.set(entry.breite / 2, entry.hoehe / 2, -entry.tiefe / 2);
-        camera.position.set(entry.breite * 2, entry.hoehe * .6, entry.tiefe);
+        cameraControls.target.set((entry?.breite ?? 0) / 2, (entry?.hoehe ?? 0) / 2, -(entry?.tiefe ?? 0) / 2);
+        camera.position.set((entry?.breite ?? 0) * 2, (entry?.hoehe ?? 0) * .6, entry?.tiefe ?? 0);
 
-        infotext.value = modelle.value[model].getDescription(locale.value);
+        infotext.value = modelle.value[model]?.getDescription(locale.value) ?? '';
 
     }
 
@@ -209,10 +197,7 @@ onUnmounted(() => {
 <style scoped>
 #orbit-container {
     width: 100%;
-    height: 100%;
+    height: auto;
     overflow: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 </style>

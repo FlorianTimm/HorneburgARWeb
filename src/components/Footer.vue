@@ -1,19 +1,19 @@
 <template>
-    <ion-footer class="ion-no-border">
-        <ion-toolbar>
-            <ion-buttons slot="start">
+    <footer class="ion-no-border">
+        <div class="ion-toolbar">
+            <div class="ion-buttons" slot="start">
                 <a href="https://www.horneburg.de" target="_blank" title="Flecken Horneburg"><img
                         src="../assets/logo_horneburg.png" alt="Flecken Horneburg" /></a>
                 <a href="https://www.landkreis-stade.de" target="_blank" title="Landkreis Stade"><img
                         src="../assets/logo_stade.png" alt="Landkreis Stade" /></a>
                 <a href="https://www.hcu-hamburg.de" target="_blank" title="HafenCity Universität Hamburg"><img
                         src="../assets/logo_hcu.png" alt="HafenCity Universität Hamburg" /></a>
-            </ion-buttons>
-            <ion-title slot="start" class="footer-text">
+            </div>
+            <div class="ion-title" slot="start">
                 {{ $t('footer_line1') }}<br />{{ $t('footer_line2') }}
-            </ion-title>
+            </div>
 
-            <ion-buttons slot="end">
+            <div class="ion-buttons" slot="end">
                 <a href="https://www.horneburg.de/portal/seiten/Seite-900000001-20450.html" target="_blank"
                     class="footer-link">
                     {{ $t('imprint') }}
@@ -22,17 +22,13 @@
                     class="footer-link">
                     {{ $t('privacy') }}
                 </a>
-            </ion-buttons>
-        </ion-toolbar>
-    </ion-footer>
+            </div>
+        </div>
+    </footer>
 
 </template>
 
 <script setup lang="ts">
-import { IonFooter, IonToolbar, IonTitle, IonButtons } from '@ionic/vue';
-
-
-
 
 </script>
 

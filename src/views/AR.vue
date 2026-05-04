@@ -1,21 +1,12 @@
 <template>
-    <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-back-button default-href="/"></ion-back-button>
-                </ion-buttons>
-                <ion-title>{{ $t('armode') }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <div id="ar-container"></div>
-        </ion-content>
-    </ion-page>
+
+    <title>{{ $t('armode') }}</title>
+
+    <div id="ar-container"></div>
+
 </template>
 
 <script setup lang="ts">
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import * as THREE from 'three';
 import * as LocAR from 'locar';
 import { onMounted, onUnmounted } from 'vue';
@@ -25,7 +16,6 @@ import { addLight, getDistance, modelSelector } from '@/func/threed';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import { ModelFetcher } from '@/func/modelFetcher';
-import { alertController } from '@ionic/vue';
 
 const { t, locale } = useI18n();
 
@@ -43,12 +33,12 @@ let infobox = ref(false);
 let infotext = ref("");
 
 onMounted(() => {
-    alertController.create({
-        header: 'AR-Modus',
-        subHeader: 'Dieser Modus ist für die Nutzung auf einem Smartphone gedacht. Bitte wechsle zu einem mobilen Gerät, um die AR-Funktionalität zu nutzen.',
-        message: 'Falls du bereits auf einem Smartphone bist, könnte es sein, dass die Kamera-Berechtigungen nicht erteilt wurden. Bitte erlaube den Zugriff auf die Kamera, um fortzufahren.',
-        buttons: ['Loslegen'],
-    }).then(alert => alert.present());
+    /*     toast({
+            header: 'AR-Modus',
+            subHeader: 'Dieser Modus ist für die Nutzung auf einem Smartphone gedacht. Bitte wechsle zu einem mobilen Gerät, um die AR-Funktionalität zu nutzen.',
+            message: 'Falls du bereits auf einem Smartphone bist, könnte es sein, dass die Kamera-Berechtigungen nicht erteilt wurden. Bitte erlaube den Zugriff auf die Kamera, um fortzufahren.',
+            buttons: ['Loslegen'],
+        }).then(alert => alert.present()); */
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('ar-container')?.appendChild(renderer.domElement);
@@ -93,12 +83,12 @@ onMounted(() => {
 
     locar.on("gpserror", error => {
         toast(`GPS Fehler: Code ${error.code}`);
-        alertController.create({
-            header: 'GPS-Fehler',
-            subHeader: 'Es gab ein Problem mit der GPS-Verbindung.',
-            message: 'Bitte stelle sicher, dass GPS aktiviert ist und die App die notwendigen Berechtigungen hat.',
-            buttons: ['OK']
-        }).then(alert => alert.present());
+        /*  alertController.create({
+             header: 'GPS-Fehler',
+             subHeader: 'Es gab ein Problem mit der GPS-Verbindung.',
+             message: 'Bitte stelle sicher, dass GPS aktiviert ist und die App die notwendigen Berechtigungen hat.',
+             buttons: ['OK']
+         }).then(alert => alert.present()); */
     });
 
     locar.on("gpsupdate", async (ev: { position: GeolocationPosition }, distMoved: number) => {
@@ -140,10 +130,13 @@ onMounted(() => {
         let liste = await ModelJson.load_json();
 
         const { diffLat, diffLong, nearest } = debugPositions(ev);
-        toast(`Nächster Standort: ${nearest.name}`);
+        if (nearest)
+            toast(`Nächster Standort: ${nearest.name}`);
 
         for (let name in liste) {
             let obj = liste[name];
+
+            if (!obj) continue;
 
 
             let object = await ModelFetcher.getModel(name);
@@ -160,29 +153,35 @@ onMounted(() => {
     }
 
     function debugPositions(ev: { position: GeolocationPosition }) {
-        const locations = [
-            {
-                name: 'Uni',
-                longitude: 10.006360171632716,
-                latitude: 53.54025627076634,
-                diffLong: 10.006360171632716 - 9.5873684507624617,
-                diffLat: 53.54025627076634 - 53.509736171441112
-            },
-            {
-                name: 'Meckelfeld',
-                longitude: 10.0282,
-                latitude: 53.4174,
-                diffLong: 10.0282 - 9.5873684507624617,
-                diffLat: 53.4174 - 53.509736171441112
-            },
-            {
-                name: 'Horneburg',
-                longitude: 9.5873684507624617,
-                latitude: 53.509736171441112,
-                diffLong: 0,
-                diffLat: 0
-            }
-        ];
+        const locations: {
+            name: string;
+            longitude: number;
+            latitude: number;
+            diffLong: number;
+            diffLat: number;
+        }[] = [
+                {
+                    name: 'Uni',
+                    longitude: 10.006360171632716,
+                    latitude: 53.54025627076634,
+                    diffLong: 10.006360171632716 - 9.5873684507624617,
+                    diffLat: 53.54025627076634 - 53.509736171441112
+                },
+                {
+                    name: 'Meckelfeld',
+                    longitude: 10.0282,
+                    latitude: 53.4174,
+                    diffLong: 10.0282 - 9.5873684507624617,
+                    diffLat: 53.4174 - 53.509736171441112
+                },
+                {
+                    name: 'Horneburg',
+                    longitude: 9.5873684507624617,
+                    latitude: 53.509736171441112,
+                    diffLong: 0,
+                    diffLat: 0
+                }
+            ];
 
         const userLat = ev.position.coords.latitude;
         const userLon = ev.position.coords.longitude;
@@ -192,18 +191,21 @@ onMounted(() => {
 
         // Find nearest location
         let nearest = locations[0];
-        let minDist = getDistance(userLat, userLon, locations[0].latitude, locations[0].longitude);
+
+
+        let minDist = getDistance(userLat, userLon, locations[0]?.latitude ?? 0, locations[0]?.longitude ?? 0);
         for (let i = 1; i < locations.length; i++) {
-            const dist = getDistance(userLat, userLon, locations[i].latitude, locations[i].longitude);
+            const dist = getDistance(userLat, userLon, locations[i]?.latitude ?? 0, locations[i]?.longitude ?? 0);
             if (dist < minDist) {
                 minDist = dist;
                 nearest = locations[i];
             }
         }
 
-        diffLat = nearest.diffLat;
-        diffLong = nearest.diffLong;
-
+        if (nearest) {
+            diffLat = nearest.diffLat;
+            diffLong = nearest.diffLong;
+        }
         return { diffLat, diffLong, nearest };
     }
 });

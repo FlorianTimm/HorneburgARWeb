@@ -12,12 +12,12 @@ export class JsonEntry {
     }
 
     getName(locale: string = 'en'): string {
-        locale = locale.split('-')[0]; // Nur die Sprache, ohne Region
+        locale = locale.split('-')[0]??'de'; // Nur die Sprache, ohne Region
         return this._name[locale] || this._name['en'] || Object.values(this._name)[0] || 'Unknown';
     }
 
     getDescription(locale: string = 'en'): string {
-        locale = locale.split('-')[0]; // Nur die Sprache, ohne Region
+        locale = locale.split('-')[0]??'de'; // Nur die Sprache, ohne Region
         return this._description[locale] || this._description['en'] || Object.values(this._description)[0] || 'No description available.';
     }
 
