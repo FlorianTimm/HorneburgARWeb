@@ -5,18 +5,15 @@ import HomePage from '../views/HomePage.vue'
 import AR from '../views/AR.vue';
 import Liste from '../views/ModelList.vue';
 import Orbit from '../views/ModelOrbit.vue';
-/*import Artifacts from '@/views/ArtifactsList.vue';
+import Artifacts from '@/views/ArtifactsList.vue';
 import ArtifactsViewer from '@/views/ArtifactsViewer.vue';
-*/
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [  {
-    path: '/',
-    redirect: '/home'
-  },
+  routes: [ 
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     component: HomePage,
   },
@@ -36,7 +33,7 @@ const router = createRouter({
     name: 'Orbit',
     component: Orbit,
     },
-    /*
+    
   {
     path: '/artifacts',
     name: 'Artifacts',
@@ -47,7 +44,6 @@ const router = createRouter({
     name: 'ArtifactDetail',
     component: ArtifactsViewer,
   }
-    */
   ],
 })
 

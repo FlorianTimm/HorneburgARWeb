@@ -1,46 +1,35 @@
 <template>
-    <ion-page>
-        <ion-header :translucent="true" class="ion-no-border">
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-back-button default-href="/"></ion-back-button>
-                </ion-buttons>
-                <ion-title>{{ $t('artifacts') }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
+    <DefaultPage>
+        <template #header_left>
+            <button @click="$router.push('/#main')">&#8592;</button>
+        </template>
+        <template #header_center>
+            <h1>{{ $t('artifacts') }}</h1>
+        </template>
+        <template #main>
+            <Cards>
+                <Card :link="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key"
+                    :title="artifact.getName($i18n.locale)">
+                    <!-- :description="artifact.getDescription($i18n.locale)">-->
 
-        <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">{{ $t('artifacts') }}</ion-title>
-                </ion-toolbar>
-            </ion-header>
-
-            <div class="cards-content">
-                <ion-card :router-link="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key"
-                    class="cards">
                     <img src="../assets/beispielhaus.svg" :alt="`${artifact.getName($i18n.locale)} Vorschau`"
                         style="width: 100%; margin-top: 10px;" />
-                    <ion-card-header>
-                        <ion-card-title>{{ artifact.getName($i18n.locale) }}</ion-card-title>
-                    </ion-card-header>
-
-                    <ion-card-content>{{ artifact.getDescription($i18n.locale) }}</ion-card-content>
-                </ion-card>
-            </div>
-        </ion-content>
-        <Footer />
-    </ion-page>
+                </Card>
+            </Cards>
+        </template>
+    </DefaultPage>
 </template>
 
 <script setup lang="ts">
-import { IonCard, IonCardContent, IonCardHeader, IonButtons, IonBackButton, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { ref, onMounted, computed } from 'vue';
-import { JsonFile } from '@/func/json';
+import { type JsonFile } from '@/func/json';
 import { ArtifactJson } from '@/func/artifacts_json';
 
 import type { Ref } from 'vue';
-import Footer from '@/components/Footer.vue';
+import Card from '@/components/Card.vue';
+import Cards from '@/components/Cards.vue';
+import DefaultPage from '@/components/DefaultPage.vue';
+
 const artifacts: Ref<JsonFile<ArtifactJson>> = ref({});
 
 onMounted(async () => {
@@ -53,16 +42,10 @@ const filteredArtifacts = computed(() => {
     const result: JsonFile<ArtifactJson> = {};
     for (const key in artifacts.value) {
         const artifact = artifacts.value[key];
-        result[key] = artifact;
+        if (artifact)
+            result[key] = artifact;
     }
     return result;
 });
 
 </script>
-
-<style scoped>
-ion-card:hover {
-    cursor: pointer;
-    background-color: #f0f0f0;
-}
-</style>

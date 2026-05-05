@@ -1,9 +1,22 @@
 <template>
+    <div id="container">
+        <Header>
+            <template #left>
+                <button @click="$router.push('/#main')">&#8592;</button>
+            </template>
+            <template #center>
+                <h1>{{ $t('armode') }} </h1>
+            </template>
+            <template #right>
+                <button @click="reload()">&#8635;</button>
+            </template>
+        </Header>
 
-    <title>{{ $t('armode') }}</title>
+        <main>
+            <div id="ar-container"></div>
+        </main>
 
-    <div id="ar-container"></div>
-
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -17,22 +30,35 @@ import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import { ModelFetcher } from '@/func/modelFetcher';
 
+import Footer from '@/components/Footer.vue';
+import Header from '@/components/Header.vue';
+
 const { t, locale } = useI18n();
 
-const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.001, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-const scene = new THREE.Scene();
-const locar = new LocAR.LocationBased(scene, camera);
-const cam = new LocAR.Webcam({
-    video: {
-        facingMode: "environment"
-    }
-});
+let renderer: THREE.WebGLRenderer;
+let locar: LocAR.LocationBased;
+let cam: LocAR.Webcam;
 
 let infobox = ref(false);
 let infotext = ref("");
 
 onMounted(() => {
+
+    let container = document.getElementById('ar-container');
+    if (!container) {
+        console.error("AR container not found");
+        return;
+    }
+
+    const camera = new THREE.PerspectiveCamera(80, container.clientWidth / container.clientHeight, 0.001, 1000);
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const scene = new THREE.Scene();
+    locar = new LocAR.LocationBased(scene, camera);
+    cam = new LocAR.Webcam({
+        video: {
+            facingMode: "environment"
+        }
+    });
     /*     toast({
             header: 'AR-Modus',
             subHeader: 'Dieser Modus ist für die Nutzung auf einem Smartphone gedacht. Bitte wechsle zu einem mobilen Gerät, um die AR-Funktionalität zu nutzen.',
@@ -40,12 +66,12 @@ onMounted(() => {
             buttons: ['Loslegen'],
         }).then(alert => alert.present()); */
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById('ar-container')?.appendChild(renderer.domElement);
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container?.appendChild(renderer.domElement);
 
     window.addEventListener("resize", e => {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.aspect = window.innerWidth / window.innerHeight;
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
     });
 
@@ -210,13 +236,18 @@ onMounted(() => {
     }
 });
 
+
+function reload() {
+    window.location.reload();
+}
+
 onUnmounted(() => {
     // Clean up resources, event listeners, etc. if needed
     console.log("AR.vue deactivated");
     try {
-        locar.stopGps();
-        renderer.setAnimationLoop(null);
-        cam.dispose();
+        if (renderer) renderer.setAnimationLoop(null);
+        if (locar) locar.stopGps();
+        if (cam) cam.dispose();
     } catch (e) {
         console.warn("Error while stopping", e);
     }
@@ -225,12 +256,33 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+#container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 #ar-container {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 </style>

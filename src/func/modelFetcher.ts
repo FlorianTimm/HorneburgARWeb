@@ -29,6 +29,11 @@ export class ModelFetcher {
         for (let key in modellListe) {
             const feature = modellListe[key];
 
+            if (!feature || !feature.path) {
+                console.warn(`Modell ${key} hat keinen Pfad und wird übersprungen.`);
+                continue;
+            }
+
             values[key] = loader.loadAsync(feature.path).then(gltf => {
                 let object = gltf.scene;
                 if (object.children.length == 1 && (object.children[0] as THREE.Group).isGroup) {

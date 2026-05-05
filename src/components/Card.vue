@@ -2,7 +2,7 @@
     <router-link :to="link">
 
         <h2>{{ title }}</h2>
-        <p>{{ description }}</p>
+        <p v-if="description">{{ description }}</p>
         <slot></slot>
 
     </router-link>
@@ -12,7 +12,7 @@
 <script setup lang="ts">
 defineProps<{
     title: string;
-    description: string;
+    description?: string;
     link: string;
 }>();
 </script>
@@ -20,14 +20,14 @@ defineProps<{
 <style scoped>
 a {
     display: block;
-    float: inline-start;
+    float: flex-start;
 
     text-decoration: none;
     color: #333;
 
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 370px;
+    width: 350px;
     height: 390px;
     margin: 20px;
 

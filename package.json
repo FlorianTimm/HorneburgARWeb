@@ -4,33 +4,34 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "pinia": "^3.0.4",
-    "vue": "^3.5.33",
-    "vue-router": "^5.0.6",
-    "vue-i18n": "^11.4.0",
+    "@vitejs/plugin-basic-ssl": "^2.3.0",
     "axios": "^1.16.0",
     "ionicons": "^8.0.13",
     "locar": "^0.1.9",
-    "three": "^0.184.0"
+    "pinia": "^3.0.4",
+    "three": "^0.184.0",
+    "vue": "^3.5.33",
+    "vue-i18n": "^11.4.0",
+    "vue-router": "^5.0.6"
   },
   "devDependencies": {
-    "@types/three": "^0.184.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^25.6.0",
+    "@types/three": "^0.184.0",
     "@vitejs/plugin-vue": "^6.0.6",
     "@vue/tsconfig": "^0.9.1",
     "npm-run-all2": "^8.0.4",
     "typescript": "~6.0.3",
     "vite": "^8.0.10",
-    "vue-tsc": "^3.2.8",
-    "vite-plugin-vue-devtools": "^8.1.1"
+    "vite-plugin-vue-devtools": "^8.1.1",
+    "vue-tsc": "^3.2.8"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

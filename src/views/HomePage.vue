@@ -10,27 +10,30 @@
 
     <section class="main-content">
       <header>
-        <h2>{{ $t('welcome') }}</h2>
+        <img src="../assets/Logos/Flecken-Horneburg.png" alt="Horneburg Logo" />
+        <h2 id="main">{{ $t('welcome') }}</h2>
         <router-link to="/about">{{ $t('about') }}</router-link>
       </header>
 
-      {{ $t('welcome_text') }}
+      <main>
+        {{ $t('welcome_text') }}
 
-      <Cards>
+        <Cards>
 
-        <Card :title="$t('island')" :description="$t('island_description')" link="/ar">
-          <img src="../assets/inselansicht.svg" :alt="$t('island')" style="width: 100%; margin-top: 10px;" />
-        </Card>
+          <Card :title="$t('island')" :description="$t('island_description')" link="/ar">
+            <img src="../assets/inselansicht.svg" :alt="$t('island')" style="width: 100%; margin-top: 10px;" />
+          </Card>
 
-        <Card :title="$t('single')" :description="$t('single_description')" link="/orbit">
-          <img src="../assets/einzelansicht2.svg" :alt="$t('single')" style="width: 100%; margin-top: 10px;" />
-        </Card>
+          <Card :title="$t('single')" :description="$t('single_description')" link="/orbit">
+            <img src="../assets/einzelansicht2.svg" :alt="$t('single')" style="width: 100%; margin-top: 10px;" />
+          </Card>
 
-        <Card :title="$t('artifacts')" :description="$t('artifacts_description')" link="/artifacts">
-          <img src="../assets/artifacts.svg" :alt="$t('artifacts')"
-            style="width: 100%; margin-top: 10px; max-height: 152px;" />
-        </Card>
-      </Cards>
+          <Card :title="$t('artifacts')" :description="$t('artifacts_description')" link="/artifacts">
+            <img src="../assets/artifacts.svg" :alt="$t('artifacts')"
+              style="width: 100%; margin-top: 10px; max-height: 152px;" />
+          </Card>
+        </Cards>
+      </main>
       <Footer />
     </section>
 
@@ -56,6 +59,14 @@ onMounted(() => {
     let startY: number;
     let scrollTop: number;
 
+    container.addEventListener('scroll', () => {
+      if (container.scrollTop > window.innerHeight / 2) {
+        window.history.replaceState(null, '', "#main");
+      } else {
+        window.history.replaceState(null, '', "#splash");
+      }
+    });
+
     container.addEventListener('mousedown', (e) => {
       isPressed = true;
       startY = e.pageY - container.offsetTop;
@@ -73,6 +84,9 @@ onMounted(() => {
       // Prüfen, ob weit genug gezogen wurde
       if (container.scrollTop > 100) {
         container.scrollTo(0, window.innerHeight);
+        setTimeout(() => {
+          window.history.replaceState(null, '', "#main");
+        }, 1000);
       } else {
         container.scrollTo(0, 0);
       }
@@ -86,14 +100,17 @@ onMounted(() => {
       container.scrollTop = scrollTop - walk;
     });
 
-    setInterval(() => {
+    setTimeout(() => {
       if (container.scrollTop < 100) {
         container.style.scrollBehavior = 'smooth';
         container.scrollTo(0, window.innerHeight);
+        setTimeout(() => {
+          window.history.replaceState(null, '', "#main");
+        }, 1000);
       }
     }, 10000);
 
-    if (!splash.shouldShow()) {
+    if (!splash.shouldShow() || window.location.hash === '#main') {
       container.scrollTo(0, window.innerHeight);
     }
     splash.wasShown();
@@ -117,8 +134,6 @@ onMounted(() => {
 
   /* Zeigt an, dass man ziehen kann */
 }
-
-
 
 .scroll-container:active {
   cursor: grabbing;
@@ -152,11 +167,13 @@ section {
 }
 
 .main-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   color: rgb(14, 10, 10);
+}
+
+main {
+  text-align: center;
 }
 
 .hint {
@@ -186,5 +203,37 @@ section {
   60% {
     transform: translateX(-50%) translateY(-5px);
   }
+}
+
+
+
+header {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  width: 100%;
+  height: 10em;
+  align-items: center;
+}
+
+header img {
+  display: block;
+  height: 40px;
+  margin: 10px auto;
+}
+
+header h2 {
+  display: block;
+  font-size: 24px;
+  margin: 0;
+}
+
+header a {
+  display: inline-block;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 </style>

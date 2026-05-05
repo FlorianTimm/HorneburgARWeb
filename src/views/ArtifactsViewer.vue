@@ -1,29 +1,25 @@
 <template>
-    <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-back-button default-href="/artifacts"></ion-back-button>
-                </ion-buttons>
-                <ion-title>{{ artifacts[artifact]?.getName($i18n.locale) }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
-
-        <ion-content :fullscreen="true">
-            <div id="orbit-container"></div>
-        </ion-content>
-    </ion-page>
+    <DefaultPage>
+        <template #header_left>
+            <button @click="$router.push('/artifacts')">&#8592;</button>
+        </template>
+        <template #header_center>
+            <h1>{{ artifacts[artifact]?.getName($i18n.locale) }}</h1>
+        </template>
+        <template #main>
+            {{ artifacts[artifact]?.getDescription($i18n.locale) }}
+        </template>
+    </DefaultPage>
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonBackButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-
 import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { ArtifactJson } from '@/func/artifacts_json';
-import { JsonFile } from '@/func/json';
+import { type JsonFile } from '@/func/json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
+import DefaultPage from '@/components/DefaultPage.vue';
 
 const route = useRoute();
 const { artifact } = route.params as { artifact: string };
@@ -34,5 +30,3 @@ onMounted(async () => {
 });
 
 </script>
-
-<style scoped></style>
