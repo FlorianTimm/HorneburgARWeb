@@ -1,5 +1,17 @@
 <template>
-    <header v-if="type === 'object' || type === 'ar'" id="header_object">
+    <header v-if="type === 'object'" id="header_object">
+        <div id="left">
+            <slot name="left"></slot>
+        </div>
+        <div id="center">
+            <slot name="center"></slot>
+        </div>
+        <div id="right">
+            <slot name="right"></slot>
+        </div>
+    </header>
+
+    <header v-if="type === 'ar'" id="header_ar">
         <div id="left">
             <slot name="left"></slot>
         </div>
@@ -46,15 +58,24 @@ switch (props.type) {
 
 <style scoped>
 #header_object,
+#header_ar,
 #header_default {
     width: 100%;
     height: 60px;
     display: grid;
     align-items: center;
     background-color: v-bind(background);
+
 }
 
-#header_object {
+#header_ar {
+    z-index: 20;
+    position: absolute;
+    top: 0;
+}
+
+#header_object,
+#header_ar {
     grid-template-columns: 1fr 3fr 1fr;
 }
 
@@ -101,6 +122,7 @@ switch (props.type) {
 
 <style>
 #header_default button,
+#header_ar button,
 #header_object button {
     background: none;
     border: none;
@@ -109,6 +131,7 @@ switch (props.type) {
 }
 
 #header_default #center h1,
+#header_ar #center h1,
 #header_object #center h1 {
     font-size: 20px;
     font-weight: 500;

@@ -13,6 +13,7 @@
         </template>
         <template #main>
             <div id="orbit-container"></div>
+            <Infobox :text="infotext" />
         </template>
     </DefaultPage>
 </template>
@@ -30,6 +31,7 @@ import { addLight, modelSelector } from '@/func/threed';
 import { ModelFetcher } from '@/func/modelFetcher';
 import DefaultPage from '@/components/DefaultPage.vue';
 import router from '@/router'
+import Infobox from '@/components/Infobox.vue';
 
 import { useI18n } from 'vue-i18n'
 const { t, locale } = useI18n()
@@ -142,8 +144,7 @@ onMounted(async () => {
 
         modelSelector(container, camera, scene, (name) => {
             console.log("Model selected:", name);
-            infotext.value = (modelle.value[name]?.getName(locale.value) + '<br /><br />' +
-                modelle.value[name]?.getDescription(locale.value)) || t('all_models_description');
+            infotext.value = `<h4>${modelle.value[name]?.getName(locale.value)}</h4><p>${modelle.value[name]?.getDescription(locale.value)}</p>` || t('all_models_description');
             if (!infobox.value) {
                 infobox.value = true;
                 autoActivated.value = true;

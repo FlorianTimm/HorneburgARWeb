@@ -10,13 +10,12 @@ import es from './locales/es.json';
 import nds from './locales/nds.json';
 
 import { createI18n } from 'vue-i18n';
-import './assets/style.css';
 
 
 export const SUPPORT_LOCALES = ['en', 'de', 'es', 'nds'];
 
 const i18n = createI18n({
-  
+
   legacy: false,
   // @ts-ignore
   locale: navigator.language || navigator.userLanguage || 'de',

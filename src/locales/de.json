@@ -8,8 +8,15 @@
     "history": "Wo heute nur eine stille Insel liegt, stand einst eine bedeutende Burganlage.",
     "history_text": "Über Jahrhunderte prägte die Horneburg das Leben der Region, bevor sie zerstört wurde. Archäologische Funde und digitale Rekonstruktionen machen es möglich, ihre Geschichte durch 3D-Modelle und Augmented Reality neu zu entdecken.",
     "history_more": "Mehr über die Geschichte der Burg lesen",
+    "museum_opening_hours": "Dienstag – Donnerstag von 10-12 Uhr (und nach Vereinbarung)",
+    "museum_price": "Eintritt frei",
     "island": "Inselansicht (AR)",
     "island_description": "Die Burg vor Ort in Augmended Reality erleben",
+    "ar_overlay_header": "So benutzt du die AR-Funktion",
+    "ar_overlay_instruction_1": "Du kannst dein Handy schwenken und damit über die Insel laufen, um durch deine Kamera die Burg zu entdecken.",
+    "ar_overlay_instruction_2": "Wenn etwas nicht funktioniert, klicke auf den Neu-Laden-Button und bleibe kurz still stehen.",
+    "ar_overlay_instruction_3": "Tippe auf die Gebäude, um mehr über sie zu erfahren.",
+    "ar_start": "Alles klar, los gehts!",
     "single": "Gebäudemodelle",
     "single_description": "Interaktive 3D-Modelle der Gebäude",
     "single_header": "Liste der Gebäudemodelle",
@@ -22,5 +29,6 @@
     "footer_line1": "Ein Projekt des Flecken Horneburg in",
     "footer_line2": "Zusammenarbeit mit der HCU Hamburg",
     "imprint": "Impressum",
-    "privacy": "Datenschutzerklärung"
+    "privacy": "Datenschutzerklärung",
+    "close": "Schließen"
 }

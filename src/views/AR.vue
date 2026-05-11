@@ -2,21 +2,42 @@
 
     <Header :type="'ar'" id="header">
         <template #left>
-            <button @click="$router.push('/#main')">&#8592;</button>
+            <button @click="$router.push('/#main')"><img src="@/assets/icons/close.svg" alt="Schließen"></button>
         </template>
         <template #center>
             <h1>{{ t('armode') }} </h1>
         </template>
         <template #right>
-            <button @click="reload()">&#8635;</button>
+            <button @click="reload()"><img src="@/assets/icons/reload.svg" alt="Neu laden"></button>
         </template>
     </Header>
 
     <main>
         <div id="ar-container"></div>
 
-        <div v-if="infobox" id="infobox">
-            {{ infotext }}
+        <Infobox :text="infotext" />
+
+        <div v-if="ar_overlay" id="ar_overlay">
+            <button id="ar_close" @click="ar_overlay = false"><img src="@/assets/icons/close.svg"
+                    :alt="t('close')"></button>
+            <h4>{{ t('ar_overlay_header') }}</h4>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><img src="@/assets/icons/left_right.svg" :alt="t('ar_overlay_instruction_1')"></td>
+                        <td>{{ t('ar_overlay_instruction_1') }}</td>
+                    </tr>
+                    <tr>
+                        <td><img src="@/assets/icons/reload.svg" :alt="t('ar_overlay_instruction_2')"></td>
+                        <td>{{ t('ar_overlay_instruction_2') }}</td>
+                    </tr>
+                    <tr>
+                        <td><img src="@/assets/icons/house.svg" :alt="t('ar_overlay_instruction_3')"></td>
+                        <td>{{ t('ar_overlay_instruction_3') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button id="ar_start" @click="ar_overlay = false">{{ t('ar_start') }}</button>
         </div>
     </main>
 
@@ -33,6 +54,7 @@ import { ref } from 'vue';
 import { ModelFetcher } from '@/func/modelFetcher';
 
 import Header from '@/components/Header.vue';
+import Infobox from '@/components/Infobox.vue';
 
 import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
@@ -41,8 +63,8 @@ let renderer: THREE.WebGLRenderer;
 let locar: LocAR.LocationBased;
 let cam: LocAR.Webcam;
 
-let infobox = ref(false);
 let infotext = ref("");
+let ar_overlay = ref(true);
 
 onMounted(() => {
 
@@ -277,18 +299,66 @@ onUnmounted(() => {
     overflow: hidden;
 }
 
-#infobox {
+#ar_overlay {
     position: absolute;
-    bottom: 20px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    z-index: 30;
-    max-width: 90%;
-    padding: 15px 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    font-size: 16px;
-    color: #222;
-    text-align: center;
+    transform: translateX(-50%) translateY(-50%);
+    width: 400px;
+    background-color: rgba(255, 255, 255);
+    padding: 25px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+#ar_overlay h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+#ar_overlay #ar_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#ar_overlay table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+#ar_overlay table td {
+    padding: 10px;
+    vertical-align: middle;
+    line-height: 1.5
+}
+
+#ar_overlay table td img {
+    width: 30px;
+    height: 30px;
+}
+
+#ar_overlay #ar_start {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    background-color: #4A594A;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
 }
 </style>

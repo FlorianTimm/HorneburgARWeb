@@ -13,7 +13,9 @@
     <section class="main-content">
       <header>
         <img src="../assets/logos/burginsel_wort_bild.svg" alt="Horneburg Logo" />
-        <router-link to="/about">{{ t('about') }}</router-link>
+        <router-link to="/about"><img src="@/assets/icons/arrow_right.svg" id="about_link" alt="{{ t('about') }}">{{
+          t('about')
+        }}</router-link>
       </header>
 
       <main>
@@ -22,15 +24,17 @@
         <Cards>
 
           <Card :title="t('island')" :description="t('island_description')" link="/ar">
-            <img src="../assets/inselansicht.svg" :alt="t('island')" style="width: 100%; margin-top: 10px;" />
+            <img src="../assets/grafiken/modus_inselansicht.svg" :alt="t('island')"
+              style="width: 100%; margin-top: 10px;" />
           </Card>
 
           <Card :title="t('single')" :description="t('single_description')" link="/orbit">
-            <img src="../assets/einzelansicht2.svg" :alt="t('single')" style="width: 100%; margin-top: 10px;" />
+            <img src="../assets/grafiken/modus_einzelgebaeude.svg" :alt="t('single')"
+              style="width: 100%; margin-top: 10px;" />
           </Card>
 
           <Card :title="t('artifacts')" :description="t('artifacts_description')" link="/artifacts">
-            <img src="../assets/artifacts.svg" :alt="t('artifacts')"
+            <img src="../assets/grafiken/modus_fundstuecke.svg" :alt="t('artifacts')"
               style="width: 100%; margin-top: 10px; max-height: 152px;" />
           </Card>
         </Cards>
@@ -52,7 +56,8 @@
             Marschdamm 2c, 21640 Horneburg<br />
             {{ t('museum_opening_hours') }}<br />
             {{ t('museum_price') }}<br />
-            <a href="https://handwerksmuseum-horneburg.de/" target="_blank">handwerksmuseum-horneburg.de</a>
+            <a href="https://handwerksmuseum-horneburg.de/" target="_blank"><img src="@/assets/icons/arrow_right.svg"
+                id="museum_link">&nbsp;handwerksmuseum-horneburg.de</a>
           </div>
         </div>
       </main>
@@ -111,16 +116,18 @@ onMounted(() => {
       container.style.scrollBehavior = 'smooth';
 
       // Prüfen, ob weit genug gezogen wurde
-      if (container.scrollTop > 100) {
+      if (document.querySelector('#map:hover')) {
+      } else if (container.scrollTop > 100 && container.scrollTop < window.innerHeight) {
         container.scrollTo(0, window.innerHeight);
         window.history.replaceState(null, '', "#main");
-      } else {
+      } else if (container.scrollTop <= 100) {
         container.scrollTo(0, 0);
       }
     });
 
     container.addEventListener('mousemove', (e) => {
       if (!isPressed) return;
+      if (document.querySelector('#map:hover')) return;
       e.preventDefault();
       const y = e.pageY - container.offsetTop;
       const walk = (y - startY) * 1.5; // Geschwindigkeit des Ziehens
@@ -206,6 +213,18 @@ section {
   margin: 0 auto;
   font-size: 46px;
   font-weight: 500;
+  width: 80%;
+  text-align: center;
+  display: block;
+}
+
+
+@media (max-width: 800px) {
+  .lock-screen h1 {
+    font-size: 40px;
+
+
+  }
 }
 
 
@@ -222,6 +241,13 @@ main {
   width: 100%;
   text-align: center;
   font-size: 30px;
+}
+
+@media (max-width: 800px) {
+  #subheader {
+    font-size: 20px;
+    bottom: 120px;
+  }
 }
 
 #arrow {
@@ -270,6 +296,15 @@ header {
   margin-bottom: 0;
 }
 
+@media (max-width: 800px) {
+  header {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    padding-bottom: 20px;
+    margin: 20px;
+  }
+}
+
 header,
 hr {
   border: none;
@@ -278,6 +313,21 @@ hr {
 
 hr {
   margin: 120px 20px 60px 20px;
+}
+
+@media (max-width: 800px) {
+  hr {
+    margin: 80px 20px 40px 20px;
+  }
+}
+
+#about_link,
+#museum_link {
+  display: inline;
+  height: 1em;
+  margin-right: 5px;
+  position: relative;
+  top: 2px;
 }
 
 #history {
@@ -341,6 +391,13 @@ hr {
   font-weight: 400;
   text-align: left;
   gap: 40px;
+}
+
+@media (max-width: 800px) {
+  #leftright {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
 }
 
 #leftright div {

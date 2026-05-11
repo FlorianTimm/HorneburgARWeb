@@ -45,6 +45,16 @@ footer {
     background-color: #fff;
 }
 
+@media (max-width: 800px) {
+    footer {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 20px;
+        padding: 20px;
+        justify-content: center;
+    }
+}
+
 footer div {
     margin: 10px 0;
     text-align: left;
