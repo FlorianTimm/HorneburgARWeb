@@ -30,5 +30,6 @@ html {
   height: 100%;
   font-family: 'Karla', sans-serif;
   background-color: #EBEDE9;
+  color: #000;
 }
 </style>
