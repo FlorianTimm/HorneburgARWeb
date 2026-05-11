@@ -3,6 +3,9 @@ import { RouterView } from 'vue-router'
 import { useSplashStore } from './stores/splash';
 const splash = useSplashStore()
 splash.shouldShow();
+
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n() 
 </script>
 
 <template>

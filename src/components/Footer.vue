@@ -36,6 +36,7 @@ footer {
     float: none;
     clear: both;
     text-align: center;
+    background-color: #fff;
 }
 
 footer div {
