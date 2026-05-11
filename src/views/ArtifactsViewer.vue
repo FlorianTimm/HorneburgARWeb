@@ -4,10 +4,10 @@
             <button @click="$router.push('/artifacts')">&#8592;</button>
         </template>
         <template #header_center>
-            <h1>{{ artifacts[artifact]?.getName($i18n.locale) }}</h1>
+            <h1>{{ artifacts[artifact]?.getName(locale) }}</h1>
         </template>
         <template #main>
-            {{ artifacts[artifact]?.getDescription($i18n.locale) }}
+            {{ artifacts[artifact]?.getDescription(locale) }}
         </template>
     </DefaultPage>
 </template>
@@ -20,6 +20,9 @@ import { type JsonFile } from '@/func/json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import DefaultPage from '@/components/DefaultPage.vue';
+
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
 
 const route = useRoute();
 const { artifact } = route.params as { artifact: string };

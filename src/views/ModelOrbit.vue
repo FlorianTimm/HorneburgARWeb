@@ -4,7 +4,7 @@
             <button @click="$router.push('/orbit')">&#8592;</button>
         </template>
         <template #header_center>
-            <h1>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) : '' }}
+            <h1>{{ modelle ? (model == 'alle' ? t('all_models') : modelle[model]?.getName($i18n.locale)) : '' }}
             </h1>
         </template>
         <template #header_right>
@@ -27,12 +27,12 @@ import { type JsonFile } from '@/func/json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { addLight, modelSelector } from '@/func/threed';
-import { useI18n } from 'vue-i18n';
 import { ModelFetcher } from '@/func/modelFetcher';
 import DefaultPage from '@/components/DefaultPage.vue';
 import router from '@/router'
 
-const { t, locale } = useI18n();
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n()
 
 const route = useRoute();
 const { model } = route.params as { model: string };

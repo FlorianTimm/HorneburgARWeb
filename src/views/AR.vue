@@ -5,7 +5,7 @@
                 <button @click="$router.push('/#main')">&#8592;</button>
             </template>
             <template #center>
-                <h1>{{ $t('armode') }} </h1>
+                <h1>{{ t('armode') }} </h1>
             </template>
             <template #right>
                 <button @click="reload()">&#8635;</button>
@@ -26,13 +26,12 @@ import { onMounted, onUnmounted } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
 import { toast } from '@/func/toast';
 import { addLight, getDistance, modelSelector } from '@/func/threed';
-import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import { ModelFetcher } from '@/func/modelFetcher';
 
-import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 
+import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
 
 let renderer: THREE.WebGLRenderer;

@@ -1,48 +1,44 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-
-import HomePage from '../views/HomePage.vue'
-import AR from '../views/AR.vue';
-import Liste from '../views/ModelList.vue';
-import Orbit from '../views/ModelOrbit.vue';
-import Artifacts from '@/views/ArtifactsList.vue';
-import ArtifactsViewer from '@/views/ArtifactsViewer.vue';
-
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [ 
   {
     path: '/',
     name: 'Home',
-    component: HomePage,
+    component: () => import('../views/HomePage.vue'),
   },
   {
     path: '/ar',
     name: 'AR',
-    component: AR,
+    component: () => import('../views/AR.vue'),
   },
   
   {
     path: '/orbit',
     name: 'Liste',
-    component: Liste,
+    component: () => import('../views/ModelList.vue'),
   },
  {
     path: '/orbit/:model',
     name: 'Orbit',
-    component: Orbit,
+    component: () => import('../views/ModelOrbit.vue'),
     },
     
   {
     path: '/artifacts',
     name: 'Artifacts',
-    component: Artifacts,
+    component: () => import('../views/ArtifactsList.vue'),
   },
   {
     path: '/artifacts/:artifact',
     name: 'ArtifactDetail',
-    component: ArtifactsViewer,
+    component: () => import('../views/ArtifactsViewer.vue'),
+    },
+    {
+    path: "/about",
+    name: "About",
+    component: () => import("../views/About.vue"),
   }
   ],
 })

@@ -10,21 +10,27 @@
                     src="../assets/logo_hcu.png" alt="HafenCity Universität Hamburg" /></a>
         </div>
         <div class="footer-text">
-            {{ $t('footer_line1') }}<br />{{ $t('footer_line2') }}
+            {{ t('footer_line1') }}<br />{{ t('footer_line2') }}
         </div>
 
         <div>
             <a href="https://www.horneburg.de/portal/seiten/Seite-900000001-20450.html" target="_blank">
-                {{ $t('imprint') }}
+                {{ t('imprint') }}
             </a>&nbsp;&nbsp;
             <a href="https://www.horneburg.de/portal/seiten/Seite-900000002-20450.html" target="_blank">
-                {{ $t('privacy') }}
+                {{ t('privacy') }}
             </a>
         </div>
 
     </footer>
 
 </template>
+
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+</script>
 
 
 <style lang="css" scoped>

@@ -4,14 +4,14 @@
             <button @click="$router.push('/#main')">&#8592;</button>
         </template>
         <template #header_center>
-            <h1>{{ $t('single') }}</h1>
+            <h1>{{ t('single') }}</h1>
         </template>
 
 
         <template #main>
             <Cards>
-                <Card :link="`/orbit/alle`" :title="$t('all_models')">
-                    <!-- :description="$t('all_models_description')" -->
+                <Card :link="`/orbit/alle`" :title="t('all_models')">
+                    <!-- :description="t('all_models_description')" -->
                     <img src="../assets/alle_gebaeude.svg" alt="Alle Modelle Vorschau"
                         style="width: 100%; margin-top: 10px;" />
                 </Card>
@@ -37,6 +37,8 @@ import Card from '@/components/Card.vue';
 import Cards from '@/components/Cards.vue';
 const modelle: Ref<JsonFile<ModelJson>> = ref({});
 
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 onMounted(async () => {
     modelle.value = await ModelJson.load_json();

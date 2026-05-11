@@ -5,7 +5,10 @@ const splash = useSplashStore()
 splash.shouldShow();
 
 import { useI18n } from 'vue-i18n'
-const { t } = useI18n() 
+const { t } = useI18n()
+
+import { ModelFetcher } from '@/func/modelFetcher';
+ModelFetcher.preload();
 </script>
 
 <template>

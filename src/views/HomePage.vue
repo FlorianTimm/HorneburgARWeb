@@ -3,34 +3,34 @@
   <div class="scroll-container" id="container">
     <section class="lock-screen">
       <img src="../assets/grafiken/burginsel.gif" />
-      <h1>{{ $t('welcome') }}</h1>
+      <h1>{{ t('welcome') }}</h1>
       <div id="subheader">
-        {{ $t('subheader') }}
+        {{ t('subheader') }}
       </div>
-      <img id="arrow" src="../assets/icons/arrow_down.svg" :alt="$t('scroll_hint')" />
+      <img id="arrow" src="../assets/icons/arrow_down.svg" :alt="t('scroll_hint')" />
     </section>
 
     <section class="main-content">
       <header>
         <img src="../assets/logos/burginsel_wort_bild.svg" alt="Horneburg Logo" />
-        <router-link to="/about">{{ $t('about') }}</router-link>
+        <router-link to="/about">{{ t('about') }}</router-link>
       </header>
 
       <main>
-        <div id="welcome_text">{{ $t('welcome_text') }}</div>
+        <div id="welcome_text">{{ t('welcome_text') }}</div>
 
         <Cards>
 
-          <Card :title="$t('island')" :description="$t('island_description')" link="/ar">
-            <img src="../assets/inselansicht.svg" :alt="$t('island')" style="width: 100%; margin-top: 10px;" />
+          <Card :title="t('island')" :description="t('island_description')" link="/ar">
+            <img src="../assets/inselansicht.svg" :alt="t('island')" style="width: 100%; margin-top: 10px;" />
           </Card>
 
-          <Card :title="$t('single')" :description="$t('single_description')" link="/orbit">
-            <img src="../assets/einzelansicht2.svg" :alt="$t('single')" style="width: 100%; margin-top: 10px;" />
+          <Card :title="t('single')" :description="t('single_description')" link="/orbit">
+            <img src="../assets/einzelansicht2.svg" :alt="t('single')" style="width: 100%; margin-top: 10px;" />
           </Card>
 
-          <Card :title="$t('artifacts')" :description="$t('artifacts_description')" link="/artifacts">
-            <img src="../assets/artifacts.svg" :alt="$t('artifacts')"
+          <Card :title="t('artifacts')" :description="t('artifacts_description')" link="/artifacts">
+            <img src="../assets/artifacts.svg" :alt="t('artifacts')"
               style="width: 100%; margin-top: 10px; max-height: 152px;" />
           </Card>
         </Cards>
@@ -43,13 +43,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import Footer from '@/components/Footer.vue';
 import Card from '@/components/Card.vue';
 import Cards from '@/components/Cards.vue';
 
 import { useSplashStore } from '@/stores/splash';
 const splash = useSplashStore()
+
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+let splashTimer: ReturnType<typeof setTimeout>;
 
 
 // 2. MAUS-DRAG LOGIK
@@ -85,9 +90,7 @@ onMounted(() => {
       // Prüfen, ob weit genug gezogen wurde
       if (container.scrollTop > 100) {
         container.scrollTo(0, window.innerHeight);
-        setTimeout(() => {
-          window.history.replaceState(null, '', "#main");
-        }, 1000);
+        window.history.replaceState(null, '', "#main");
       } else {
         container.scrollTo(0, 0);
       }
@@ -101,15 +104,15 @@ onMounted(() => {
       container.scrollTop = scrollTop - walk;
     });
 
-    setTimeout(() => {
-      if (container.scrollTop < 100) {
-        container.style.scrollBehavior = 'smooth';
-        container.scrollTo(0, window.innerHeight);
-        setTimeout(() => {
+    if (container.scrollTop < 100) {
+      splashTimer = setTimeout(() => {
+        if (container.scrollTop < 100) {
+          container.style.scrollBehavior = 'smooth';
+          container.scrollTo(0, window.innerHeight);
           window.history.replaceState(null, '', "#main");
-        }, 1000);
-      }
-    }, 10000);
+        }
+      }, 20000);
+    }
 
     if (!splash.shouldShow() || window.location.hash === '#main') {
       container.scrollTo(0, window.innerHeight);
@@ -118,6 +121,13 @@ onMounted(() => {
   } else {
     console.error("Container für Scrollen nicht gefunden");
   }
+
+  onUnmounted(() => {
+    console.log("HomePage.vue unmounted");
+    if (splashTimer) {
+      clearTimeout(splashTimer);
+    }
+  });
 });
 </script>
 
@@ -201,6 +211,7 @@ main {
   font-size: 24px;
   opacity: 0.8;
   animation: bounce 2s infinite;
+  animation-delay: 10s;
 }
 
 @keyframes bounce {

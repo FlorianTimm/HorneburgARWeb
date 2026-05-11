@@ -55,7 +55,11 @@ export class ModelFetcher {
 
     static async getModel(name: string): Promise<THREE.Object3D<THREE.Object3DEventMap>> {
         const instance = ModelFetcher.getInstance();
-        const model = await (await instance.values)[name];
+        const models = await (await instance.values)
+        if (!models[name]) {
+            throw new Error(`Model ${name} not found`);
+        }
+        const model = await models[name];
         return model.clone();
     }
 

@@ -63,10 +63,14 @@ export function modelSelector(container: HTMLElement, camera: THREE.Camera, scen
         const intersects = raycaster.intersectObjects(meshes, false);
         console.log("Raycaster checked for intersections, found", intersects.length);
         if (intersects.length > 0) {
-            let name = intersects[0].object.name;
+            let intersection = intersects[0]
+            if (!intersection) {
+                return;
+            }
+            let name = intersection.object.name;
             console.log("Object name:", name);
 
-            intersects[0].object.parent?.traverse((child) => {
+            intersection.object.parent?.traverse((child) => {
                 if ((child as THREE.Mesh).isMesh) {
                     const mesh = child as THREE.Mesh;
                     // Only set emissive if material supports it
