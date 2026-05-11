@@ -34,6 +34,27 @@
               style="width: 100%; margin-top: 10px; max-height: 152px;" />
           </Card>
         </Cards>
+        <hr />
+        <div id='history'>
+          <h3>{{ t('history') }}</h3>
+          {{ t('history_text') }}
+          <img src="../assets/grafiken/zeitstrahl_groß.svg" id="timeline_big" />
+          <img src="../assets/grafiken/zeitstrahl_klein.svg" id="timeline_small" />
+          <router-link to="/history" custom v-slot="{ navigate }">
+            <button @click="navigate">{{ t('history_more') }}</button>
+          </router-link>
+        </div>
+        <hr />
+        <div id="leftright">
+          <Map :center="[9.58769, 53.50963]" :zoom="14.5" id="map" />
+          <div>
+            <h3>Handswerksmuseum Horneburg</h3>
+            Marschdamm 2c, 21640 Horneburg<br />
+            {{ t('museum_opening_hours') }}<br />
+            {{ t('museum_price') }}<br />
+            <a href="https://handwerksmuseum-horneburg.de/" target="_blank">handwerksmuseum-horneburg.de</a>
+          </div>
+        </div>
       </main>
       <Footer />
     </section>
@@ -47,11 +68,13 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import Footer from '@/components/Footer.vue';
 import Card from '@/components/Card.vue';
 import Cards from '@/components/Cards.vue';
+import Map from '@/components/Map.vue';
 
 import { useSplashStore } from '@/stores/splash';
 const splash = useSplashStore()
 
 import { useI18n } from 'vue-i18n'
+import type router from '@/router';
 const { t } = useI18n()
 
 let splashTimer: ReturnType<typeof setTimeout>;
@@ -199,7 +222,6 @@ main {
   width: 100%;
   text-align: center;
   font-size: 30px;
-  opacity: 0.8;
 }
 
 #arrow {
@@ -209,7 +231,6 @@ main {
   left: 50%;
   transform: translateX(-50%);
   font-size: 24px;
-  opacity: 0.8;
   animation: bounce 2s infinite;
   animation-delay: 10s;
 }
@@ -244,11 +265,103 @@ header {
   grid-template-columns: 1fr auto;
   width: auto;
   height: auto;
+  align-items: center;
   margin: 30px 40px;
   margin-bottom: 0;
-  align-items: center;
-  border-bottom: 2px solid #999;
+}
 
+header,
+hr {
+  border: none;
+  border-bottom: 2px solid #999;
+}
+
+hr {
+  margin: 120px 20px 60px 20px;
+}
+
+#history {
+  max-width: 1000px;
+  margin: 20px auto;
+  text-align: left;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+#timeline_big {
+  display: block;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 1000px;
+}
+
+#timeline_small {
+  display: none;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (max-width: 600px) {
+  #timeline_big {
+    display: none;
+  }
+
+  #timeline_small {
+    display: block;
+  }
+}
+
+#history button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+  border: 1px solid #222;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+
+#map {
+  width: 100%;
+  height: 400px;
+
+}
+
+#leftright {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: left;
+  gap: 40px;
+}
+
+#leftright div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 2;
+
+}
+
+#leftright h3 {
+  font-weight: 500;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#leftright a {
+  margin-top: 10px;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 header img {

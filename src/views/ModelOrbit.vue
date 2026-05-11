@@ -1,5 +1,5 @@
 <template>
-    <DefaultPage>
+    <DefaultPage headertype="object" :footer="false">
         <template #header_left>
             <button @click="$router.push('/orbit')">&#8592;</button>
         </template>
@@ -173,7 +173,7 @@ onMounted(async () => {
 
     addLight(scene)
 
-    scene.background = new THREE.Color(0xdde3dd);
+    scene.background = new THREE.Color(0xEBEDE9);
 
     renderer.setAnimationLoop(animate);
     cameraControls.update();

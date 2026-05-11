@@ -1,22 +1,25 @@
 <template>
-    <div id="container">
-        <Header>
-            <template #left>
-                <button @click="$router.push('/#main')">&#8592;</button>
-            </template>
-            <template #center>
-                <h1>{{ t('armode') }} </h1>
-            </template>
-            <template #right>
-                <button @click="reload()">&#8635;</button>
-            </template>
-        </Header>
 
-        <main>
-            <div id="ar-container"></div>
-        </main>
+    <Header :type="'ar'" id="header">
+        <template #left>
+            <button @click="$router.push('/#main')">&#8592;</button>
+        </template>
+        <template #center>
+            <h1>{{ t('armode') }} </h1>
+        </template>
+        <template #right>
+            <button @click="reload()">&#8635;</button>
+        </template>
+    </Header>
 
-    </div>
+    <main>
+        <div id="ar-container"></div>
+
+        <div v-if="infobox" id="infobox">
+            {{ infotext }}
+        </div>
+    </main>
+
 </template>
 
 <script setup lang="ts">
@@ -255,33 +258,37 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-#container {
+#header {
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
-    display: grid;
-    grid-template-rows: auto 1fr;
-}
 
-header {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-}
-
-.left {
-    display: flex;
-    align-items: center;
-}
-
-.right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
 }
 
 #ar-container {
     width: 100%;
     height: 100%;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
     overflow: hidden;
+}
+
+#infobox {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    max-width: 90%;
+    padding: 15px 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    font-size: 16px;
+    color: #222;
+    text-align: center;
 }
 </style>

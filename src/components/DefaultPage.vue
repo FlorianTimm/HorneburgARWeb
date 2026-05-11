@@ -1,6 +1,6 @@
 <template>
     <div id="container">
-        <Header>
+        <Header :type="headertype">
             <template #left>
                 <slot name="header_left"></slot>
             </template>
@@ -16,13 +16,22 @@
         <main>
             <slot name="main"></slot>
         </main>
-        <Footer />
+        <Footer v-if="footer" />
     </div>
 </template>
 
 <script setup lang="ts">
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
+
+withDefaults(defineProps<{
+    headertype?: "default" | "object" | "ar";
+    footer?: boolean;
+}>(), {
+    headertype: "default",
+    footer: true
+})
+
 </script>
 
 <style scoped>

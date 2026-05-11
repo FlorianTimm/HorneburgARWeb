@@ -4,7 +4,7 @@
             <button @click="$router.push('/#main')">&#8592;</button>
         </template>
         <template #header_center>
-            <h1>{{ t('single') }}</h1>
+            <h1>{{ t('single_header') }}</h1>
         </template>
 
 
