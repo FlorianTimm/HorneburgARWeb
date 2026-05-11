@@ -104,7 +104,7 @@ onMounted(() => {
     });
 
     cam.on("webcamerror", error => {
-        alert(`Webcam error: code ${error.code} message ${error.message}`);
+        console.debug(`Webcam error: code ${error.code} message ${error.message}`);
     });
 
     let firstLocation = true;
@@ -122,7 +122,7 @@ onMounted(() => {
     });
 
     deviceOrientationControls.on("deviceorientationerror", error => {
-        alert(`Device orientation error: code ${error.code} message ${error.message}`);
+        console.debug(`Device orientation error: code ${error.code} message ${error.message}`);
     });
 
     deviceOrientationControls.init();
