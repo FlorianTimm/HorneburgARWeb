@@ -1,5 +1,5 @@
 <template>
-    <DefaultPage>
+    <DefaultPage headertype="object" :footer="false">
         <template #header_left>
             <button @click="$router.push('/artifacts')"><img src="@/assets/icons/close.svg"
                     alt="{{ t('close') }}"></button>
@@ -14,6 +14,14 @@
                 style="width: 100%; margin-top: 10px;" />
 
         </template>
+        <template #header_right>
+            <div id="vorzurueck">
+                <button @click="vorheriges()" alt="{{ t('previous') }}"><img src="@/assets/icons/arrow_left.svg"
+                        alt="{{ t('previous') }}"></button>
+                <button @click="naechstes()" alt="{{ t('next') }}"><img src="@/assets/icons/arrow_right.svg"
+                        alt="{{ t('next') }}"></button>
+            </div>
+        </template>
     </DefaultPage>
 </template>
 
@@ -26,6 +34,8 @@ import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import DefaultPage from '@/components/DefaultPage.vue';
 
+import router from '@/router'
+
 import { useI18n } from 'vue-i18n'
 const { locale } = useI18n()
 
@@ -37,4 +47,53 @@ onMounted(async () => {
     artifacts.value = await ArtifactJson.load_json();
 });
 
+
+
+
+function vorheriges() {
+
+
+    let keys = Object.keys(artifacts.value);
+
+    let index = keys.indexOf(artifact);
+
+
+
+    index--;
+    if (index < 0) {
+        index = keys.length - 1;
+    }
+
+
+    if (index >= 0 && index < keys.length) {
+        let nextArtifact = keys[index];
+        router.push(`/artifacts/${nextArtifact}`);
+    }
+}
+
+function naechstes() {
+    let keys = Object.keys(artifacts.value);
+    let index = keys.indexOf(artifact);
+
+    index++;
+
+    if (index >= keys.length) {
+        index = 0;
+    }
+
+
+    if (index >= 0 && index < keys.length) {
+        let nextArtifact = keys[index];
+        router.push(`/artifacts/${nextArtifact}`);
+    }
+}
+
+
 </script>
+
+<style scoped>
+#vorzurueck {
+    display: flex;
+    gap: 0.5em;
+}
+</style>

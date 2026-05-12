@@ -109,13 +109,14 @@ header {
 #header_object,
 #header_ar {
     width: 100%;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: auto 1fr auto;
     gap: 2em;
     margin: 0;
     padding: 0 var(--margin-sides);
 }
 
 #header_default {
+    margin-top: 1em;
     grid-template-columns: 3fr 1fr;
 }
 
@@ -141,6 +142,7 @@ header {
 
 #left_container #left {
     align-items: flex-start;
+    margin-bottom: 0.3em;
     z-index: 10;
 }
 

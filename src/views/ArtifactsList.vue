@@ -5,13 +5,15 @@
                     alt="{{ t('back') }}"></button>
         </template>
         <template #header_center>
-            <h1>{{ t('artifacts') }}</h1>
+            <h1>{{ t('artifacts_header') }}</h1>
         </template>
         <template #main>
-            <Cards>
-                <Card :link="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key"
-                    :title="artifact.getName($i18n.locale)" :image="artifact.getPreviewImage()" />
-            </Cards>
+            <p>{{ t('artifacts_intro') }}</p>
+            <div id="images">
+                <a :href="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key">
+                    <img :src="artifact.getPreviewImage()" :alt="artifact.getName($i18n.locale)" />
+                </a>
+            </div>
         </template>
     </DefaultPage>
 </template>
@@ -48,3 +50,33 @@ const filteredArtifacts = computed(() => {
 });
 
 </script>
+
+<style scoped>
+#images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+a {
+    display: block;
+    width: 12em;
+    height: auto;
+    border-radius: 5px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+a img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+}
+
+a:hover img {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    filter: drop-shadow(4px 4px 4px #919191);
+}
+</style>
