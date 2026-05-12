@@ -3,6 +3,8 @@ import { JsonEntry, type JsonFile } from './json';
 
 
 export class ModelJson extends JsonEntry {
+    private _path: string;
+    private _svgPath: string;
     private _longitude: number;
     private _latitude: number;
     private _rotation: number;
@@ -14,7 +16,9 @@ export class ModelJson extends JsonEntry {
     private static _cache?: Promise<JsonFile<ModelJson>>;
 
     constructor(name: { [key: string]: string }, description: { [key: string]: string }, path: string, svg_path: string, longitude: number, latitude: number, rotation: number, breite: number, tiefe: number, hoehe: number, show_in_list: boolean = true) {
-        super(name, description, path, svg_path);
+        super(name, description);
+        this._path = path;
+        this._svgPath = svg_path;
         this._longitude = longitude;
         this._latitude = latitude;
         this._rotation = rotation;
@@ -22,6 +26,15 @@ export class ModelJson extends JsonEntry {
         this._tiefe = tiefe;
         this._hoehe = hoehe;
         this._show_in_list = show_in_list;
+    }
+
+
+    get path(): string {
+        return this._path;
+    }
+
+    get svg_path(): string {
+        return this._svgPath;
     }
 
     get longitude(): number {
@@ -66,8 +79,8 @@ export class ModelJson extends JsonEntry {
                             prop.description,
                             prop.path,
                             prop.svg_path,
-                            geom.coordinates[0]??0,
-                            geom.coordinates[1]??0,
+                            geom.coordinates[0] ?? 0,
+                            geom.coordinates[1] ?? 0,
                             prop.rotation,
                             prop.breite,
                             prop.tiefe,

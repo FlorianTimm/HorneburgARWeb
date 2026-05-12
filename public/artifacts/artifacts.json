@@ -1,13 +1,41 @@
 {
-    "schwertgurtanhaenger": {
+    "phillipstaler": {
         "name": {
-            "de": "Schwertgurtanhänger",
-            "en": "Sword Belt Pendant"
+            "de": "Philippstaler",
+            "en": "Philippstaler"
         },
         "description": {
-            "de": "Beschreibung auf Deutsch",
-            "en": "Description in English"
+            "de": "Ein besonderer Fund ist eine stark abgenutzte und ehemals gefaltete Silbermünze aus dem 16. Jahrhundert. Es handelt sich um einen 1/10-Philippstaler des spanischen Königs Philipp II., der von 1555 bis 1598 regierte. Die Münze ist stark beschnitten, das heißt, am Rand wurde in betrügerischer Absicht Silber abgetrennt. Diese Form der Wertminderung stand zwar unter schwerer Strafe, wurde jedoch insbesondere in Notzeiten – etwa während des Dreißigjährigen Krieges – häufig praktiziert.<br />Aufgrund der fehlenden Randbereiche ist die genaue Identifizierung der Münze erschwert. Die Vorderseite zeigt die Büste Philipps II. sowie die nur schwer lesbare Umschrift „PHS D G HISP Z REX VX BRA“. Diese lässt sich als „Philipp, von Gottes Gnaden König von Spanien und Herzog von Brabant“ auflösen. Unterhalb des Porträts ist vermutlich das Prägejahr 1571 zu erkennen.<br />Auf der Rückseite sind ein gekröntes Burgunderkreuz sowie der Wahlspruch Philipps „DOMINVS MIHI ADIVTOR“ („Der Herr ist mein Helfer“) dargestellt.<br />Der Philippstaler wurde in Antwerpen im damaligen Herzogtum Brabant geprägt, das zu den Spanischen Niederlanden gehörte. Das verwendete Silber dürfte aus den amerikanischen Kolonien stammen, aus denen im 16. Jahrhundert große Mengen Edelmetall nach Spanien gelangten.",
+            "en": "A special find is a heavily worn and formerly folded silver coin from the 16th century. It is a 1/10 Philippstaler of the Spanish King Philip II, who reigned from 1555 to 1598. The coin is heavily clipped, meaning that silver was cut off at the edge in fraudulent intent. This form of devaluation was punishable by severe penalties, but it was often practiced, especially in times of need – such as during the Thirty Years' War.<br />Due to the missing edge areas, the exact identification of the coin is difficult. The obverse shows the bust of Philip II and the barely legible inscription “PHS D G HISP Z REX VX BRA”. This can be resolved as “Philip, by the grace of God King of Spain and Duke of Brabant”. Below the portrait, the minting year 1571 can probably be seen.<br />On the reverse, a crowned Burgundian cross and Philip's motto “DOMINVS MIHI ADIVTOR” (“The Lord is my helper”) are depicted.<br />The Philippstaler was minted in Antwerp in the then Duchy of Brabant, which belonged to the Spanish Netherlands. The silver used probably came from the American colonies, from which large amounts of precious metals were brought to Spain in the 16th century."
         },
-        "path": "/artifacts/schwertgurtanhaenger.jpg"
+        "images": [
+            {
+                "small": "/artifacts/small/1_philippstaler1.png",
+                "large": "/artifacts/large/1_philippstaler1.png"
+            },
+            {
+                "small": "/artifacts/small/1_philippstaler2.png",
+                "large": "/artifacts/large/1_philippstaler2.png"
+            }
+        ]
+    },
+    "gloeckchen": {
+        "name": {
+            "de": "Glöckchen",
+            "en": "Bell"
+        },
+        "description": {
+            "de": "<p>Das kleine Bronzeglöckchen, das auf der Burg gefunden wurde, wirkt auf den ersten Blick unscheinbar, doch seine Beschädigungen erzählen eine eindrückliche Geschichte. Auf zwei Seiten sind deutliche Hackspuren zu erkennen, die vermutlich mit einer kleinen Axt oder einem ähnlichen Werkzeug ausgeführt wurden. Durch diese gewaltsamen Eingriffe ist ein Teil der Wandung herausgebrochen, die Form der Glocke wurde sichtbar deformiert, und auch der Klöppel fehlt. In ihrem heutigen Zustand ist das Glöckchen nicht mehr funktionsfähig – sein einst heller Klang ist verstummt.</p><p>Solche Glöckchen konnten vielfältige Funktionen erfüllen, etwa als Signalgeber im Alltag der Burg oder im Zusammenhang mit Tieren oder Ausrüstung. Die gezielte Zerstörung wirft daher Fragen auf. Eine mögliche Erklärung liegt in den kriegerischen Auseinandersetzungen des Dreißigjährigen Krieges. In dieser Zeit wurden Metallobjekte häufig eingeschmolzen oder beschädigt, um an das wertvolle Material zu gelangen oder es unbrauchbar zu machen. Vielleicht sollte das Glöckchen gezielt zerstört werden, um das Metall weiterzuverwenden – oder es fiel einer gewaltsamen Plünderung zum Opfer. So wird das fragmentierte Objekt zu einem stillen Zeugnis von Konflikt, Zerstörung und den Umbrüchen einer bewegten Epoche.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/2_gloeckchen1.png",
+                "large": "/artifacts/large/2_gloeckchen1.png"
+            },
+            {
+                "small": "/artifacts/small/2_gloeckchen2.png",
+                "large": "/artifacts/large/2_gloeckchen2.png"
+            }
+        ]
     }
 }

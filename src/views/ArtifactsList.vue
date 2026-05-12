@@ -10,12 +10,7 @@
         <template #main>
             <Cards>
                 <Card :link="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key"
-                    :title="artifact.getName($i18n.locale)">
-                    <!-- :description="artifact.getDescription($i18n.locale)">-->
-
-                    <img src="../assets/beispielhaus.svg" :alt="`${artifact.getName($i18n.locale)} Vorschau`"
-                        style="width: 100%; margin-top: 10px;" />
-                </Card>
+                    :title="artifact.getName($i18n.locale)" :image="artifact.getPreviewImage()" />
             </Cards>
         </template>
     </DefaultPage>

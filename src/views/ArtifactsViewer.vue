@@ -8,7 +8,11 @@
             <h1>{{ artifacts[artifact]?.getName(locale) }}</h1>
         </template>
         <template #main>
-            {{ artifacts[artifact]?.getDescription(locale) }}
+            <span v-html="artifacts[artifact]?.getDescription(locale)"></span>
+            <img v-for="(image, index) in artifacts[artifact]?.images || []" :key="index" :src="image.large"
+                :alt="`${artifacts[artifact]?.getName(locale)} Bild ${index + 1}`"
+                style="width: 100%; margin-top: 10px;" />
+
         </template>
     </DefaultPage>
 </template>
