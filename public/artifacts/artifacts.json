@@ -1,40 +1,237 @@
 {
     "phillipstaler": {
         "name": {
-            "de": "Philippstaler",
-            "en": "Philippstaler"
+            "de": "Philippstaler (1/10)",
+            "en": "Philip Taler (1/10)"
         },
         "description": {
-            "de": "Ein besonderer Fund ist eine stark abgenutzte und ehemals gefaltete Silbermünze aus dem 16. Jahrhundert. Es handelt sich um einen 1/10-Philippstaler des spanischen Königs Philipp II., der von 1555 bis 1598 regierte. Die Münze ist stark beschnitten, das heißt, am Rand wurde in betrügerischer Absicht Silber abgetrennt. Diese Form der Wertminderung stand zwar unter schwerer Strafe, wurde jedoch insbesondere in Notzeiten – etwa während des Dreißigjährigen Krieges – häufig praktiziert.<br />Aufgrund der fehlenden Randbereiche ist die genaue Identifizierung der Münze erschwert. Die Vorderseite zeigt die Büste Philipps II. sowie die nur schwer lesbare Umschrift „PHS D G HISP Z REX VX BRA“. Diese lässt sich als „Philipp, von Gottes Gnaden König von Spanien und Herzog von Brabant“ auflösen. Unterhalb des Porträts ist vermutlich das Prägejahr 1571 zu erkennen.<br />Auf der Rückseite sind ein gekröntes Burgunderkreuz sowie der Wahlspruch Philipps „DOMINVS MIHI ADIVTOR“ („Der Herr ist mein Helfer“) dargestellt.<br />Der Philippstaler wurde in Antwerpen im damaligen Herzogtum Brabant geprägt, das zu den Spanischen Niederlanden gehörte. Das verwendete Silber dürfte aus den amerikanischen Kolonien stammen, aus denen im 16. Jahrhundert große Mengen Edelmetall nach Spanien gelangten.",
-            "en": "A special find is a heavily worn and formerly folded silver coin from the 16th century. It is a 1/10 Philippstaler of the Spanish King Philip II, who reigned from 1555 to 1598. The coin is heavily clipped, meaning that silver was cut off at the edge in fraudulent intent. This form of devaluation was punishable by severe penalties, but it was often practiced, especially in times of need – such as during the Thirty Years' War.<br />Due to the missing edge areas, the exact identification of the coin is difficult. The obverse shows the bust of Philip II and the barely legible inscription “PHS D G HISP Z REX VX BRA”. This can be resolved as “Philip, by the grace of God King of Spain and Duke of Brabant”. Below the portrait, the minting year 1571 can probably be seen.<br />On the reverse, a crowned Burgundian cross and Philip's motto “DOMINVS MIHI ADIVTOR” (“The Lord is my helper”) are depicted.<br />The Philippstaler was minted in Antwerp in the then Duchy of Brabant, which belonged to the Spanish Netherlands. The silver used probably came from the American colonies, from which large amounts of precious metals were brought to Spain in the 16th century."
+            "de": "Stark abgenutzte und ehemals gefaltete Silbermünze (1/10-Philippstaler) aus dem 16. Jahrhundert, geprägt in Antwerpen. Am Rand stark beschnitten; Vorderseite: Büste Philipps II. mit Umschrift ‚PHS D G HISP Z REX VX BRA‘; vermutlich Prägejahr 1571. Rückseite: gekröntes Burgunderkreuz und Wahlspruch ‚DOMINVS MIHI ADIVTOR‘.",
+            "en": "Heavily worn and clipped 1/10 Philip Taler from the 16th century, struck in Antwerp. Clipped edge; obverse shows Philip II (probable date 1571), reverse with Burgundian cross and motto 'DOMINVS MIHI ADIVTOR'."
         },
         "images": [
             {
-                "small": "/artifacts/small/1_philippstaler1.png",
-                "large": "/artifacts/large/1_philippstaler1.png"
+                "small": "/artifacts/small/1_philippstaler_1.png",
+                "large": "/artifacts/large/1_philippstaler_1.png"
             },
             {
-                "small": "/artifacts/small/1_philippstaler2.png",
-                "large": "/artifacts/large/1_philippstaler2.png"
+                "small": "/artifacts/small/1_philippstaler_2.png",
+                "large": "/artifacts/large/1_philippstaler_2.png"
+            },
+            {
+                "extra": "/artifacts/extra/1_spanische_niederlande_philipp_ii_munzkabinett_berlin_5478872.jpg"
             }
         ]
     },
     "gloeckchen": {
         "name": {
             "de": "Glöckchen",
-            "en": "Bell"
+            "en": "Bronze Bell"
         },
         "description": {
-            "de": "<p>Das kleine Bronzeglöckchen, das auf der Burg gefunden wurde, wirkt auf den ersten Blick unscheinbar, doch seine Beschädigungen erzählen eine eindrückliche Geschichte. Auf zwei Seiten sind deutliche Hackspuren zu erkennen, die vermutlich mit einer kleinen Axt oder einem ähnlichen Werkzeug ausgeführt wurden. Durch diese gewaltsamen Eingriffe ist ein Teil der Wandung herausgebrochen, die Form der Glocke wurde sichtbar deformiert, und auch der Klöppel fehlt. In ihrem heutigen Zustand ist das Glöckchen nicht mehr funktionsfähig – sein einst heller Klang ist verstummt.</p><p>Solche Glöckchen konnten vielfältige Funktionen erfüllen, etwa als Signalgeber im Alltag der Burg oder im Zusammenhang mit Tieren oder Ausrüstung. Die gezielte Zerstörung wirft daher Fragen auf. Eine mögliche Erklärung liegt in den kriegerischen Auseinandersetzungen des Dreißigjährigen Krieges. In dieser Zeit wurden Metallobjekte häufig eingeschmolzen oder beschädigt, um an das wertvolle Material zu gelangen oder es unbrauchbar zu machen. Vielleicht sollte das Glöckchen gezielt zerstört werden, um das Metall weiterzuverwenden – oder es fiel einer gewaltsamen Plünderung zum Opfer. So wird das fragmentierte Objekt zu einem stillen Zeugnis von Konflikt, Zerstörung und den Umbrüchen einer bewegten Epoche.</p>"
+            "de": "Kleines Bronzeglöckchen mit deutlichen Hackspuren an zwei Seiten; Wandung teilweise herausgebrochen, Klöppel fehlt. Mögliche Beschädigung durch Plünderung oder Einschmelzen während des Dreißigjährigen Krieges.",
+            "en": "Small bronze bell with clear axe marks on two sides; wall partially broken out and clapper missing. Possibly damaged during plunder or melted down in the Thirty Years' War."
         },
         "images": [
             {
-                "small": "/artifacts/small/2_gloeckchen1.png",
-                "large": "/artifacts/large/2_gloeckchen1.png"
+                "small": "/artifacts/small/2_gloeckchen_1.png",
+                "large": "/artifacts/large/2_gloeckchen_1.png"
             },
             {
-                "small": "/artifacts/small/2_gloeckchen2.png",
-                "large": "/artifacts/large/2_gloeckchen2.png"
+                "small": "/artifacts/small/2_gloeckchen_2.png",
+                "large": "/artifacts/large/2_gloeckchen_2.png"
+            }
+        ]
+    },
+    "bleiglas_fragmente": {
+        "name": {
+            "de": "Fragmente von Bleiglasfenstern",
+            "en": "Leaded Glass Window Fragments"
+        },
+        "description": {
+            "de": "Zwei Fragmente (dreieckig und trapezförmig) aus orangefarbenem Glas mit Luftblasen; umlaufende Blei-Fassung erkennbar. Möglicherweise Teil eines repräsentativen Fensters (Saal/Kapelle).",
+            "en": "Two fragments (triangular and trapezoid) of orange glass with air bubbles and lead cames. Likely from a representative window (hall or chapel)."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/3_bleiglas_1.png",
+                "large": "/artifacts/large/3_bleiglas_1.png"
+            },
+            {
+                "small": "/artifacts/small/3_bleiglas_2.png",
+                "large": "/artifacts/large/3_bleiglas_2.png"
+            }
+        ]
+    },
+    "schwertgurtanhaenger": {
+        "name": {
+            "de": "Schwertgurtanhänger",
+            "en": "Sword Belt Pendant"
+        },
+        "description": {
+            "de": "Schwertgurtanhänger aus Kupferlegierung; s-förmiger Haken, tropfenförmiger Körper, unteres Loch zur Befestigung. Teil eines Bandeliers, 17. Jahrhundert; Fundkontext: Horneburg.",
+            "en": "Sword belt pendant in a copper alloy; S-shaped hook and teardrop body with attachment hole. Part of a bandelier, 17th century; found at Horneburg."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/4_schwertgurtanhanger.png",
+                "large": "/artifacts/large/4_schwertgurtanhanger.png"
+            },
+            {
+                "extra": "/artifacts/extra/4_a_soldier_blowing_on_a_match_from_the_musketeers_series_plate_40_in_wapenhandelinghe_van_roers_musquetten_ende_spiessen_the_exercise_of_arms_met_dp828803.jpg"
+            }
+        ]
+    },
+    "steinzeugkrug_fragment": {
+        "name": {
+            "de": "Fragment eines Steinzeugkruges",
+            "en": "Stoneware Jug Fragment"
+        },
+        "description": {
+            "de": "Unterteil eines mittelalterlichen Steinzeugkruges mit Boden und Wellenfuß. Robust und typisch als Trinkgefäß für Bier oder Wein.",
+            "en": "Lower part of a medieval stoneware jug with base and wavy foot. Robust drinking vessel typical for beer or wine."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/5_steinzeugkrug.png",
+                "large": "/artifacts/large/5_steinzeugkrug.png"
+            },
+            {
+                "extra": "/artifacts/extra/5_siegburger_kanne_luhdorf_1.jpg"
+            }
+        ]
+    },
+    "tabakpfeifen_stiele": {
+        "name": {
+            "de": "Stiele von Tabakpfeifen",
+            "en": "Tobacco Pipe Stems"
+        },
+        "description": {
+            "de": "Fragmente von Tonpfeifenstielen; Hinweis auf verbreitetes Tabakrauchen seit dem 17. Jahrhundert, besonders unter Soldaten und Seeleuten.",
+            "en": "Fragments of clay pipe stems, indicating widespread tobacco use from the 17th century, especially among soldiers and sailors."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/6_tabakpfeifen.png",
+                "large": "/artifacts/large/6_tabakpfeifen.png"
+            },
+            {
+                "extra": "/artifacts/extra/6_steckpfeife_26503_915142.jpg"
+            }
+        ]
+    },
+    "gewehrkugeln": {
+        "name": {
+            "de": "Gewehrkugeln aus Blei",
+            "en": "Lead Musket Balls"
+        },
+        "description": {
+            "de": "Bleikugeln in verschiedenen Kalibern, viele deformiert; größtes Exemplar ~2,5 cm Kaliber, vermutlich aus einer Hakenbüchse.",
+            "en": "Lead shot in various calibers, many deformed; largest ~2.5 cm caliber, likely from a heavy firearm."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/7_gewehrkugeln.png",
+                "large": "/artifacts/large/7_gewehrkugeln.png"
+            }
+        ]
+    },
+    "geschmolzenes_silber": {
+        "name": {
+            "de": "Geschmolzenes Silber",
+            "en": "Melted Silver"
+        },
+        "description": {
+            "de": "Unregelmäßiges, erstarrtes Silberfragment mit Fließstrukturen; Hinweis auf Feuer und Einschmelzen bei der Zerstörung der Burg.",
+            "en": "Irregular solidified silver fragment with flow structures; evidence of fire and melting during the castle's destruction."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/8_geschmolzenes_silber.png",
+                "large": "/artifacts/large/8_geschmolzenes_silber.png"
+            }
+        ]
+    },
+    "geschmolzenes_buntmetall": {
+        "name": {
+            "de": "Geschmolzenes Buntmetall",
+            "en": "Melted Non-Ferrous Metal"
+        },
+        "description": {
+            "de": "Deformierte Fragmente von Kupferlegierungen mit blasenartigen Oberflächen; Zeugnis extremer Hitzeeinwirkung und Brandkatastrophe.",
+            "en": "Deformed copper-alloy fragments with blistered surfaces; testimony to extreme heat and burning."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/9_geschmolzenes_buntmetall_1.png",
+                "large": "/artifacts/large/9_geschmolzenes_buntmetall_1.png"
+            },
+            {
+                "small": "/artifacts/small/9_geschmolzenes_buntmetall_2.png",
+                "large": "/artifacts/large/9_geschmolzenes_buntmetall_2.png"
+            }
+        ]
+    },
+    "geschmolzenes_fensterglas": {
+        "name": {
+            "de": "Geschmolzenes Fensterglas",
+            "en": "Melted Window Glass"
+        },
+        "description": {
+            "de": "Drei angeschmolzene Fensterglasfragmente mit welligen Kanten; direkte Folge der Brandkatastrophe bei der Zerstörung der Burg.",
+            "en": "Three partially melted window glass fragments with wavy edges; direct result of the fire during the castle's destruction."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/10_fensterglas.png",
+                "large": "/artifacts/large/10_fensterglas.png"
+            }
+        ]
+    },
+    "ofenkachel_fragment": {
+        "name": {
+            "de": "Fragment einer Ofenkachel",
+            "en": "Tile Stove Fragment"
+        },
+        "description": {
+            "de": "Fragment einer glasierten Ofenkachel aus der frühen Neuzeit; Hinweis auf Kachelofen und gehobenen Wohnkomfort.",
+            "en": "Fragment of a glazed stove tile from the early modern period; indicates tiled stoves and elevated domestic comfort."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/11_ofenkachel.png",
+                "large": "/artifacts/large/11_ofenkachel.png"
+            }
+        ]
+    },
+    "spinnwirtel_blei": {
+        "name": {
+            "de": "Spinnwirtel aus Blei",
+            "en": "Lead Spindle Whorl"
+        },
+        "description": {
+            "de": "Kleines, durchlochtes Gewicht aus Blei, verwendet als Wirtel auf einer Spindel zum Spinnen von Wolle oder Flachs; belegt textile Arbeit auf der Burg.",
+            "en": "Small perforated lead weight used as a spindle whorl for spinning wool or flax; evidence of textile work at the castle."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/12_spinnwirtel.png",
+                "large": "/artifacts/large/12_spinnwirtel.png"
+            }
+        ]
+    },
+    "dachziegel": {
+        "name": {
+            "de": "Dachziegelfragmente",
+            "en": "Roof Tile Fragments"
+        },
+        "description": {
+            "de": "Fragmente mittelalterlicher Dachziegel; belegen die Verwendung von Hartdachdeckung auf der Burg (höherer Ausstattungsstandard gegenüber Reetdächern).",
+            "en": "Fragments of medieval roof tiles; indicate the use of hard roof coverings at the castle, suggesting a higher building standard than thatched roofs."
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/13_dachziegel.png",
+                "large": "/artifacts/large/13_dachziegel.png"
             }
         ]
     }
