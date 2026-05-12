@@ -1,19 +1,19 @@
 <template>
     <footer>
 
-        <div class="logos">
+        <div id="footer-logos">
             <a href="https://www.horneburg.de" target="_blank" title="Flecken Horneburg"><img
-                    src="../assets/logo_horneburg.png" alt="Flecken Horneburg" /></a>
+                    src="../assets/logos/flecken_horneburg_rgb.svg" alt="Flecken Horneburg" /></a>
             <a href="https://www.landkreis-stade.de" target="_blank" title="Landkreis Stade"><img
-                    src="../assets/logo_stade.png" alt="Landkreis Stade" /></a>
+                    src="../assets/logos/landkreis_stade_rgb.svg" alt="Landkreis Stade" /></a>
             <a href="https://www.hcu-hamburg.de" target="_blank" title="HafenCity Universität Hamburg"><img
-                    src="../assets/logo_hcu.png" alt="HafenCity Universität Hamburg" /></a>
+                    src="../assets/logos/hcu_rgb.svg" alt="HafenCity Universität Hamburg" /></a>
         </div>
-        <div class="footer-text">
+        <div id="footer-text">
             {{ t('footer_line1') }}<br />{{ t('footer_line2') }}
         </div>
 
-        <div>
+        <div id="footer-links">
             <a href="https://www.horneburg.de/portal/seiten/Seite-900000001-20450.html" target="_blank">
                 {{ t('imprint') }}
             </a>&nbsp;&nbsp;
@@ -65,13 +65,12 @@ a:hover {
 }
 
 a:hover img {
-    filter: grayscale(0%);
+    filter: grayscale(0%) contrast(100%) brightness(100%);
 }
 
 footer img {
-    filter: grayscale(100%);
+    filter: grayscale(100%) contrast(80%) brightness(140%);
     transition: filter 0.3s;
     height: 3em;
-    margin-left: 20px;
 }
 </style>
