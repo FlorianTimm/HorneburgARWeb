@@ -8,6 +8,8 @@
     "history": "Wo heute nur eine stille Insel liegt, stand einst eine bedeutende Burganlage.",
     "history_text": "Über Jahrhunderte prägte die Horneburg das Leben der Region, bevor sie zerstört wurde. Archäologische Funde und digitale Rekonstruktionen machen es möglich, ihre Geschichte durch 3D-Modelle und Augmented Reality neu zu entdecken.",
     "history_more": "Mehr über die Geschichte der Burg lesen",
+    "visit": "Die Burg noch intensiver erleben?",
+    "visit_text": "In der Virtual-Reality-Ausstellung im Handwerksmuseum kannst du die Burg vollständig begehen und in ihren  historischen Zustand eintauchen.",
     "museum_opening_hours": "Dienstag – Donnerstag von 10-12 Uhr (und nach Vereinbarung)",
     "museum_price": "Eintritt frei",
     "island": "Inselansicht (AR)",
@@ -30,5 +32,8 @@
     "footer_line2": "Zusammenarbeit mit der HCU Hamburg",
     "imprint": "Impressum",
     "privacy": "Datenschutzerklärung",
-    "close": "Schließen"
+    "close": "Schließen",
+    "back": "Zurück",
+    "previous": "Vorheriges",
+    "next": "Nächstes"
 }

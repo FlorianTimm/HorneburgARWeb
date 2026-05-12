@@ -45,3 +45,12 @@ onUnmounted(() => {
     }
 });
 </script>
+
+<style lang="css" scoped>
+#map {
+    font-size: 0.8em;
+    max-width: 100%;
+    overflow: hidden;
+
+}
+</style>

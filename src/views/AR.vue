@@ -304,60 +304,58 @@ onUnmounted(() => {
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    width: 400px;
+    width: 90%;
+    max-width: 30em;
+    max-height: 90%;
+    overflow-y: auto;
     background-color: rgba(255, 255, 255);
-    padding: 25px;
-    border-radius: 4px;
+    padding: 1.3em;
+    border-radius: 0.25em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     text-align: left;
-    font-size: 15px;
     font-weight: 400;
 }
 
 #ar_overlay h4 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 500;
+    margin-bottom: 1em;
 }
 
 #ar_overlay #ar_close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1em;
+    right: 1em;
     background: none;
     border: none;
-    font-size: 18px;
+    font-size: 1em;
     cursor: pointer;
 }
 
 #ar_overlay table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 15px;
+    margin-bottom: 0.9375em;
 }
 
 #ar_overlay table td {
-    padding: 10px;
+    padding: 1em;
     vertical-align: middle;
-    line-height: 1.5
+    line-height: 1.5;
 }
 
 #ar_overlay table td img {
-    width: 30px;
-    height: 30px;
+    width: 2em;
+    height: 2em;
 }
 
 #ar_overlay #ar_start {
     display: block;
     width: 100%;
-    padding: 20px;
+    padding: 1.25em;
     background-color: #4A594A;
     color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 15px;
+    border-radius: 0.1em;
     cursor: pointer;
     font-weight: 600;
 }

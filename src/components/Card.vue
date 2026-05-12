@@ -1,10 +1,20 @@
 <template>
-    <router-link :to="link">
-
+    <router-link :to="link" class="card" v-if="!image">
         <h2>{{ title }}</h2>
         <p v-if="description">{{ description }}</p>
         <slot></slot>
+    </router-link>
 
+
+    <router-link :to="link" class="card card_with_image" v-if="image">
+        <div>
+            <h2>{{ title }}</h2>
+            <p v-if="description">{{ description }}</p>
+            <slot></slot>
+        </div>
+        <div id="img">
+            <img :src="image" :alt="title" />
+        </div>
     </router-link>
 
 </template>
@@ -14,6 +24,7 @@ defineProps<{
     title: string;
     description?: string;
     link: string;
+    image?: string;
 }>();
 </script>
 
@@ -21,28 +32,42 @@ defineProps<{
 a {
     display: block;
     float: flex-start;
-
-    text-decoration: none;
     color: #333;
-
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    height: 390px;
-    margin: 20px;
-
+    width: 20em;
+    height: 20em;
+    margin: 1.5em;
+    padding: 1em;
     transition: background-color 0.3s ease;
     background-color: #fff;
 }
 
-a h2 {
-    display: block;
+.card_with_image {
+    display: grid;
+    grid-template-rows: auto 70%;
+}
+
+#img {
+    align-self: center;
+    margin: 5%
+}
+
+.card_with_image img {
     width: 100%;
-    text-align: center;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+@media (max-width: 800px) {
+    a {
+        margin: 1em 0;
+    }
 }
 
 a:hover {
     cursor: pointer;
-    background-color: #f0f0f0;
+    border: 2px solid #555;
 }
 </style>

@@ -13,8 +13,12 @@
 
         </Header>
 
-        <main>
+        <main v-if="$slots.main" id="main">
             <slot name="main"></slot>
+        </main>
+
+        <main v-if="$slots.fullscreen" id="fullscreen">
+            <slot name="fullscreen"></slot>
         </main>
         <Footer v-if="footer" />
     </div>
@@ -42,8 +46,13 @@ div#container {
     grid-template-rows: auto 1fr auto;
 }
 
-main {
-    padding: 20px;
-    text-align: center;
+#main {
+    padding: 2em var(--margin-sides);
+}
+
+#fullscreen {
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 </style>

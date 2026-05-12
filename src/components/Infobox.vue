@@ -33,19 +33,19 @@ watch(() => props.text, (newText) => {
 <style scoped>
 #infobox {
     position: absolute;
-    top: 80px;
-    right: 20px;
-    width: 300px;
-    height: 70%;
+    bottom: 4em;
+    right: 1em;
+    width: 15em;
+    min-height: 7em;
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 25px;
+    padding: 2em 1em;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 10;
     text-align: left;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     #infobox {
         width: 90%;
         left: 5%;

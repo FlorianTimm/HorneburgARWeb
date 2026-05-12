@@ -1,7 +1,8 @@
 <template>
     <DefaultPage>
         <template #header_left>
-            <button @click="$router.push('/#main')">&#8592;</button>
+            <button @click="$router.push('/#main')"><img src="@/assets/icons/arrow_long.svg"
+                    alt="{{ t('back') }}"></button>
         </template>
         <template #header_center>
             <h1>{{ t('single_header') }}</h1>
@@ -10,17 +11,10 @@
 
         <template #main>
             <Cards>
-                <Card :link="`/orbit/alle`" :title="t('all_models')">
-                    <!-- :description="t('all_models_description')" -->
-                    <img src="../assets/alle_gebaeude.svg" alt="Alle Modelle Vorschau"
-                        style="width: 100%; margin-top: 10px;" />
-                </Card>
+                <Card :link="`/orbit/alle`" :title="t('all_models')" :image="alleGebaeudeSvg" />
 
                 <Card :link="`/orbit/${key}`" v-for="(model, key) in filteredModelle" :key="key"
-                    :title="model.getName($i18n.locale)"> <!-- :description="model.getDescription($i18n.locale)">-->
-                    <img :src="model.svg_path" :alt="`${model.getName($i18n.locale)} Vorschau`"
-                        style="width: 100%; margin-top: 10px;" />
-                </Card>
+                    :title="model.getName($i18n.locale)" :image="model.svg_path" />
             </Cards>
         </template>
     </DefaultPage>
@@ -35,6 +29,7 @@ import type { Ref } from 'vue';
 import DefaultPage from '@/components/DefaultPage.vue';
 import Card from '@/components/Card.vue';
 import Cards from '@/components/Cards.vue';
+import alleGebaeudeSvg from '@/assets/alle_gebaeude.svg';
 const modelle: Ref<JsonFile<ModelJson>> = ref({});
 
 import { useI18n } from 'vue-i18n'

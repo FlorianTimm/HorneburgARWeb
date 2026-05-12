@@ -36,28 +36,39 @@ const { t } = useI18n();
 <style lang="css" scoped>
 footer {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto 1fr auto;
+    gap: 2em;
     width: 100%;
     align-items: center;
     float: none;
     clear: both;
-    text-align: center;
     background-color: #fff;
+    box-sizing: border-box;
+    padding: 1em var(--margin-sides);
+    text-align: left;
+    font-size: 0.8em;
+}
+
+#footer-logos {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 2em;
+    justify-content: center;
 }
 
 @media (max-width: 800px) {
     footer {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
-        gap: 20px;
-        padding: 20px;
-        justify-content: center;
     }
-}
 
-footer div {
-    margin: 10px 0;
-    text-align: left;
+    #footer-text {
+        justify-self: center;
+    }
+
+    #footer-links {
+        justify-self: center;
+    }
 }
 
 a:hover {

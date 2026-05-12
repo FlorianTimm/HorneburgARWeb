@@ -1,17 +1,21 @@
 <template>
     <DefaultPage headertype="object" :footer="false">
         <template #header_left>
-            <button @click="$router.push('/orbit')">&#8592;</button>
+            <button @click="$router.push('/orbit')"><img src="@/assets/icons/close.svg" alt="{{ t('close') }}"></button>
         </template>
         <template #header_center>
             <h1>{{ modelle ? (model == 'alle' ? t('all_models') : modelle[model]?.getName($i18n.locale)) : '' }}
             </h1>
         </template>
         <template #header_right>
-            <button @click="vorheriges()">&#8592;</button>
-            <button @click="naechstes()">&#8594;</button>
+            <div id="vorzurueck">
+                <button @click="vorheriges()" alt="{{ t('previous') }}"><img src="@/assets/icons/arrow_left.svg"
+                        alt="{{ t('previous') }}"></button>
+                <button @click="naechstes()" alt="{{ t('next') }}"><img src="@/assets/icons/arrow_right.svg"
+                        alt="{{ t('next') }}"></button>
+            </div>
         </template>
-        <template #main>
+        <template #fullscreen>
             <div id="orbit-container"></div>
             <Infobox :text="infotext" />
         </template>
@@ -67,7 +71,7 @@ onMounted(async () => {
 
     function freeSpaceForOverlay() {
         if (!container) return;
-        if (container.clientWidth > 1000) {
+        if (container.clientWidth > 800) {
             infobox.value = true;
             camera.setViewOffset(container.clientWidth, container.clientHeight, 0 + container.clientWidth / 10, 0, container.clientWidth + container.clientWidth / 10, container.clientHeight);
         }
@@ -256,8 +260,12 @@ onUnmounted(() => {
 
 <style scoped>
 #orbit-container {
-    width: 100%;
+    width: 98%;
     height: 100%;
-    overflow: hidden;
+}
+
+#vorzurueck {
+    display: flex;
+    gap: 0.5em;
 }
 </style>

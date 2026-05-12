@@ -1,7 +1,8 @@
 <template>
     <DefaultPage>
         <template #header_left>
-            <button @click="$router.push('/#main')">&#8592;</button>
+            <button @click="$router.push('/#main')"><img src="@/assets/icons/arrow_long.svg"
+                    alt="{{ t('back') }}"></button>
         </template>
         <template #header_center>
             <h1>{{ t('about') }}</h1>

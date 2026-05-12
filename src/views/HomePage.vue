@@ -1,42 +1,35 @@
 <template>
 
-  <div class="scroll-container" id="container">
-    <section class="lock-screen">
+  <div id="scroll-container">
+    <section id="lock-screen">
       <img src="../assets/grafiken/burginsel.gif" />
       <h1>{{ t('welcome') }}</h1>
-      <div id="subheader">
+      <h2 id="subheader">
         {{ t('subheader') }}
-      </div>
+      </h2>
       <img id="arrow" src="../assets/icons/arrow_down.svg" :alt="t('scroll_hint')" />
     </section>
 
-    <section class="main-content">
-      <header>
-        <img src="../assets/logos/burginsel_wort_bild.svg" alt="Horneburg Logo" />
-        <router-link to="/about"><img src="@/assets/icons/arrow_right.svg" id="about_link" alt="{{ t('about') }}">{{
-          t('about')
-        }}</router-link>
-      </header>
+    <section id="main-content">
+      <Header type="homepage">
+        <template #left><img src="../assets/logos/burginsel_wort_bild.svg" alt="Horneburg Logo" /></template>
+        <template #right>
+          <router-link to="/about"><img src="@/assets/icons/arrow_right.svg" id="about_link"
+              alt="{{ t('about') }}">&nbsp;{{ t('about') }}</router-link>
+        </template>
+      </Header>
 
       <main>
         <div id="welcome_text">{{ t('welcome_text') }}</div>
 
         <Cards>
 
-          <Card :title="t('island')" :description="t('island_description')" link="/ar">
-            <img src="../assets/grafiken/modus_inselansicht.svg" :alt="t('island')"
-              style="width: 100%; margin-top: 10px;" />
-          </Card>
+          <Card :title="t('island')" :description="t('island_description')" link="/ar" :image="svg_inselansicht" />
 
-          <Card :title="t('single')" :description="t('single_description')" link="/orbit">
-            <img src="../assets/grafiken/modus_einzelgebaeude.svg" :alt="t('single')"
-              style="width: 100%; margin-top: 10px;" />
-          </Card>
+          <Card :title="t('single')" :description="t('single_description')" link="/orbit" :image="svg_einzelgebaeude" />
 
-          <Card :title="t('artifacts')" :description="t('artifacts_description')" link="/artifacts">
-            <img src="../assets/grafiken/modus_fundstuecke.svg" :alt="t('artifacts')"
-              style="width: 100%; margin-top: 10px; max-height: 152px;" />
-          </Card>
+          <Card :title="t('artifacts')" :description="t('artifacts_description')" link="/artifacts"
+            :image="svg_fundstuecke" />
         </Cards>
         <hr />
         <div id='history'>
@@ -49,6 +42,10 @@
           </router-link>
         </div>
         <hr />
+        <div id='history'>
+          <h3> {{ t('visit') }} </h3>
+          {{ t('visit_text') }}
+        </div>
         <div id="leftright">
           <Map :center="[9.58769, 53.50963]" :zoom="14.5" id="map" />
           <div>
@@ -74,6 +71,11 @@ import Footer from '@/components/Footer.vue';
 import Card from '@/components/Card.vue';
 import Cards from '@/components/Cards.vue';
 import Map from '@/components/Map.vue';
+import Header from '@/components/Header.vue';
+
+import svg_inselansicht from '@/assets/grafiken/modus_inselansicht.svg';
+import svg_einzelgebaeude from '@/assets/grafiken/modus_einzelgebaeude.svg';
+import svg_fundstuecke from '@/assets/grafiken/modus_fundstuecke.svg';
 
 import { useSplashStore } from '@/stores/splash';
 const splash = useSplashStore()
@@ -87,7 +89,7 @@ let splashTimer: ReturnType<typeof setTimeout>;
 
 // 2. MAUS-DRAG LOGIK
 onMounted(() => {
-  const container = document.getElementById('container');
+  const container = document.getElementById('scroll-container');
   if (container) {
     let isPressed = false;
     let startY: number;
@@ -163,7 +165,7 @@ onMounted(() => {
 
 <style scoped>
 /* Container mit Scroll-Snap für Touch & Scrollrad */
-.scroll-container {
+#scroll-container {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
@@ -176,7 +178,7 @@ onMounted(() => {
   /* Zeigt an, dass man ziehen kann */
 }
 
-.scroll-container:active {
+#scroll-container:active {
   cursor: grabbing;
 }
 
@@ -185,78 +187,56 @@ section {
   scroll-snap-stop: always;
   position: relative;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
 }
 
-.lock-screen {
+#lock-screen {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   background-image: url('@/assets/bilder/burginsel.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* padding: 0 0 10px 10%; */
+  padding: 2em var(--margin-sides);
   color: white;
   pointer-events: none;
   /* Klicks gehen durch zum Container */
 }
 
-.lock-screen img {
+#lock-screen img {
   width: 130px;
   margin: 0 auto;
   margin-bottom: 20px;
 }
 
-.lock-screen h1 {
+#lock-screen h1 {
   margin: 0 auto;
-  font-size: 46px;
-  font-weight: 500;
-  width: 80%;
   text-align: center;
   display: block;
 }
 
-
-@media (max-width: 800px) {
-  .lock-screen h1 {
-    font-size: 40px;
-
-
-  }
-}
-
-
-
-main {
-  text-align: center;
-  margin: 20px;
-  margin-top: 20px;
-}
-
 #subheader {
-  position: absolute;
-  bottom: 160px;
+  margin: 0 auto;
   width: 100%;
   text-align: center;
-  font-size: 30px;
+  font-size: 1.5em;
 }
 
 @media (max-width: 800px) {
   #subheader {
-    font-size: 20px;
-    bottom: 120px;
+    font-size: 1.2em;
+    margin: 0 auto;
   }
 }
 
 #arrow {
   position: absolute;
-  height: 40px;
-  bottom: 30px;
+  height: 2em;
+  bottom: 3em;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 24px;
   animation: bounce 2s infinite;
   animation-delay: 10s;
 }
@@ -280,79 +260,42 @@ main {
   }
 }
 
-.main-content {
+
+main {
+  text-align: center;
+  margin: 2em var(--margin-sides);
   display: grid;
   grid-template-rows: auto 1fr auto;
   color: rgb(14, 10, 10);
-}
-
-header {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  width: auto;
-  height: auto;
-  align-items: center;
-  margin: 30px 40px;
-  margin-bottom: 0;
-}
-
-@media (max-width: 800px) {
-  header {
-    grid-template-columns: auto;
-    grid-template-rows: auto auto;
-    padding-bottom: 20px;
-    margin: 20px;
-  }
-}
-
-header,
-hr {
-  border: none;
-  border-bottom: 2px solid #999;
-}
-
-hr {
-  margin: 120px 20px 60px 20px;
-}
-
-@media (max-width: 800px) {
-  hr {
-    margin: 80px 20px 40px 20px;
-  }
 }
 
 #about_link,
 #museum_link {
   display: inline;
   height: 1em;
-  margin-right: 5px;
-  position: relative;
-  top: 2px;
 }
 
+#welcome_text,
 #history {
+  margin: 1em auto;
   max-width: 1000px;
-  margin: 20px auto;
-  text-align: left;
-  font-size: 20px;
-  line-height: 1.5;
+
 }
 
 #timeline_big {
   display: block;
-  margin: 20px auto;
   width: 100%;
   max-width: 1000px;
+  margin: 5em auto;
 }
 
 #timeline_small {
   display: none;
   margin: 20px auto;
-  width: 100%;
-  max-width: 600px;
+  max-width: 700px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   #timeline_big {
     display: none;
   }
@@ -366,8 +309,6 @@ hr {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 500;
   color: #222;
   border: 1px solid #222;
   background-color: inherit;
@@ -376,19 +317,15 @@ hr {
 
 
 #map {
-  width: 100%;
   height: 400px;
-
 }
 
 #leftright {
-  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 3em auto;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 0.85em;
   text-align: left;
   gap: 40px;
 }
@@ -405,20 +342,11 @@ hr {
   flex-direction: column;
   justify-content: center;
   line-height: 2;
-
-}
-
-#leftright h3 {
-  font-weight: 500;
-  font-size: 20px;
-  margin-bottom: 10px;
 }
 
 #leftright a {
   margin-top: 10px;
-  color: inherit;
   font-weight: 600;
-  text-decoration: none;
 }
 
 header img {
@@ -430,17 +358,8 @@ header a {
   display: inline-block;
   text-decoration: none;
   color: #333;
-  font-size: 15px;
+  font-size: 0.85em;
   font-weight: bold;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-#welcome_text {
-  display: block;
-  margin: 20px auto;
-  font-size: 20px;
-  text-align: left;
-  max-width: 1000px;
 }
 </style>

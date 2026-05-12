@@ -1,7 +1,8 @@
 <template>
     <DefaultPage>
         <template #header_left>
-            <button @click="$router.push('/artifacts')">&#8592;</button>
+            <button @click="$router.push('/artifacts')"><img src="@/assets/icons/close.svg"
+                    alt="{{ t('close') }}"></button>
         </template>
         <template #header_center>
             <h1>{{ artifacts[artifact]?.getName(locale) }}</h1>
