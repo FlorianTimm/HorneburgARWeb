@@ -35,7 +35,7 @@
         <div id='history'>
           <h3>{{ t('history') }}</h3>
           {{ t('history_text') }}
-          <img src="../assets/grafiken/zeitstrahl_groß.svg" id="timeline_big" />
+          <img src="../assets/grafiken/zeitstrahl_gross.svg" id="timeline_big" />
           <img src="../assets/grafiken/zeitstrahl_klein.svg" id="timeline_small" />
           <router-link to="/history" custom v-slot="{ navigate }">
             <button @click="navigate">{{ t('history_more') }}</button>
