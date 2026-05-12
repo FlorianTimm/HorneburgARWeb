@@ -358,5 +358,6 @@ onUnmounted(() => {
     border-radius: 0.1em;
     cursor: pointer;
     font-weight: 600;
+    text-align: center;
 }
 </style>

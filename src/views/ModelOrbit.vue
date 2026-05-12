@@ -1,8 +1,8 @@
 <template>
     <DefaultPage headertype="object" :footer="false">
         <template #header_left>
-            <button @click="$router.push('/orbit')" title="{{ t('close') }}"><img src="@/assets/icons/close.svg"
-                    alt="{{ t('close') }}"></button>
+            <button @click="$router.push('/orbit')" :title="t('close')"><img src="@/assets/icons/close.svg"
+                    :alt="t('close')"></button>
         </template>
         <template #header_center>
             <h1>{{ modelle ? (model == 'alle' ? t('all_models') : modelle[model]?.getName($i18n.locale)) : '' }}
@@ -10,10 +10,10 @@
         </template>
         <template #header_right>
             <div id="vorzurueck">
-                <button @click="vorheriges()" title="{{ t('previous') }}"><img src="@/assets/icons/arrow_left.svg"
-                        alt="{{ t('previous') }}"></button>
-                <button @click="naechstes()" title="{{ t('next') }}"><img src="@/assets/icons/arrow_right.svg"
-                        alt="{{ t('next') }}"></button>
+                <button @click="vorheriges()" :title="t('previous')"><img src="@/assets/icons/arrow_left.svg"
+                        :alt="t('previous')"></button>
+                <button @click="naechstes()" :title="t('next')"><img src="@/assets/icons/arrow_right.svg"
+                        :alt="t('next')"></button>
             </div>
         </template>
         <template #fullscreen>
