@@ -35,8 +35,11 @@ watch(() => props.text, (newText) => {
     position: absolute;
     bottom: 4em;
     right: 1em;
-    width: 15em;
+    min-width: 15em;
+    max-width: 40%;
     min-height: 7em;
+    max-height: 30em;
+    overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.95);
     padding: 2em 1em;
     border-radius: 4px;
@@ -48,6 +51,7 @@ watch(() => props.text, (newText) => {
 @media (max-width: 800px) {
     #infobox {
         width: 90%;
+        max-width: none;
         left: 5%;
         right: 5%;
         top: inherit;

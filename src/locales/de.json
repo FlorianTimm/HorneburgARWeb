@@ -37,5 +37,7 @@
     "close": "Schließen",
     "back": "Zurück",
     "previous": "Vorheriges",
-    "next": "Nächstes"
+    "next": "Nächstes",
+    "image": "Bild",
+    "description": "Beschreibung"
 }

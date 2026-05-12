@@ -81,7 +81,6 @@ import { useSplashStore } from '@/stores/splash';
 const splash = useSplashStore()
 
 import { useI18n } from 'vue-i18n'
-import type router from '@/router';
 const { t } = useI18n()
 
 let splashTimer: ReturnType<typeof setTimeout>;
