@@ -1,8 +1,8 @@
 {
     "phillipstaler": {
         "name": {
-            "de": "Philippstaler (1/10)",
-            "en": "Philip Taler (1/10)"
+            "de": "Philippstaler",
+            "en": "Philip Taler"
         },
         "description": {
             "de": "<p>Ein besonderer Fund ist eine stark abgenutzte und ehemals gefaltete Silberm&uuml;nze aus dem 16. Jahrhundert. Es handelt sich um einen 1/10-Philippstaler des spanischen K&ouml;nigs Philipp II., der von 1555 bis 1598 regierte. Die M&uuml;nze ist stark beschnitten, das hei&szlig;t, am Rand wurde in betr&uuml;gerischer Absicht Silber abgetrennt. Diese Form der Wertminderung stand zwar unter schwerer Strafe, wurde jedoch insbesondere in Notzeiten &ndash; etwa w&auml;hrend des Drei&szlig;igj&auml;hrigen Krieges &ndash; h&auml;ufig praktiziert.</p><p>Aufgrund der fehlenden Randbereiche ist die genaue Identifizierung der M&uuml;nze erschwert. Die Vorderseite zeigt die B&uuml;ste Philipps II. sowie die nur schwer lesbare Umschrift &bdquo;PHS D G HISP Z REX VX BRA&ldquo;. Diese l&auml;sst sich als &bdquo;Philipp, von Gottes Gnaden K&ouml;nig von Spanien und Herzog von Brabant&ldquo; aufl&ouml;sen. Unterhalb des Portr&auml;ts ist vermutlich das Pr&auml;gejahr 1571 zu erkennen.</p><p>Auf der R&uuml;ckseite sind ein gekr&ouml;ntes Burgunderkreuz sowie der Wahlspruch Philipps &bdquo;DOMINVS MIHI ADIVTOR&ldquo; (&bdquo;Der Herr ist mein Helfer&ldquo;) dargestellt.</p><p>Der Philippstaler wurde in Antwerpen im damaligen Herzogtum Brabant gepr&auml;gt, das zu den Spanischen Niederlanden geh&ouml;rte. Das verwendete Silber d&uuml;rfte aus den amerikanischen Kolonien stammen, aus denen im 16. Jahrhundert gro&szlig;e Mengen Edelmetall nach Spanien gelangten.</p>",
@@ -16,10 +16,10 @@
             {
                 "small": "/artifacts/small/1_philippstaler_2.png",
                 "large": "/artifacts/large/1_philippstaler_2.png"
-            },
-            {
-                "extra": "/artifacts/extra/1_spanische_niederlande_philipp_ii_munzkabinett_berlin_5478872.jpg"
             }
+        ],
+        "extra": [
+            "/artifacts/extra/1_spanische_niederlande_philipp_ii_munzkabinett_berlin_5478872.jpg"
         ]
     },
     "gloeckchen": {
@@ -75,10 +75,10 @@
             {
                 "small": "/artifacts/small/4_schwertgurtanhanger.png",
                 "large": "/artifacts/large/4_schwertgurtanhanger.png"
-            },
-            {
-                "extra": "/artifacts/extra/4_a_soldier_blowing_on_a_match_from_the_musketeers_series_plate_40_in_wapenhandelinghe_van_roers_musquetten_ende_spiessen_the_exercise_of_arms_met_dp828803.jpg"
             }
+        ],
+        "extra": [
+            "/artifacts/extra/4_a_soldier_blowing_on_a_match_from_the_musketeers_series_plate_40_in_wapenhandelinghe_van_roers_musquetten_ende_spiessen_the_exercise_of_arms_met_dp828803.jpg"
         ]
     },
     "steinzeugkrug_fragment": {
@@ -94,10 +94,10 @@
             {
                 "small": "/artifacts/small/5_steinzeugkrug.png",
                 "large": "/artifacts/large/5_steinzeugkrug.png"
-            },
-            {
-                "extra": "/artifacts/extra/5_siegburger_kanne_luhdorf_1.jpg"
             }
+        ],
+        "extra": [
+            "/artifacts/extra/5_siegburger_kanne_luhdorf_1.jpg"
         ]
     },
     "tabakpfeifen_stiele": {
@@ -113,10 +113,10 @@
             {
                 "small": "/artifacts/small/6_tabakpfeifen.png",
                 "large": "/artifacts/large/6_tabakpfeifen.png"
-            },
-            {
-                "extra": "/artifacts/extra/6_steckpfeife_26503_915142.jpg"
             }
+        ],
+        "extra": [
+            "/artifacts/extra/6_steckpfeife_26503_915142.jpg"
         ]
     },
     "gewehrkugeln": {
