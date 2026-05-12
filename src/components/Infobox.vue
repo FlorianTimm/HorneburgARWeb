@@ -3,7 +3,7 @@
 
         <div v-if="visible" id="infobox">
             <button id="infobox_close" @click="visible = false"><img src="@/assets/icons/close.svg"
-                    :alt="t('close')"></button>
+                    :title="t('close')"></button>
             <span v-html="text"></span>
         </div>
     </transition>

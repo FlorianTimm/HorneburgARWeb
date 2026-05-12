@@ -1,8 +1,8 @@
 <template>
     <DefaultPage headertype="object" :footer="false" fullscreen>
         <template #header_left>
-            <button @click="$router.push('/artifacts')"><img src="@/assets/icons/close.svg"
-                    alt="{{ t('close') }}"></button>
+            <button @click="$router.push('/artifacts')" :title="t('close')"><img src="@/assets/icons/close.svg"
+                    :alt="t('close')"></button>
         </template>
         <template #header_center>
             <h1>{{ artifacts[artifact]?.getName(locale) }}</h1>
@@ -10,10 +10,10 @@
 
         <template #header_right>
             <div id="vorzurueck">
-                <button @click="vorheriges()" alt="{{ t('previous') }}"><img src="@/assets/icons/arrow_left.svg"
-                        alt="{{ t('previous') }}"></button>
-                <button @click="naechstes()" alt="{{ t('next') }}"><img src="@/assets/icons/arrow_right.svg"
-                        alt="{{ t('next') }}"></button>
+                <button @click="vorheriges()" :title="t('previous')"><img src="@/assets/icons/arrow_left.svg"
+                        :alt="t('previous')"></button>
+                <button @click="naechstes()" :title="t('next')"><img src="@/assets/icons/arrow_right.svg"
+                        :alt="t('next')"></button>
             </div>
         </template>
 
@@ -22,7 +22,8 @@
             <Infobox :text="artifacts[artifact]?.getDescription(locale) ?? ''" />
             <div id="img_select" v-if="(artifacts[artifact]?.images?.length ?? 0) > 1">
                 <button v-for="(image, index) in artifacts[artifact]?.images ?? []" :key="index"
-                    @click="changeImg(image.large)" :class="{ 'active': currentImage === image.large }">
+                    :title="`${t('image')} ${index + 1}`" @click="changeImg(image.large)"
+                    :class="{ 'active': currentImage === image.large }">
                     <img :src="image.small" :alt="`${t('image')} ${index + 1}`" />
                 </button>
             </div>

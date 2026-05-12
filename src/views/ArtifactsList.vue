@@ -1,8 +1,8 @@
 <template>
     <DefaultPage>
         <template #header_left>
-            <button @click="$router.push('/#main')"><img src="@/assets/icons/arrow_long.svg"
-                    alt="{{ t('back') }}"></button>
+            <button @click="$router.push('/#main')" :title="t('back')"><img src="@/assets/icons/arrow_long.svg"
+                    :alt="t('back')"></button>
         </template>
         <template #header_center>
             <h1>{{ t('artifacts_header') }}</h1>

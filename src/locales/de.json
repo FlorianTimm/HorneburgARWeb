@@ -39,5 +39,7 @@
     "previous": "Vorheriges",
     "next": "Nächstes",
     "image": "Bild",
-    "description": "Beschreibung"
+    "description": "Beschreibung",
+    "reload": "Neu laden",
+    "loading": "Laden..."
 }

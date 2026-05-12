@@ -2,13 +2,13 @@
 
     <Header :type="'ar'" id="header">
         <template #left>
-            <button @click="$router.push('/#main')"><img src="@/assets/icons/close.svg" alt="Schließen"></button>
+            <button @click="$router.push('/#main')"><img src="@/assets/icons/close.svg" :title="t('close')"></button>
         </template>
         <template #center>
             <h1>{{ t('armode') }} </h1>
         </template>
         <template #right>
-            <button @click="reload()"><img src="@/assets/icons/reload.svg" alt="Neu laden"></button>
+            <button @click="reload()"><img src="@/assets/icons/reload.svg" :title="t('reload')"></button>
         </template>
     </Header>
 
@@ -19,7 +19,7 @@
 
         <div v-if="ar_overlay" id="ar_overlay">
             <button id="ar_close" @click="ar_overlay = false"><img src="@/assets/icons/close.svg"
-                    :alt="t('close')"></button>
+                    :button="t('close')"></button>
             <h4>{{ t('ar_overlay_header') }}</h4>
             <table>
                 <tbody>

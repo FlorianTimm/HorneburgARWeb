@@ -2,8 +2,9 @@
     <footer>
 
         <div id="footer-logos">
-            <a href="https://www.horneburg.de" target="_blank" title="Flecken Horneburg"><img
-                    src="../assets/logos/flecken_horneburg_rgb.svg" alt="Flecken Horneburg" /></a>
+            <a href="https://www.horneburg.de/portal/seiten/flecken-horneburg-900000077-20450.html" target="_blank"
+                title="Flecken Horneburg"><img src="../assets/logos/flecken_horneburg_rgb.svg"
+                    alt="Flecken Horneburg" /></a>
             <a href="https://www.landkreis-stade.de" target="_blank" title="Landkreis Stade"><img
                     src="../assets/logos/landkreis_stade_rgb.svg" alt="Landkreis Stade" /></a>
             <a href="https://www.hcu-hamburg.de" target="_blank" title="HafenCity Universität Hamburg"><img
