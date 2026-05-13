@@ -1,6 +1,6 @@
 <template>
 
-    <Header :type="'ar'" id="header">
+    <Header :type="'ar'">
         <template #left>
             <button @click="$router.push('/#main')"><img src="@/assets/icons/close.svg" :title="t('close')"></button>
         </template>
@@ -13,9 +13,9 @@
     </Header>
 
     <main>
-        <div id="ar-container"></div>
+        <canvas id="ar-container"></canvas>
 
-        <Infobox :text="infotext" />
+        <Infobox :header="infobox_header" :text="infotext" />
 
         <div v-if="ar_overlay" id="ar_overlay">
             <button id="ar_close" @click="ar_overlay = false"><img src="@/assets/icons/close.svg"
@@ -44,8 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import * as THREE from 'three';
-import * as LocAR from 'locar';
+import { App, type LocAR } from 'locar';
 import { onMounted, onUnmounted } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
 import { toast } from '@/func/toast';
@@ -59,87 +58,34 @@ import Infobox from '@/components/Infobox.vue';
 import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
 
-let renderer: THREE.WebGLRenderer;
-let locar: LocAR.LocationBased;
-let cam: LocAR.Webcam;
+let locar: LocAR;
 
 let infotext = ref("");
+let infobox_header = ref("");
 let ar_overlay = ref(true);
 
-onMounted(() => {
+onMounted(async () => {
 
-    let container = document.getElementById('ar-container');
+    let container = document.getElementById('ar-container') as HTMLCanvasElement;
     if (!container) {
         console.error("AR container not found");
         return;
     }
 
-    const camera = new THREE.PerspectiveCamera(80, container.clientWidth / container.clientHeight, 0.001, 1000);
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    const scene = new THREE.Scene();
-    locar = new LocAR.LocationBased(scene, camera);
-    cam = new LocAR.Webcam({
-        video: {
-            facingMode: "environment"
-        }
-    });
-    /*     toast({
-            header: 'AR-Modus',
-            subHeader: 'Dieser Modus ist für die Nutzung auf einem Smartphone gedacht. Bitte wechsle zu einem mobilen Gerät, um die AR-Funktionalität zu nutzen.',
-            message: 'Falls du bereits auf einem Smartphone bist, könnte es sein, dass die Kamera-Berechtigungen nicht erteilt wurden. Bitte erlaube den Zugriff auf die Kamera, um fortzufahren.',
-            buttons: ['Loslegen'],
-        }).then(alert => alert.present()); */
-
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container?.appendChild(renderer.domElement);
-
-    window.addEventListener("resize", e => {
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-    });
-
-    cam.on("webcamstarted", ev => {
-        scene.background = ev.texture;
-    });
-
-    cam.on("webcamerror", error => {
-        console.debug(`Webcam error: code ${error.code} message ${error.message}`);
+    const app = new App({
+        cameraOptions: { hFov: 80, near: 0.001, far: 1000 },
+        gpsOptions: { gpsMinDistance: 1.5 },
+        canvas: container
     });
 
     let firstLocation = true;
 
-    const deviceOrientationControls = new LocAR.DeviceOrientationControls(camera,
-        {
-            smoothingFactor: 0.1,
-            enablePermissionDialog: true
-
-        }
-    );
-
-    deviceOrientationControls.on("deviceorientationgranted", ev => {
-        ev.target.connect();
-    });
-
-    deviceOrientationControls.on("deviceorientationerror", error => {
-        console.debug(`Device orientation error: code ${error.code} message ${error.message}`);
-    });
-
-    deviceOrientationControls.init();
-
-    locar.setGpsOptions({
-        gpsMinDistance: 1.5 // meters
-    });
+    locar = await app.start();
 
     locar.on("gpserror", error => {
         toast(`GPS Fehler: Code ${error.code}`);
-        /*  alertController.create({
-             header: 'GPS-Fehler',
-             subHeader: 'Es gab ein Problem mit der GPS-Verbindung.',
-             message: 'Bitte stelle sicher, dass GPS aktiviert ist und die App die notwendigen Berechtigungen hat.',
-             buttons: ['OK']
-         }).then(alert => alert.present()); */
     });
+
 
     locar.on("gpsupdate", async (ev: { position: GeolocationPosition }, distMoved: number) => {
         toast(`GPS Update: Lat ${ev.position.coords.latitude.toFixed(6)}, Lon ${ev.position.coords.longitude.toFixed(6)}, Accuracy ${ev.position.coords.accuracy}m`);
@@ -154,27 +100,22 @@ onMounted(() => {
         locar.fakeGps(53.54025627076634, 10.006360171632716);
     }
 
-    modelSelector(document.getElementById('ar-container')!, camera, scene, async (name) => {
+    modelSelector(document.getElementById('ar-container')!, app.camera, app.scene, async (name) => {
         console.log("Model selected:", name);
         let liste = await ModelJson.load_json()
         let ganzerName = liste[name]?.getName(locale.value);
         if (ganzerName) {
             toast(ganzerName);
         }
+        infobox_header.value = ganzerName || '';
+        infotext.value = liste[name]?.getDescription(locale.value) || '';
     }, () => {
         console.log("No model selected");
-        infotext.value = t('all_models_description');
+        infobox_header.value = '';
+        infotext.value = '';
     });
 
-
     locar.startGps();
-
-    renderer.setAnimationLoop(animate);
-
-    function animate() {
-        deviceOrientationControls.update();
-        renderer.render(scene, camera);
-    }
 
     async function loadModels(ev: { position: GeolocationPosition }) {
         let liste = await ModelJson.load_json();
@@ -199,7 +140,7 @@ onMounted(() => {
         }
         ;
         // Add illumination to the scene
-        addLight(scene)
+        addLight(app.scene)
     }
 
     function debugPositions(ev: { position: GeolocationPosition }) {
@@ -268,13 +209,19 @@ function reload() {
 onUnmounted(() => {
     // Clean up resources, event listeners, etc. if needed
     console.log("AR.vue deactivated");
-    try {
-        if (renderer) renderer.setAnimationLoop(null);
-        if (locar) locar.stopGps();
-        if (cam) cam.dispose();
-    } catch (e) {
-        console.warn("Error while stopping", e);
+
+    let video = document.querySelector("video");
+    if (video) {
+        video.pause();
+        video.srcObject = null;
+        document.body.removeChild(video);
     }
+
+    if (locar) {
+        locar.startGps()
+        locar = null as any;
+    }
+
 });
 
 </script>
@@ -359,5 +306,11 @@ onUnmounted(() => {
     cursor: pointer;
     font-weight: 600;
     text-align: center;
+}
+</style>
+
+<style>
+video {
+    z-index: 5 !important;
 }
 </style>
