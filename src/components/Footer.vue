@@ -15,12 +15,12 @@
         </div>
 
         <div id="footer-links">
-            <a href="https://www.horneburg.de/portal/seiten/Seite-900000001-20450.html" target="_blank">
+            <router-link to="/imprint">
                 {{ t('imprint') }}
-            </a>&nbsp;&nbsp;
-            <a href="https://www.horneburg.de/portal/seiten/Seite-900000002-20450.html" target="_blank">
+            </router-link>&nbsp;&nbsp;
+            <router-link to="/privacy">
                 {{ t('privacy') }}
-            </a>
+            </router-link>
         </div>
 
     </footer>

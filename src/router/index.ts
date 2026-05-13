@@ -45,6 +45,16 @@ const router = createRouter({
       name: "History",
       component: () => import("../views/History.vue"),
     },
+    {
+      path: "/imprint",
+      name: "Imprint",
+      component: () => import("../views/Imprint.vue"),
+    },
+    {
+      path: "/privacy",
+      name: "Privacy",
+      component: () => import("../views/Privacy.vue"),
+    }
   ],
 })
 

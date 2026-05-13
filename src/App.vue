@@ -89,6 +89,10 @@ h4 {
   font-size: 1.1em;
 }
 
+p {
+  margin-bottom: 0.7em;
+}
+
 button {
   font-weight: 600;
 }
