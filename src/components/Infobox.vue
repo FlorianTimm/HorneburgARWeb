@@ -1,32 +1,41 @@
 <template>
     <transition name="fade">
 
-        <div v-if="visible" id="infobox">
-            <button id="infobox_close" @click="visible = false"><img src="@/assets/icons/close.svg"
-                    :title="t('close')"></button>
-            <span v-html="text"></span>
+        <div id="infobox" v-if="text || header">
+            <button id="infobox_minimize" v-if="visible && text" @click="visible = false"><img
+                    src="@/assets/icons/minus.svg" :title="t('minimize')"></button>
+            <button id="infobox_maximize" v-if="!visible && text" @click="visible = true"><img
+                    src="@/assets/icons/plus.svg" :title="t('maximize')"></button>
+            <h3 v-if="header">{{ header }}</h3>
+            <span v-if="visible && text" v-html="text"></span>
+
         </div>
     </transition>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 
 let props = defineProps<{
+    header: string;
     text: string;
 }>()
 
 let visible = ref(false);
-
+/*
 watch(() => props.text, (newText) => {
     if (newText) {
-        visible.value = true;
+        window.innerWidth <= 800 ? visible.value = false : visible.value = true;
     } else {
         visible.value = false;
     }
+});*/
+
+onMounted(() => {
+    window.innerWidth <= 800 ? visible.value = false : visible.value = true;
 });
 </script>
 
@@ -37,15 +46,20 @@ watch(() => props.text, (newText) => {
     right: 1em;
     min-width: 15em;
     max-width: 40%;
-    min-height: 7em;
+    min-height: 3em;
     max-height: 30em;
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 2em 1em;
+    padding: 1em 1em;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 10;
     text-align: left;
+}
+
+#infobox h3 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
 }
 
 @media (max-width: 800px) {
@@ -55,16 +69,17 @@ watch(() => props.text, (newText) => {
         left: 5%;
         right: 5%;
         top: inherit;
-        bottom: -5px;
+        bottom: 1em;
         margin: 0px;
         box-sizing: border-box;
     }
 }
 
-#infobox_close {
+#infobox_maximize,
+#infobox_minimize {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1em;
+    right: 0.5em;
     background: none;
     border: none;
     cursor: pointer;

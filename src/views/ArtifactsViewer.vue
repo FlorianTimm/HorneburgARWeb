@@ -19,7 +19,8 @@
 
         <template #fullscreen>
             <div id="imgmap"></div>
-            <Infobox :text="artifacts[artifact]?.getDescription(locale) ?? ''" />
+            <Infobox :header="artifacts[artifact]?.getName(locale) ?? ''"
+                :text="artifacts[artifact]?.getDescription(locale) ?? ''" />
             <div id="img_select" v-if="(artifacts[artifact]?.images?.length ?? 0) > 1">
                 <button v-for="(image, index) in artifacts[artifact]?.images ?? []" :key="index"
                     :title="`${t('image')} ${index + 1}`" @click="changeImg(image.large)"
