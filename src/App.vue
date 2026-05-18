@@ -34,7 +34,7 @@ ModelFetcher.preload();
 
 @media (max-width: 400px) {
   :root {
-    --margin-sides: 0.1em;
+    --margin-sides: 0.5em;
   }
 }
 
@@ -69,6 +69,7 @@ h2,
 h3,
 h4,
 h5 {
+  line-height: 1.25;
   font-weight: 500;
 }
 
@@ -81,7 +82,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1.15em;
+  font-size: 1.2em;
   margin-bottom: 0.5em;
 }
 
@@ -89,8 +90,35 @@ h4 {
   font-size: 1.1em;
 }
 
-p {
+main>p,
+article>p,
+main>h1,
+article>h1,
+main>h2,
+article>h2,
+main>h3,
+article>h3,
+main>h4,
+article>h4 {
+  margin-left: 1em;
   margin-bottom: 0.7em;
+  max-width: 1000px;
+}
+
+@media (max-width: 800px) {
+
+  main>p,
+  article>p,
+  main>h1,
+  main>h2,
+  main>h3,
+  main>h4,
+  article>h1,
+  article>h2,
+  article>h3,
+  article>h4 {
+    margin-left: 0.1em;
+  }
 }
 
 button {

@@ -47,7 +47,7 @@ div#container {
 }
 
 #main {
-    padding: 2em var(--margin-sides);
+    padding: 1em var(--margin-sides) 2em;
 }
 
 #fullscreen {

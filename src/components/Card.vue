@@ -41,6 +41,8 @@ a {
     padding: 1em;
     transition: background-color 0.3s ease;
     background-color: #fff;
+    cursor: pointer;
+    border: 2px solid transparent;
 }
 
 .card_with_image {
@@ -67,7 +69,6 @@ a {
 }
 
 a:hover {
-    cursor: pointer;
-    border: 2px solid #555;
+    border-color: #555;
 }
 </style>

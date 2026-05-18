@@ -8,28 +8,26 @@
             <h1>{{ t('history_title') }}</h1>
         </template>
         <template #main>
-            <LeftRight>
-                <template #left>
-                    <span v-html="t('history_fulltext')"></span>
-                </template>
-                <template #right>
-                    <img src="@/assets/bilder/burginsel.jpg" :alt="t('image')" class="history-image">
-                </template>
-            </LeftRight>
+            <TextWithImages :images="images">
+                <article v-html="t('history_fulltext')"></article>
+            </TextWithImages>
         </template>
     </DefaultPage>
 </template>
 
 <script setup lang="ts">
 import DefaultPage from '@/components/DefaultPage.vue';
-import LeftRight from '@/components/LeftRight.vue';
+import TextWithImages from '@/components/TextWithImages.vue';
 import { useI18n } from 'vue-i18n';
+import { ref, onMounted } from 'vue';
+import { getImages, type ImageData } from '@/func/imageHelper';
 const { t } = useI18n();
+
+const images = ref<ImageData[]>([]);
+
+onMounted(() => {
+    getImages('history').then((data) => {
+        images.value = data;
+    });
+})
 </script>
-
-
-<style scoped>
-.history-image {
-    width: 40vw;
-}
-</style>

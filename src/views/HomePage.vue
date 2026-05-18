@@ -20,7 +20,9 @@
       </Header>
 
       <main>
-        <div id="welcome_text">{{ t('welcome_text') }}</div>
+
+        <p>{{ t('welcome_text') }}</p>
+
 
         <Cards>
 
@@ -32,20 +34,20 @@
             :image="svg_fundstuecke" />
         </Cards>
         <hr />
-        <div id='history'>
-          <h3>{{ t('history') }}</h3>
-          {{ t('history_text') }}
-          <img src="../assets/grafiken/zeitstrahl_gross.svg" id="timeline_big" />
-          <img src="../assets/grafiken/zeitstrahl_klein.svg" id="timeline_small" />
-          <router-link to="/history" custom v-slot="{ navigate }">
-            <button @click="navigate">{{ t('history_more') }}</button>
-          </router-link>
-        </div>
+
+        <h3>{{ t('history') }}</h3>
+        <p>{{ t('history_text') }}</p>
+        <img src="../assets/grafiken/zeitstrahl_gross.svg" id="timeline_big" />
+        <img src="../assets/grafiken/zeitstrahl_klein.svg" id="timeline_small" />
+        <router-link to="/history" custom v-slot="{ navigate }">
+          <button @click="navigate" id="historybutton">{{ t('history_more') }}</button>
+        </router-link>
+
         <hr />
-        <div id='history'>
-          <h3> {{ t('visit') }} </h3>
-          {{ t('visit_text') }}
-        </div>
+
+        <h3>{{ t('visit') }}</h3>
+        <p>{{ t('visit_text') }}</p>
+
         <div id="leftright">
           <Map :center="[9.58769, 53.50963]" :zoom="14.5" id="map" />
           <div>
@@ -271,14 +273,7 @@ main {
 #about_link,
 #museum_link {
   display: inline;
-  height: 1em;
-}
-
-#welcome_text,
-#history {
-  margin: 1em auto;
-  max-width: 1000px;
-
+  height: 0.7em;
 }
 
 #timeline_big {
@@ -291,7 +286,8 @@ main {
 #timeline_small {
   display: none;
   margin: 20px auto;
-  max-width: 700px;
+  width: 100%;
+  max-width: 800px;
 }
 
 @media (max-width: 800px) {
@@ -304,7 +300,7 @@ main {
   }
 }
 
-#history button {
+#historybutton {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
@@ -316,11 +312,15 @@ main {
 
 
 #map {
-  height: 400px;
+  min-height: 300px;
+  max-height: 400px;
+  width: 100%;
+  aspect-ratio: 2;
 }
 
 #leftright {
-  max-width: 1200px;
+  max-width: 1000px;
+  width: 100%;
   margin: 3em auto;
   display: grid;
   grid-template-columns: 2fr 1fr;

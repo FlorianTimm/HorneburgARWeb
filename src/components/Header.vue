@@ -113,17 +113,18 @@ header {
     gap: 2em;
     margin: 0;
     padding: 0 var(--margin-sides);
+    align-items: center;
 }
 
 #header_default {
+    height: 6em;
     margin-top: 1em;
+    margin-bottom: 2em;
     grid-template-columns: 3fr 1fr;
+    align-items: end;
 }
 
-#left {
-    display: flex;
-    align-items: flex-start;
-}
+#left {}
 
 #center {
     display: flex;
@@ -162,10 +163,14 @@ header {
     cursor: pointer;
 }
 
-#header_default #center h1,
 #header_homepage #right h1,
 #header_ar #center h1,
 #header_object #center h1 {
     font-size: 1em;
+}
+
+#header_default #center h1 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
 }
 </style>

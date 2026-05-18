@@ -153,12 +153,13 @@ onMounted(async () => {
         modelSelector(container, camera, scene, (name) => {
             console.log("Model selected:", name);
             header.value = modelle.value[name]?.getName(locale.value) ?? '';
-            infotext.value = `<p>${modelle.value[name]?.getDescription(locale.value)}</p>` || t('all_models_description');
+            infotext.value = modelle.value[name]?.getDescription(locale.value) ?? `<p>${t('all_models_description')}</p>`;
             if (!infobox.value) {
                 infobox.value = true;
                 autoActivated.value = true;
             }
         }, () => {
+            header.value = "";
             infotext.value = t('all_models_description');
             if (autoActivated.value) {
                 infobox.value = false;

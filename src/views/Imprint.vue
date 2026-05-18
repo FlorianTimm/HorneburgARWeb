@@ -8,7 +8,7 @@
             <h1>{{ t('imprint') }}</h1>
         </template>
         <template #main>
-            <span v-html="t('imprint_html')" id="text"></span>
+            <article v-html="t('imprint_html')" id="text" />
         </template>
     </DefaultPage>
 </template>

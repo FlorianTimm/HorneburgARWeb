@@ -10,15 +10,12 @@
             <a href="https://www.hcu-hamburg.de" target="_blank" title="HafenCity Universität Hamburg"><img
                     src="../assets/logos/hcu_rgb.svg" alt="HafenCity Universität Hamburg" /></a>
         </div>
-        <div id="footer-text">
-            {{ t('footer_line1') }}<br />{{ t('footer_line2') }}
-        </div>
+        <div id="footer-text" v-html="t('footer_text')" />
 
         <div id="footer-links">
             <router-link to="/imprint">
                 {{ t('imprint') }}
-            </router-link>&nbsp;&nbsp;
-            <router-link to="/privacy">
+            </router-link><router-link to="/privacy">
                 {{ t('privacy') }}
             </router-link>
         </div>
@@ -50,11 +47,21 @@ footer {
     font-size: 0.8em;
 }
 
+#footer-text {
+    line-height: 130%;
+}
+
 #footer-logos {
     display: grid;
     grid-template-columns: repeat(3, auto);
     gap: 2em;
     justify-content: center;
+}
+
+#footer-links {
+    display: grid;
+    gap: 2em;
+    grid-template-columns: auto auto;
 }
 
 @media (max-width: 800px) {

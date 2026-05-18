@@ -41,16 +41,17 @@ onMounted(() => {
 
 <style scoped>
 #infobox {
+    --abstand: 2em;
     position: absolute;
-    bottom: 4em;
-    right: 1em;
+    bottom: var(--abstand);
+    right: var(--abstand);
     min-width: 15em;
     max-width: 40%;
     min-height: 3em;
-    max-height: 30em;
+    max-height: calc(100vh - 2 * var(--abstand) - 4em);
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 1em 1em;
+    padding: 2.5em 1.5em 1em;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 10;
@@ -79,10 +80,15 @@ onMounted(() => {
 #infobox_minimize {
     position: absolute;
     top: 1em;
-    right: 0.5em;
+    right: 1em;
     background: none;
     border: none;
     cursor: pointer;
+}
+
+#infobox_maximize:hover,
+#infobox_minimize:hover {
+    filter: drop-shadow(0 0 4px rgb(13, 158, 0));
 }
 
 .fade-enter-active,

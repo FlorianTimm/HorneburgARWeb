@@ -8,7 +8,7 @@
             <h1>{{ t('privacy') }}</h1>
         </template>
         <template #main>
-            <span v-html="t('privacy_html')" id="text"></span>
+            <article v-html="t('privacy_html')" id="text" />
 
             <div class="innen" style="padding:0px;background:transparent;">
                 <p><strong>I. Name und Anschrift des Verantwortlichen</strong><br><br>Der Verantwortliche im Sinne der
@@ -98,7 +98,8 @@
                     gestalten. Einige Elemente unserer Internetseite erfordern es, dass der aufrufende Browser auch nach
                     einem Seitenwechsel identifiziert werden kann.<br>In den Cookies werden dabei folgende Daten
                     gespeichert und übermittelt:<br>(1) Letzter aktivierter Menüpunkt<br>(2) Status aufklickbarer
-                    Bereiche<br>(3) Log-In-Informationen (Sessionbasiert)</p>
+                    Bereiche<br>(3) Log-In-Informationen (Sessionbasiert)
+                </p>
                 <p>(4) Artikel im Warenkorb (bei eCommerce-Nutzung)</p>
                 <p>Zusätzlich zu eigenen Cookies werden bei Bedarf weitere 3rd-Party Cookies verwendet, die Beschreibung
                     erfolgt im jeweiligen Abschnitt.<br><br>2. Rechtsgrundlage für die Datenverarbeitung <br>Die
@@ -168,7 +169,8 @@
                     Vertragspartei der Nutzer ist oder der Durchführung vorvertraglicher Maßnahmen, so ist zusätzliche
                     Rechtsgrundlage für die Verarbeitung der Daten Art. 6 Abs. 1 lit. b DSGVO.<br><br>3. Zweck der
                     Datenverarbeitung<br>Eine Registrierung des Nutzers ist für das Bereithalten bestimmter Inhalte und
-                    Dienstleistungen auf unserer Website erforderlich.</p>
+                    Dienstleistungen auf unserer Website erforderlich.
+                </p>
                 <p><br>4. Dauer der Speicherung<br>Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes
                     ihrer Erhebung nicht mehr erforderlich sind. Dies ist für die während des Registrierungsvorgangs
                     erhobenen Daten der Fall, wenn die Registrierung auf unserer Internetseite aufgehoben oder

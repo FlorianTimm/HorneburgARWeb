@@ -1,32 +1,20 @@
 <template>
-    <DefaultPage>
-        <template #header_left>
-            <button @click="$router.push('/#main')" :title="t('back')"><img src="@/assets/icons/arrow_long.svg"
-                    :alt="t('back')"></button>
-        </template>
-        <template #header_center>
-            <h1>{{ t('artifacts_header') }}</h1>
-        </template>
-        <template #main>
-            <p>{{ t('artifacts_intro') }}</p>
-            <div id="images">
-                <a :href="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key">
-                    <img :src="artifact.getPreviewImage()" :alt="artifact.getName($i18n.locale)" />
-                </a>
-            </div>
-        </template>
-    </DefaultPage>
+    <ListPage :header="t('artifacts_header')" :intro="t('artifacts_intro')">
+        <div id="images">
+            <a :href="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key">
+                <img :src="artifact.getPreviewImage()" :alt="artifact.getName($i18n.locale)" />
+            </a>
+        </div>
+    </ListPage>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { type JsonFile } from '@/func/json';
 import { ArtifactJson } from '@/func/artifacts_json';
+import ListPage from '@/components/ListPage.vue';
 
 import type { Ref } from 'vue';
-import Card from '@/components/Card.vue';
-import Cards from '@/components/Cards.vue';
-import DefaultPage from '@/components/DefaultPage.vue';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -62,6 +50,7 @@ const filteredArtifacts = computed(() => {
 a {
     display: block;
     width: 12em;
+    margin: 1.5em;
     height: auto;
     border-radius: 5px;
     transition: transform 0.3s ease, filter 0.3s ease;

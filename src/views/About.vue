@@ -8,15 +8,9 @@
             <h1>{{ t('about') }}</h1>
         </template>
         <template #main>
-            <LeftRight>
-                <template #left>
-                    <span v-html="t('about_html')"></span>
-                </template>
-                <template #right>
-                    <img src="@/assets/bilder/luftbild.png" :alt="t('image')" class="history-image">
-                    <img src="@/assets/bilder/vr.png" :alt="t('image')" class="history-image">
-                </template>
-            </LeftRight>
+            <TextWithImages :images="images">
+                <article v-html="t('about_html')"></article>
+            </TextWithImages>
         </template>
     </DefaultPage>
 </template>
@@ -24,12 +18,16 @@
 <script setup lang="ts">
 import DefaultPage from '@/components/DefaultPage.vue';
 import { useI18n } from 'vue-i18n';
-import LeftRight from '@/components/LeftRight.vue';
+import TextWithImages from '@/components/TextWithImages.vue';
+import { ref, onMounted } from 'vue';
+import { getImages, type ImageData } from '@/func/imageHelper';
 const { t } = useI18n();
-</script>
 
-<style scoped>
-.history-image {
-    width: 30vw;
-}
-</style>
+const images = ref<ImageData[]>([]);
+
+onMounted(() => {
+    getImages('about').then((data) => {
+        images.value = data;
+    });
+})
+</script>
