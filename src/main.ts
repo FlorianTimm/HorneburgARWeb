@@ -19,7 +19,7 @@ const i18n = createI18n({
   legacy: false,
   // @ts-ignore
   locale: navigator.language || navigator.userLanguage || 'de',
-  fallbackLocale: 'en',
+  fallbackLocale: 'de',
   messages: {
     en: en,
     de: de,

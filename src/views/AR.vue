@@ -13,8 +13,17 @@
     </Header>
 
     <main>
-        <canvas id="ar-container"></canvas>
+        <canvas id="ar-container">
 
+        </canvas>
+        <div id="error">
+            <div>
+                <h3>{{ t('ar_error') }}</h3>
+                <p>{{ t('ar_distance', { distance: distanceToCastle }) }}</p>
+                <router-link to="/orbit" id="link" class="arrow_in_front">{{ t('ar_alternative') }}</router-link>
+                <router-link to="/" id="zumstart">{{ t('ar_error_back') }}</router-link>
+            </div>
+        </div>
         <Infobox :header="infobox_header" :text="infotext" />
 
         <div v-if="ar_overlay" id="ar_overlay">
@@ -28,17 +37,22 @@
                         <td>{{ t('ar_overlay_instruction_1') }}</td>
                     </tr>
                     <tr>
-                        <td><img src="@/assets/icons/reload.svg" :alt="t('ar_overlay_instruction_2')"></td>
+                        <td><img src="@/assets/icons/footprints.svg" :alt="t('ar_overlay_instruction_2')"></td>
                         <td>{{ t('ar_overlay_instruction_2') }}</td>
                     </tr>
                     <tr>
                         <td><img src="@/assets/icons/house.svg" :alt="t('ar_overlay_instruction_3')"></td>
                         <td>{{ t('ar_overlay_instruction_3') }}</td>
                     </tr>
+                    <tr>
+                        <td><img src="@/assets/icons/reload.svg" :alt="t('ar_overlay_instruction_4')"></td>
+                        <td>{{ t('ar_overlay_instruction_4') }}</td>
+                    </tr>
                 </tbody>
             </table>
             <button id="ar_start" @click="ar_overlay = false">{{ t('ar_start') }}</button>
         </div>
+
     </main>
 
 </template>
@@ -56,6 +70,7 @@ import Header from '@/components/Header.vue';
 import Infobox from '@/components/Infobox.vue';
 
 import { useI18n } from 'vue-i18n';
+import type router from '@/router';
 const { t, locale } = useI18n();
 
 let locar: LocAR;
@@ -63,6 +78,7 @@ let locar: LocAR;
 let infotext = ref("");
 let infobox_header = ref("");
 let ar_overlay = ref(true);
+let distanceToCastle = ref(t('ar_distance_placeholder'));
 
 onMounted(async () => {
 
@@ -84,21 +100,29 @@ onMounted(async () => {
 
     locar.on("gpserror", error => {
         toast(`GPS Fehler: Code ${error.code}`);
+        document.getElementById("error")!.style.visibility = "visible";
     });
-
 
     locar.on("gpsupdate", async (ev: { position: GeolocationPosition }, distMoved: number) => {
         toast(`GPS Update: Lat ${ev.position.coords.latitude.toFixed(6)}, Lon ${ev.position.coords.longitude.toFixed(6)}, Accuracy ${ev.position.coords.accuracy}m`);
-        if (firstLocation) {
-            firstLocation = false;
-            loadModels(ev);
+        let dist = getDistance(ev.position.coords.latitude, ev.position.coords.longitude, 53.509736171441112, 9.5873684507624617);
+        console.log(`Entfernung zur Burginsel: ${dist}m`);
+        if (dist > 1500) {
+            distanceToCastle.value = (dist / 1000).toFixed(1) + " km";
+            document.getElementById("error")!.style.visibility = "visible";
+        } else if (dist > 300) {
+            distanceToCastle.value = Math.round(dist) + " m";
+            document.getElementById("error")!.style.visibility = "visible";
+        }
+        else {
+            document.getElementById("error")!.style.visibility = "hidden";
+
+            if (firstLocation) {
+                firstLocation = false;
+                loadModels(ev);
+            }
         }
     });
-
-    if (window.location.search.includes("debug")) {
-        console.debug("Debug mode: Simulating GPS location");
-        locar.fakeGps(53.54025627076634, 10.006360171632716);
-    }
 
     modelSelector(document.getElementById('ar-container')!, app.camera, app.scene, async (name) => {
         console.log("Model selected:", name);
@@ -120,9 +144,14 @@ onMounted(async () => {
     async function loadModels(ev: { position: GeolocationPosition }) {
         let liste = await ModelJson.load_json();
 
-        const { diffLat, diffLong, nearest } = debugPositions(ev);
-        if (nearest)
-            toast(`Nächster Standort: ${nearest.name}`);
+        let diffLat = 0;
+        let diffLong = 0;
+
+        if (window.location.search.includes("debug")) {
+            let d = debugPositions(ev);
+            diffLat = d.diffLat;
+            diffLong = d.diffLong;
+        }
 
         for (let name in liste) {
             let obj = liste[name];
@@ -143,7 +172,7 @@ onMounted(async () => {
         addLight(app.scene)
     }
 
-    function debugPositions(ev: { position: GeolocationPosition }) {
+    function debugPositions(ev: { position: GeolocationPosition }): { diffLat: number, diffLong: number } {
         const locations: {
             name: string;
             longitude: number;
@@ -197,7 +226,7 @@ onMounted(async () => {
             diffLat = nearest.diffLat;
             diffLong = nearest.diffLong;
         }
-        return { diffLat, diffLong, nearest };
+        return { diffLat, diffLong };
     }
 });
 
@@ -250,16 +279,16 @@ onUnmounted(() => {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(calc(-50% + 2em));
     width: 90%;
     max-width: 30em;
-    max-height: 90%;
+    max-height: calc(100% - 5em);
     overflow-y: auto;
     background-color: rgba(255, 255, 255);
     padding: 1.3em;
     border-radius: 0.25em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
+    z-index: 15;
     text-align: left;
     font-weight: 400;
 }
@@ -295,7 +324,8 @@ onUnmounted(() => {
     height: 2em;
 }
 
-#ar_overlay #ar_start {
+#ar_overlay #ar_start,
+#error #zumstart {
     display: block;
     width: 100%;
     padding: 1.25em;
@@ -305,6 +335,30 @@ onUnmounted(() => {
     border-radius: 0.1em;
     cursor: pointer;
     font-weight: 600;
+    text-align: center;
+}
+
+
+#error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    background-color: #EBEDE9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    visibility: hidden;
+}
+
+#error>div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
     text-align: center;
 }
 </style>

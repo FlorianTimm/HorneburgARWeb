@@ -8,5 +8,5 @@ export async function toast(text: string) {
     });
 
     await toast.present(); */
-    console.debug(text);
+    console.log(text);
 }

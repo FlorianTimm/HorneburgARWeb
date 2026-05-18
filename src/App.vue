@@ -131,4 +131,17 @@ hr {
   margin-top: 2em;
   margin-bottom: 4em;
 }
+
+.arrow_in_front::before {
+  content: "";
+  display: inline-block;
+  height: 0.7em;
+  width: 1em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  margin-right: 0.3em;
+  background-image: url('@/assets/icons/arrow_right.svg');
+
+}
 </style>

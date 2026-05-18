@@ -14,8 +14,7 @@
       <Header type="homepage">
         <template #left><img src="../assets/logos/burginsel_wort_bild.svg" alt="Horneburg Logo" /></template>
         <template #right>
-          <router-link to="/about"><img src="@/assets/icons/arrow_right.svg" id="about_link"
-              alt="{{ t('about') }}">&nbsp;{{ t('about') }}</router-link>
+          <router-link to="/about" class="arrow_in_front">{{ t('about') }}</router-link>
         </template>
       </Header>
 
@@ -55,8 +54,8 @@
             Marschdamm 2c, 21640 Horneburg<br />
             {{ t('museum_opening_hours') }}<br />
             {{ t('museum_price') }}<br />
-            <a href="https://handwerksmuseum-horneburg.de/" target="_blank"><img src="@/assets/icons/arrow_right.svg"
-                id="museum_link">&nbsp;handwerksmuseum-horneburg.de</a>
+            <a href="https://handwerksmuseum-horneburg.de/" target="_blank"
+              class="arrow_in_front">handwerksmuseum-horneburg.de</a>
           </div>
         </div>
       </main>

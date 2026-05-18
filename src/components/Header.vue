@@ -79,7 +79,7 @@ header {
 }
 
 #header_ar {
-    z-index: 20;
+    z-index: 30;
     position: absolute;
     top: 0;
 }
