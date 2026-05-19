@@ -48,6 +48,10 @@ export default function fullScreen(src: string, description?: string, event?: Ev
         descriptionDiv.style.transform = 'translateX(-50%)';
         descriptionDiv.style.color = 'white';
         descriptionDiv.style.textAlign = 'center';
+        descriptionDiv.style.backgroundColor = 'rgba(50, 50, 50, 0.2)';
+        descriptionDiv.style.textShadow = '0 0 7px black';
+        descriptionDiv.style.borderRadius = '10px';
+        descriptionDiv.style.boxShadow = '0 0 15px 30px rgba(50, 50, 50, 0.2)';
         div.appendChild(descriptionDiv);
     }
 
