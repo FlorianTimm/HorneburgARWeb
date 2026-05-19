@@ -47,6 +47,8 @@ html {
   background-color: #EBEDE9;
   font-size: 18px;
   color: #000;
+  line-height: 1.6;
+  text-align: left;
 }
 
 * {
@@ -55,8 +57,6 @@ html {
   padding: 0;
   font-family: 'Karla', sans-serif;
   font-weight: 400;
-  text-align: left;
-  line-height: 1.6;
 }
 
 a {
@@ -102,7 +102,25 @@ main>h4,
 article>h4 {
   margin-left: 1em;
   margin-bottom: 0.7em;
+  width: 100%;
   max-width: 1000px;
+}
+
+@media (min-width: 1050px) {
+
+  main>p,
+  article>p,
+  main>h1,
+  main>h2,
+  main>h3,
+  main>h4,
+  article>h1,
+  article>h2,
+  article>h3,
+  article>h4 {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media (max-width: 800px) {
@@ -128,8 +146,7 @@ button {
 hr {
   border: none;
   border-bottom: 2px solid #999;
-  margin-top: 2em;
-  margin-bottom: 4em;
+  margin: 4em -0.5em;
 }
 
 .arrow_in_front::before {

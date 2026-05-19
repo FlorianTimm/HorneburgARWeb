@@ -34,21 +34,20 @@ defineProps<{
 <style scoped>
 .textwithimages {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 4em;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .textwithimages>div {
     display: flex;
     flex-direction: column;
-    justify-content: top;
     gap: 2em;
 }
 
-
-
 .image-container {
-    width: 30vw;
+    width: 100%;
     cursor: pointer;
 }
 
@@ -59,23 +58,18 @@ defineProps<{
 }
 
 img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
 }
 
 #text {
-    max-width: 800px;
-}
-
-#images {
-    max-width: 300px;
+    vertical-align: end;
 }
 
 .image-description {
-    text-align: center;
+    display: block;
     font-size: 0.9em;
-    margin-top: 0.5em;
-    line-height: inherit;
+    line-height: 1.1em;
 }
 
 @media(max-width: 800px) {

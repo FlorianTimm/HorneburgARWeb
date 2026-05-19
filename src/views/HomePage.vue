@@ -269,6 +269,10 @@ main {
   color: rgb(14, 10, 10);
 }
 
+main>* {
+  text-align: left;
+}
+
 #about_link,
 #museum_link {
   display: inline;

@@ -79,6 +79,14 @@ footer {
     }
 }
 
+@media (max-width: 400px) {
+    #footer-logos {
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+}
+
 a:hover {
     text-decoration: underline;
 }

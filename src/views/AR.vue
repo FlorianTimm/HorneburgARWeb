@@ -18,10 +18,12 @@
         </canvas>
         <div id="error">
             <div>
-                <h3>{{ t('ar_error') }}</h3>
-                <p>{{ t('ar_distance', { distance: distanceToCastle }) }}</p>
+                <img src="../assets/grafiken/burginsel.gif" />
+                <h3>{{ t('ar_error', { distance: distanceToCastle }) }}</h3>
                 <router-link to="/orbit" id="link" class="arrow_in_front">{{ t('ar_alternative') }}</router-link>
-                <router-link to="/" id="zumstart">{{ t('ar_error_back') }}</router-link>
+                <router-link to="/#main" id="zumstart">{{ t('ar_error_back') }}</router-link>
+
+                <a @click="beamMeToHorneburg()" id="beaming">{{ t('ar_error_teleport') }}</a>
             </div>
         </div>
         <Infobox :header="infobox_header" :text="infotext" />
@@ -74,27 +76,34 @@ import type router from '@/router';
 const { t, locale } = useI18n();
 
 let locar: LocAR;
+let app: App;
 
 let infotext = ref("");
 let infobox_header = ref("");
 let ar_overlay = ref(true);
 let distanceToCastle = ref(t('ar_distance_placeholder'));
 
-onMounted(async () => {
+let diffLat = 0;
+let diffLong = 0;
 
+let firstLocation = true;
+
+onMounted(async () => {
     let container = document.getElementById('ar-container') as HTMLCanvasElement;
     if (!container) {
         console.error("AR container not found");
         return;
     }
 
-    const app = new App({
+    app = new App({
         cameraOptions: { hFov: 80, near: 0.001, far: 1000 },
         gpsOptions: { gpsMinDistance: 1.5 },
         canvas: container
     });
 
-    let firstLocation = true;
+    firstLocation = true;
+    diffLat = 0;
+    diffLong = 0;
 
     locar = await app.start();
 
@@ -104,24 +113,7 @@ onMounted(async () => {
     });
 
     locar.on("gpsupdate", async (ev: { position: GeolocationPosition }, distMoved: number) => {
-        toast(`GPS Update: Lat ${ev.position.coords.latitude.toFixed(6)}, Lon ${ev.position.coords.longitude.toFixed(6)}, Accuracy ${ev.position.coords.accuracy}m`);
-        let dist = getDistance(ev.position.coords.latitude, ev.position.coords.longitude, 53.509736171441112, 9.5873684507624617);
-        console.log(`Entfernung zur Burginsel: ${dist}m`);
-        if (dist > 1500) {
-            distanceToCastle.value = (dist / 1000).toFixed(1) + " km";
-            document.getElementById("error")!.style.visibility = "visible";
-        } else if (dist > 300) {
-            distanceToCastle.value = Math.round(dist) + " m";
-            document.getElementById("error")!.style.visibility = "visible";
-        }
-        else {
-            document.getElementById("error")!.style.visibility = "hidden";
-
-            if (firstLocation) {
-                firstLocation = false;
-                loadModels(ev);
-            }
-        }
+        gpsUpdate(ev, distMoved);
     });
 
     modelSelector(document.getElementById('ar-container')!, app.camera, app.scene, async (name) => {
@@ -140,96 +132,50 @@ onMounted(async () => {
     });
 
     locar.startGps();
-
-    async function loadModels(ev: { position: GeolocationPosition }) {
-        let liste = await ModelJson.load_json();
-
-        let diffLat = 0;
-        let diffLong = 0;
-
-        if (window.location.search.includes("debug")) {
-            let d = debugPositions(ev);
-            diffLat = d.diffLat;
-            diffLong = d.diffLong;
-        }
-
-        for (let name in liste) {
-            let obj = liste[name];
-
-            if (!obj) continue;
-
-
-            let object = await ModelFetcher.getModel(name);
-            object.rotation.y = Math.PI * obj.rotation / 180;
-
-            locar.add(object,
-                obj.longitude + diffLong,
-                obj.latitude + diffLat,
-                -1.5);
-        }
-        ;
-        // Add illumination to the scene
-        addLight(app.scene)
-    }
-
-    function debugPositions(ev: { position: GeolocationPosition }): { diffLat: number, diffLong: number } {
-        const locations: {
-            name: string;
-            longitude: number;
-            latitude: number;
-            diffLong: number;
-            diffLat: number;
-        }[] = [
-                {
-                    name: 'Uni',
-                    longitude: 10.006360171632716,
-                    latitude: 53.54025627076634,
-                    diffLong: 10.006360171632716 - 9.5873684507624617,
-                    diffLat: 53.54025627076634 - 53.509736171441112
-                },
-                {
-                    name: 'Meckelfeld',
-                    longitude: 10.0282,
-                    latitude: 53.4174,
-                    diffLong: 10.0282 - 9.5873684507624617,
-                    diffLat: 53.4174 - 53.509736171441112
-                },
-                {
-                    name: 'Horneburg',
-                    longitude: 9.5873684507624617,
-                    latitude: 53.509736171441112,
-                    diffLong: 0,
-                    diffLat: 0
-                }
-            ];
-
-        const userLat = ev.position.coords.latitude;
-        const userLon = ev.position.coords.longitude;
-
-        let diffLat = 0;
-        let diffLong = 0;
-
-        // Find nearest location
-        let nearest = locations[0];
-
-
-        let minDist = getDistance(userLat, userLon, locations[0]?.latitude ?? 0, locations[0]?.longitude ?? 0);
-        for (let i = 1; i < locations.length; i++) {
-            const dist = getDistance(userLat, userLon, locations[i]?.latitude ?? 0, locations[i]?.longitude ?? 0);
-            if (dist < minDist) {
-                minDist = dist;
-                nearest = locations[i];
-            }
-        }
-
-        if (nearest) {
-            diffLat = nearest.diffLat;
-            diffLong = nearest.diffLong;
-        }
-        return { diffLat, diffLong };
-    }
 });
 
+async function loadModels() {
+    let liste = await ModelJson.load_json();
+
+    for (let name in liste) {
+        let obj = liste[name];
+
+        if (!obj) continue;
+
+
+        let object = await ModelFetcher.getModel(name);
+        object.rotation.y = Math.PI * obj.rotation / 180;
+
+        locar.add(object,
+            obj.longitude + diffLong,
+            obj.latitude + diffLat,
+            -1.5);
+    }
+
+    addLight(app.scene)
+}
+
+
+function gpsUpdate(ev: { position: GeolocationPosition }, distMoved: number) {
+    let dist = getDistance(ev.position.coords.latitude - diffLat, ev.position.coords.longitude - diffLong, 53.509736171441112, 9.5873684507624617);
+
+    console.log(`Entfernung zur Burginsel: ${dist}m`);
+    if (dist > 1500) {
+        distanceToCastle.value = (dist / 1000).toFixed(1) + " km";
+        document.getElementById("error")!.style.visibility = "visible";
+    } else if (dist > 300) {
+        distanceToCastle.value = Math.round(dist) + " m";
+        document.getElementById("error")!.style.visibility = "visible";
+    }
+    else {
+        document.getElementById("error")!.style.visibility = "hidden";
+
+        if (firstLocation) {
+            firstLocation = false;
+            loadModels();
+        }
+    }
+}
 
 function reload() {
     window.location.reload();
@@ -247,11 +193,22 @@ onUnmounted(() => {
     }
 
     if (locar) {
-        locar.startGps()
+        locar.stopGps();
         locar = null as any;
     }
 
 });
+
+function beamMeToHorneburg() {
+    let pos = locar.getLastKnownLocation()
+    if (!pos) {
+        toast("Aktuelle Position unbekannt. Teleportation fehlgeschlagen.");
+        return;
+    }
+    diffLat = pos.latitude - 53.50970522;
+    diffLong = pos.longitude - 9.58754553;
+    gpsUpdate({ position: { coords: { latitude: pos.latitude, longitude: pos.longitude, accuracy: 10 } } } as any, 0);
+}
 
 </script>
 
@@ -347,10 +304,8 @@ onUnmounted(() => {
     height: 100%;
     z-index: 20;
     background-color: #EBEDE9;
-    display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2em;
     visibility: hidden;
 }
 
@@ -358,8 +313,25 @@ onUnmounted(() => {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(calc(-50% + 2em));
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+#error img {
+    width: 4em;
+    height: auto;
+    margin: 0 auto;
+    filter: invert()
+}
+
+#beaming {
+    color: #777;
+    font-size: 0.7em;
+    line-height: 110%;
+    cursor: pointer;
 }
 </style>
 
