@@ -28,8 +28,8 @@
         </div>
         <Infobox :header="infobox_header" :text="infotext" />
 
-        <div v-if="ar_overlay" id="ar_overlay">
-            <button id="ar_close" @click="ar_overlay = false"><img src="@/assets/icons/close.svg"
+        <div v-if="ar_instruction_overlay && geo_permission == 'granted'" class="ar_overlay">
+            <button id="ar_close" @click="ar_instruction_overlay = false"><img src="@/assets/icons/close.svg"
                     :button="t('close')"></button>
             <h4>{{ t('ar_overlay_header') }}</h4>
             <table>
@@ -52,7 +52,18 @@
                     </tr>
                 </tbody>
             </table>
-            <button id="ar_start" @click="ar_overlay = false">{{ t('ar_start') }}</button>
+            <button id="ar_start" @click="ar_instruction_overlay = false">{{ t('ar_start') }}</button>
+        </div>
+
+        <div v-if="geo_permission != 'granted' || webcam_permission != 'granted'" class="ar_overlay">
+            <h4>{{ t('ar_permission_header') }}</h4>
+            <p v-if="geo_permission != 'denied' && webcam_permission != 'denied'">{{ t('ar_permission_start') }}</p>
+            <p v-else>{{ t('ar_permission_decline') }}</p>
+            <button v-if="geo_permission != 'denied' && webcam_permission != 'denied'" id="ar_start"
+                @click="startAR()">{{
+                    t('ar_start_permissions')
+                }}</button>
+            <router-link to="/orbit" id="link" class="arrow_in_front">{{ t('ar_alternative') }}</router-link>
         </div>
 
     </main>
@@ -72,7 +83,6 @@ import Header from '@/components/Header.vue';
 import Infobox from '@/components/Infobox.vue';
 
 import { useI18n } from 'vue-i18n';
-import type router from '@/router';
 const { t, locale } = useI18n();
 
 let locar: LocAR;
@@ -80,7 +90,9 @@ let app: App;
 
 let infotext = ref("");
 let infobox_header = ref("");
-let ar_overlay = ref(true);
+let ar_instruction_overlay = ref(false);
+let geo_permission = ref<PermissionState>('prompt');
+let webcam_permission = ref<PermissionState>('prompt');
 let distanceToCastle = ref(t('ar_distance_placeholder'));
 
 let diffLat = 0;
@@ -89,6 +101,53 @@ let diffLong = 0;
 let firstLocation = true;
 
 onMounted(async () => {
+    firstLocation = true;
+    diffLat = 0;
+    diffLong = 0;
+    navigator.permissions.query({ name: "geolocation" }).then(result => {
+        geo_permission.value = result.state;
+        if (result.state === "granted" && webcam_permission.value === "granted") {
+            startAR();
+        }
+    });
+    (await navigator.permissions.query({ name: "geolocation" })).addEventListener('change', function () {
+        console.log("Geolocation permission state changed:", this.state);
+        geo_permission.value = this.state;
+        if (this.state === "granted" && webcam_permission.value === "granted") {
+            startAR();
+        }
+    });
+
+    navigator.permissions.query({ name: "camera" }).then(result => {
+        webcam_permission.value = result.state;
+        if (result.state === "granted" && geo_permission.value === "granted") {
+            startAR();
+        }
+    });
+    (await navigator.permissions.query({ name: "camera" })).addEventListener('change', function () {
+        console.log("Camera permission state changed:", this.state);
+        webcam_permission.value = this.state;
+        if (this.state === "granted" && geo_permission.value === "granted") {
+            startAR();
+        }
+    });
+
+});
+
+function checkARSupport() {
+    if (!('xr' in navigator)) {
+        toast("WebXR wird von diesem Gerät nicht unterstützt.");
+        return false;
+    }
+    return true;
+}
+
+async function startAR() {
+    if (!checkARSupport()) {
+        console.error("AR not supported on this device");
+        return;
+    }
+
     let container = document.getElementById('ar-container') as HTMLCanvasElement;
     if (!container) {
         console.error("AR container not found");
@@ -100,16 +159,12 @@ onMounted(async () => {
         gpsOptions: { gpsMinDistance: 1.5 },
         canvas: container
     });
-
-    firstLocation = true;
-    diffLat = 0;
-    diffLong = 0;
-
     locar = await app.start();
 
     locar.on("gpserror", error => {
         toast(`GPS Fehler: Code ${error.code}`);
-        document.getElementById("error")!.style.visibility = "visible";
+        //document.getElementById("error")!.style.visibility = "visible";
+        geo_permission.value = 'denied';
     });
 
     locar.on("gpsupdate", async (ev: { position: GeolocationPosition }, distMoved: number) => {
@@ -132,7 +187,9 @@ onMounted(async () => {
     });
 
     locar.startGps();
-});
+
+    ar_instruction_overlay.value = true;
+};
 
 async function loadModels() {
     let liste = await ModelJson.load_json();
@@ -185,6 +242,10 @@ onUnmounted(() => {
     // Clean up resources, event listeners, etc. if needed
     console.log("AR.vue deactivated");
 
+    stop()
+});
+
+function stop() {
     let video = document.querySelector("video");
     if (video) {
         video.pause();
@@ -196,8 +257,7 @@ onUnmounted(() => {
         locar.stopGps();
         locar = null as any;
     }
-
-});
+}
 
 function beamMeToHorneburg() {
     let pos = locar.getLastKnownLocation()
@@ -232,7 +292,7 @@ function beamMeToHorneburg() {
     overflow: hidden;
 }
 
-#ar_overlay {
+.ar_overlay {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -250,11 +310,11 @@ function beamMeToHorneburg() {
     font-weight: 400;
 }
 
-#ar_overlay h4 {
+.ar_overlay h4 {
     margin-bottom: 1em;
 }
 
-#ar_overlay #ar_close {
+.ar_overlay #ar_close {
     position: absolute;
     top: 1em;
     right: 1em;
@@ -264,24 +324,24 @@ function beamMeToHorneburg() {
     cursor: pointer;
 }
 
-#ar_overlay table {
+.ar_overlay table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 0.9375em;
 }
 
-#ar_overlay table td {
+.ar_overlay table td {
     padding: 1em;
     vertical-align: middle;
     line-height: 1.5;
 }
 
-#ar_overlay table td img {
+.ar_overlay table td img {
     width: 2em;
     height: 2em;
 }
 
-#ar_overlay #ar_start,
+.ar_overlay #ar_start,
 #error #zumstart {
     display: block;
     width: 100%;
