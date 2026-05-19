@@ -119,12 +119,10 @@ header {
 #header_default {
     height: 6em;
     margin-top: 1em;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     grid-template-columns: 3fr 1fr;
     align-items: end;
 }
-
-#left {}
 
 #center {
     display: flex;

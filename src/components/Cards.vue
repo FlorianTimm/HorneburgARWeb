@@ -6,7 +6,6 @@
 
 <style scoped>
 div {
-    text-align: center;
     align-items: flex-start;
     justify-content: center;
     align-items: center;

@@ -20,13 +20,12 @@
             <div>
                 <img src="../assets/grafiken/burginsel.gif" />
                 <h3>{{ t('ar_error', { distance: distanceToCastle }) }}</h3>
-                <router-link to="/orbit" id="link" class="arrow_in_front">{{ t('ar_alternative') }}</router-link>
                 <router-link to="/#main" id="zumstart">{{ t('ar_error_back') }}</router-link>
 
                 <a @click="beamMeToHorneburg()" id="beaming">{{ t('ar_error_teleport') }}</a>
             </div>
         </div>
-        <Infobox :header="infobox_header" :text="infotext" />
+        <Infobox :header="infobox_header" :subheader="infobox_subheader" :text="infotext" />
 
         <div v-if="ar_instruction_overlay && geo_permission == 'granted' && webcam_permission == 'granted'"
             class="ar_overlay">
@@ -91,6 +90,7 @@ let app: App;
 
 let infotext = ref("");
 let infobox_header = ref("");
+let infobox_subheader = ref("");
 let ar_instruction_overlay = ref(false);
 let geo_permission = ref<PermissionState | undefined>(undefined);
 let webcam_permission = ref<PermissionState | undefined>(undefined);
@@ -178,10 +178,12 @@ async function startAR() {
             toast(ganzerName);
         }
         infobox_header.value = ganzerName || '';
+        infobox_subheader.value = liste[name]?.getSubheader(locale.value) || '';
         infotext.value = liste[name]?.getDescription(locale.value) || '';
     }, () => {
         console.log("No model selected");
         infobox_header.value = '';
+        infobox_subheader.value = '';
         infotext.value = '';
     });
 
@@ -344,7 +346,8 @@ function beamMeToHorneburg() {
 .ar_overlay #ar_start,
 #error #zumstart {
     display: block;
-    width: 100%;
+    width: auto;
+    margin: 1em auto;
     padding: 1.25em;
     background-color: #4A594A;
     color: white;

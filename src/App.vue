@@ -111,21 +111,6 @@ article>h4 {
   max-width: 1000px;
 }
 
-@media (min-width: 1050px) {
-
-  article>p,
-  main>h1,
-  main>h2,
-  main>h3,
-  main>h4,
-  article>h1,
-  article>h2,
-  article>h3,
-  article>h4 {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
 
 @media (max-width: 800px) {
 

@@ -3,6 +3,7 @@ import { JsonEntry, type JsonFile } from './json';
 
 
 export class ModelJson extends JsonEntry {
+    private _subheader: { [key: string]: string };
     private _path: string;
     private _svgPath: string;
     private _longitude: number;
@@ -15,8 +16,9 @@ export class ModelJson extends JsonEntry {
 
     private static _cache?: Promise<JsonFile<ModelJson>>;
 
-    constructor(name: { [key: string]: string }, description: { [key: string]: string }, path: string, svg_path: string, longitude: number, latitude: number, rotation: number, breite: number, tiefe: number, hoehe: number, show_in_list: boolean = true) {
+    constructor(name: { [key: string]: string }, subheader: { [key: string]: string }, description: { [key: string]: string }, path: string, svg_path: string, longitude: number, latitude: number, rotation: number, breite: number, tiefe: number, hoehe: number, show_in_list: boolean = true) {
         super(name, description);
+        this._subheader = subheader;
         this._path = path;
         this._svgPath = svg_path;
         this._longitude = longitude;
@@ -65,6 +67,11 @@ export class ModelJson extends JsonEntry {
         return this._show_in_list;
     }
 
+    getSubheader(locale: string = 'en'): string {
+        locale = locale.split('-')[0] ?? 'de'; // Nur die Sprache, ohne Region
+        return this._subheader[locale] || this._subheader['en'] || Object.values(this._subheader)[0] || 'No subheader available.';
+    }
+
     public static async load_json(): Promise<JsonFile<ModelJson>> {
         if (!this._cache) {
             this._cache = get('/modelle/modelle.geojson')
@@ -76,6 +83,7 @@ export class ModelJson extends JsonEntry {
                         let geom = feature.geometry;
                         liste[prop.id] = new ModelJson(
                             prop.name,
+                            prop.subheader,
                             prop.description,
                             prop.path,
                             prop.svg_path,
@@ -100,6 +108,7 @@ export type GeoJsonFeature = {
     properties: {
         id: string;
         name: { [key: string]: string };
+        subheader: { [key: string]: string };
         description: { [key: string]: string };
         path: string;
         rotation: number;

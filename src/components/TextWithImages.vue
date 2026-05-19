@@ -68,8 +68,8 @@ img {
 
 .image-description {
     display: block;
-    font-size: 0.9em;
-    line-height: 1.1em;
+    font-size: 0.85em;
+    line-height: 1.4em;
 }
 
 @media(max-width: 800px) {
@@ -81,5 +81,15 @@ img {
     #images>* {
         width: 100%;
     }
+}
+</style>
+
+<style>
+.textwithimages #text h3 {
+    margin-top: 2em;
+}
+
+.textwithimages #text h3:first-child {
+    margin-top: 0em;
 }
 </style>

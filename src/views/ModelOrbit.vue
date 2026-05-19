@@ -20,7 +20,7 @@
             <div id="orbit-container"></div>
             <Infobox
                 :header="header ? header : (modelle ? (model == 'alle' ? t('all_models') : modelle[model]?.getName($i18n.locale)) : '') ?? ''"
-                :text="infotext" />
+                :subheader="subheader" :text="infotext" />
         </template>
     </DefaultPage>
 </template>
@@ -49,6 +49,7 @@ const modelle: Ref<JsonFile<ModelJson>> = ref({});
 let infobox = ref(false);
 let autoActivated = ref(false);
 let header = ref("");
+let subheader = ref("");
 let infotext = ref("");
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -153,6 +154,7 @@ onMounted(async () => {
         modelSelector(container, camera, scene, (name) => {
             console.log("Model selected:", name);
             header.value = modelle.value[name]?.getName(locale.value) ?? '';
+            subheader.value = modelle.value[name]?.getSubheader(locale.value) ?? '';
             infotext.value = modelle.value[name]?.getDescription(locale.value) ?? `<p>${t('all_models_description')}</p>`;
             if (!infobox.value) {
                 infobox.value = true;
@@ -160,6 +162,7 @@ onMounted(async () => {
             }
         }, () => {
             header.value = "";
+            subheader.value = "";
             infotext.value = t('all_models_description');
             if (autoActivated.value) {
                 infobox.value = false;

@@ -6,7 +6,13 @@
                     src="@/assets/icons/minus.svg" :title="t('minimize')"></button>
             <button id="infobox_maximize" v-if="!visible && text" @click="visible = true"><img
                     src="@/assets/icons/plus.svg" :title="t('maximize')"></button>
-            <h3 v-if="header">{{ header }}</h3>
+
+            <div id="infobox_header">
+                <h3 v-if="subheader && header">{{ header }}</h3>
+                <h4 v-else-if="header">{{ header }}</h4>
+                <h4 v-if="subheader">{{ subheader }}</h4>
+            </div>
+
             <span v-if="visible && text" v-html="text"></span>
 
         </div>
@@ -21,6 +27,7 @@ const { t } = useI18n()
 
 let props = defineProps<{
     header: string;
+    subheader: string;
     text: string;
 }>()
 
@@ -51,16 +58,25 @@ onMounted(() => {
     max-height: calc(100vh - 2 * var(--abstand) - 4em);
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 1.5em 1.5em 1em;
+    padding: 1.2em 1.2em 0em 1.2em;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 10;
     text-align: left;
 }
 
+#infobox #infobox_header,
+#infobox span {
+    margin-bottom: 1.2em;
+    display: block;
+}
+
 #infobox h3 {
-    margin-top: 0;
-    margin-bottom: 0.5em;
+    font-size: 0.8em !important;
+}
+
+#infobox h4 {
+    font-size: 1.1em !important;
 }
 
 @media (max-width: 800px) {
