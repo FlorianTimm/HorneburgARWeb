@@ -28,7 +28,8 @@
         </div>
         <Infobox :header="infobox_header" :text="infotext" />
 
-        <div v-if="ar_instruction_overlay && geo_permission == 'granted'" class="ar_overlay">
+        <div v-if="ar_instruction_overlay && geo_permission == 'granted' && webcam_permission == 'granted'"
+            class="ar_overlay">
             <button id="ar_close" @click="ar_instruction_overlay = false"><img src="@/assets/icons/close.svg"
                     :button="t('close')"></button>
             <h4>{{ t('ar_overlay_header') }}</h4>
@@ -72,7 +73,7 @@
 
 <script setup lang="ts">
 import { App, type LocAR } from 'locar';
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, watch } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
 import { toast } from '@/func/toast';
 import { addLight, getDistance, modelSelector } from '@/func/threed';
@@ -91,8 +92,9 @@ let app: App;
 let infotext = ref("");
 let infobox_header = ref("");
 let ar_instruction_overlay = ref(false);
-let geo_permission = ref<PermissionState>('prompt');
-let webcam_permission = ref<PermissionState>('prompt');
+let geo_permission = ref<PermissionState | undefined>(undefined);
+let webcam_permission = ref<PermissionState | undefined>(undefined);
+let started = false;
 let distanceToCastle = ref(t('ar_distance_placeholder'));
 
 let diffLat = 0;
@@ -104,50 +106,49 @@ onMounted(async () => {
     firstLocation = true;
     diffLat = 0;
     diffLong = 0;
+
+    watch(webcam_permission, () => {
+        console.log("Webcam permission changed:", webcam_permission.value);
+    });
+    watch(geo_permission, () => {
+        console.log("Geolocation permission changed:", geo_permission.value);
+    });
     navigator.permissions.query({ name: "geolocation" }).then(result => {
         geo_permission.value = result.state;
-        if (result.state === "granted" && webcam_permission.value === "granted") {
-            startAR();
-        }
+        checkARSupport();
     });
+
     (await navigator.permissions.query({ name: "geolocation" })).addEventListener('change', function () {
-        console.log("Geolocation permission state changed:", this.state);
         geo_permission.value = this.state;
-        if (this.state === "granted" && webcam_permission.value === "granted") {
-            startAR();
-        }
+        checkARSupport();
     });
 
     navigator.permissions.query({ name: "camera" }).then(result => {
         webcam_permission.value = result.state;
-        if (result.state === "granted" && geo_permission.value === "granted") {
-            startAR();
-        }
+        checkARSupport();
     });
     (await navigator.permissions.query({ name: "camera" })).addEventListener('change', function () {
-        console.log("Camera permission state changed:", this.state);
         webcam_permission.value = this.state;
-        if (this.state === "granted" && geo_permission.value === "granted") {
-            startAR();
-        }
+        checkARSupport();
     });
+
+
 
 });
 
 function checkARSupport() {
-    if (!('xr' in navigator)) {
-        toast("WebXR wird von diesem Gerät nicht unterstützt.");
-        return false;
+    if (geo_permission.value == 'granted' && webcam_permission.value == 'granted') {
+        startAR();
+    } else if (geo_permission.value == 'denied' || webcam_permission.value == 'denied') {
+        stopAR();
     }
-    return true;
 }
 
 async function startAR() {
-    if (!checkARSupport()) {
-        console.error("AR not supported on this device");
+    if (started) {
         return;
     }
-
+    started = true;
     let container = document.getElementById('ar-container') as HTMLCanvasElement;
     if (!container) {
         console.error("AR container not found");
@@ -163,7 +164,6 @@ async function startAR() {
 
     locar.on("gpserror", error => {
         toast(`GPS Fehler: Code ${error.code}`);
-        //document.getElementById("error")!.style.visibility = "visible";
         geo_permission.value = 'denied';
     });
 
@@ -242,10 +242,10 @@ onUnmounted(() => {
     // Clean up resources, event listeners, etc. if needed
     console.log("AR.vue deactivated");
 
-    stop()
+    stopAR()
 });
 
-function stop() {
+function stopAR() {
     let video = document.querySelector("video");
     if (video) {
         video.pause();
@@ -257,6 +257,7 @@ function stop() {
         locar.stopGps();
         locar = null as any;
     }
+    started = false;
 }
 
 function beamMeToHorneburg() {
