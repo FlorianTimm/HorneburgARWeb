@@ -22,6 +22,11 @@ ModelFetcher.preload();
   src: url('@/assets/font/Karla/Karla-VariableFont_wght.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Karla italic';
+  src: url('@/assets/font/Karla/Karla-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
 :root {
   --margin-sides: 3em;
 }
@@ -108,7 +113,6 @@ article>h4 {
 
 @media (min-width: 1050px) {
 
-  main>p,
   article>p,
   main>h1,
   main>h2,

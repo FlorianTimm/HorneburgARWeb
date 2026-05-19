@@ -164,7 +164,6 @@ async function startAR() {
 
     locar.on("gpserror", error => {
         toast(`GPS Fehler: Code ${error.code}`);
-        geo_permission.value = 'denied';
     });
 
     locar.on("gpsupdate", async (ev: { position: GeolocationPosition }, distMoved: number) => {

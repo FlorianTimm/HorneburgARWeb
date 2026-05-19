@@ -32,6 +32,6 @@ defineProps<{
 
 <style scoped>
 #intro {
-    font-style: italic;
+    font-family: 'Karla italic', sans-serif;
 }
 </style>

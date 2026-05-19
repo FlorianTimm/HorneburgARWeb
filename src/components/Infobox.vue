@@ -51,7 +51,7 @@ onMounted(() => {
     max-height: calc(100vh - 2 * var(--abstand) - 4em);
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 2.5em 1.5em 1em;
+    padding: 1.5em 1.5em 1em;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 10;
