@@ -54,6 +54,7 @@ html {
   color: #000;
   line-height: 1.6;
   text-align: left;
+  hyphens: auto;
 }
 
 * {

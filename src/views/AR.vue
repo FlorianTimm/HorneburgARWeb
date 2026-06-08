@@ -380,7 +380,9 @@ function beamMeToHorneburg() {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 1.5em;
+    gap: 1em;
+    width: 80%;
+    max-width: 25em;
 }
 
 #error img {
@@ -391,9 +393,8 @@ function beamMeToHorneburg() {
 }
 
 #beaming {
-    color: #777;
+    text-decoration: underline;
     font-size: 0.7em;
-    line-height: 110%;
     cursor: pointer;
 }
 </style>

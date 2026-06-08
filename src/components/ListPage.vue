@@ -33,5 +33,7 @@ defineProps<{
 <style scoped>
 #intro {
     font-family: 'Karla italic', sans-serif;
+    margin-left: 0;
+    margin-top: -1em;
 }
 </style>

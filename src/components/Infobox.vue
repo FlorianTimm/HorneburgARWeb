@@ -2,18 +2,21 @@
     <transition name="fade">
 
         <div id="infobox" v-if="text || header">
-            <button id="infobox_minimize" v-if="visible && text" @click="visible = false"><img
-                    src="@/assets/icons/minus.svg" :title="t('minimize')"></button>
-            <button id="infobox_maximize" v-if="!visible && text" @click="visible = true"><img
-                    src="@/assets/icons/plus.svg" :title="t('maximize')"></button>
+
 
             <div id="infobox_header">
-                <h3 v-if="subheader && header">{{ header }}</h3>
-                <h4 v-else-if="header">{{ header }}</h4>
-                <h4 v-if="subheader">{{ subheader }}</h4>
+                <div id="infobox_header_left">
+                    <h3 v-if="subheader && header">{{ header }}</h3>
+                    <h4 v-else-if="header">{{ header }}</h4>
+                    <h4 v-if="subheader">{{ subheader }}</h4>
+                </div>
+                <button id="infobox_minimize" v-if="visible && text" @click="visible = false"><img
+                        src="@/assets/icons/minus.svg" :title="t('minimize')"></button>
+                <button id="infobox_maximize" v-if="!visible && text" @click="visible = true"><img
+                        src="@/assets/icons/plus.svg" :title="t('maximize')"></button>
             </div>
 
-            <span v-if="visible && text" v-html="text"></span>
+            <div v-if="visible && text" v-html="text" id="infobox_text"></div>
 
         </div>
     </transition>
@@ -63,12 +66,21 @@ onMounted(() => {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 10;
     text-align: left;
+    display: grid;
+    grid-template-rows: auto 1fr;
 }
 
 #infobox #infobox_header,
-#infobox span {
+#infobox #infobox_text {
     margin-bottom: 1.2em;
+
+}
+
+#infobox #infobox_text {
+    overflow-y: auto;
     display: block;
+    padding-right: 1em;
+    margin-right: -1em;
 }
 
 #infobox h3 {
@@ -92,14 +104,28 @@ onMounted(() => {
     }
 }
 
+#infobox_header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75em;
+}
+
+#infobox_header_left>h3 {
+    margin-bottom: 0.7em;
+}
+
+#infobox_header_left>h4 {
+    margin-bottom: 0;
+}
+
 #infobox_maximize,
 #infobox_minimize {
-    position: absolute;
-    top: 1em;
-    right: 1em;
+    right: 0.5em;
+    vertical-align: middle;
     background: none;
     border: none;
     cursor: pointer;
+    margin-right: 0.75em;
 }
 
 #infobox_maximize:hover,
@@ -122,5 +148,9 @@ onMounted(() => {
 #infobox h4 {
     margin-top: 0;
     margin-bottom: 10px;
+}
+
+#infobox_text p {
+    margin-bottom: 0.7em;
 }
 </style>

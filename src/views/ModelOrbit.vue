@@ -17,10 +17,11 @@
             </div>
         </template>
         <template #fullscreen>
-            <div id="orbit-container"></div>
+            <div id="orbit-container"><img src="@/assets/icons/drehen.svg" id="icon_drehen" /></div>
             <Infobox
                 :header="header ? header : (modelle ? (model == 'alle' ? t('all_models') : modelle[model]?.getName($i18n.locale)) : '') ?? ''"
                 :subheader="subheader" :text="infotext" />
+
         </template>
     </DefaultPage>
 </template>
@@ -276,5 +277,14 @@ onUnmounted(() => {
 #vorzurueck {
     display: flex;
     gap: 0.5em;
+}
+
+#icon_drehen {
+    position: absolute;
+    top: 6em;
+    left: 2em;
+
+    width: 1.7em;
+    height: 1.7em;
 }
 </style>

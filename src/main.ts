@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import { watch } from 'vue'
 
 import en from './locales/en.json';
 import de from './locales/de.json';
@@ -20,6 +21,7 @@ const i18n = createI18n({
   // @ts-ignore
   locale: navigator.language || navigator.userLanguage || 'de',
   fallbackLocale: 'de',
+  seo: true,
   messages: {
     en: en,
     de: de,
@@ -27,6 +29,11 @@ const i18n = createI18n({
     nds: nds
   },
 });
+document.documentElement.setAttribute('lang', i18n.global.locale.value)
+
+watch(() => i18n.global.locale, (newLocale) => {
+  document.documentElement.setAttribute('lang', newLocale.value)
+})
 
 const app = createApp(App)
 

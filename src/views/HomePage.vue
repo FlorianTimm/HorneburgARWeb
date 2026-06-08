@@ -218,7 +218,7 @@ section {
 }
 
 #subheader {
-  margin: 0 auto;
+  margin: 1em auto 0;
   width: 100%;
   text-align: center;
   font-size: 1.5em;
@@ -227,7 +227,6 @@ section {
 @media (max-width: 800px) {
   #subheader {
     font-size: 1.2em;
-    margin: 0 auto;
   }
 }
 

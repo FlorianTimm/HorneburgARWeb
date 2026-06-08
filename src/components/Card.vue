@@ -62,9 +62,11 @@ a {
     display: block;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 750px) {
     a {
         margin: 1em 0;
+        width: 100%;
+        max-width: 20em;
     }
 }
 
