@@ -16,6 +16,10 @@
             {
                 "small": "/artifacts/small/1_philippstaler_2.png",
                 "large": "/artifacts/large/1_philippstaler_2.png"
+            },
+            {
+                "small": "/artifacts/extra_caption/1_philipp.svg",
+                "large": "/artifacts/extra_caption/1_philipp.svg"
             }
         ],
         "extra": [
@@ -75,6 +79,10 @@
             {
                 "small": "/artifacts/small/4_schwertgurtanhanger.png",
                 "large": "/artifacts/large/4_schwertgurtanhanger.png"
+            },
+            {
+                "small": "/artifacts/extra_caption/4_soldat.svg",
+                "large": "/artifacts/extra_caption/4_soldat.svg"
             }
         ],
         "extra": [
@@ -94,6 +102,10 @@
             {
                 "small": "/artifacts/small/5_steinzeugkrug.png",
                 "large": "/artifacts/large/5_steinzeugkrug.png"
+            },
+            {
+                "small": "/artifacts/extra_caption/5_kanne.svg",
+                "large": "/artifacts/extra_caption/5_kanne.svg"
             }
         ],
         "extra": [
@@ -113,6 +125,10 @@
             {
                 "small": "/artifacts/small/6_tabakpfeifen.png",
                 "large": "/artifacts/large/6_tabakpfeifen.png"
+            },
+            {
+                "small": "/artifacts/extra_caption/6_pfeife.svg",
+                "large": "/artifacts/extra_caption/6_pfeife.svg"
             }
         ],
         "extra": [

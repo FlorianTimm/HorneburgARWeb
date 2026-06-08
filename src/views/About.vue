@@ -11,12 +11,14 @@
             <TextWithImages :images="images">
                 <article v-html="t('about_html')"></article>
             </TextWithImages>
+            <ImgSources :sources="t('about_sources_html')" />
         </template>
     </DefaultPage>
 </template>
 
 <script setup lang="ts">
 import DefaultPage from '@/components/DefaultPage.vue';
+import ImgSources from '@/components/ImgSources.vue';
 import { useI18n } from 'vue-i18n';
 import TextWithImages from '@/components/TextWithImages.vue';
 import { ref, onMounted } from 'vue';
