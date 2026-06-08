@@ -55,6 +55,7 @@ html {
   line-height: 1.6;
   text-align: left;
   hyphens: auto;
+  hyphenate-limit-chars: 12 4 4;
 }
 
 * {
@@ -106,7 +107,7 @@ main>h3,
 article>h3,
 main>h4,
 article>h4 {
-  margin-left: 1em;
+  margin-left: 1rem;
   margin-bottom: 0.7em;
   width: 100%;
   max-width: 1000px;

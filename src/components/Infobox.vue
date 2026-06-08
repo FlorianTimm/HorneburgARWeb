@@ -58,6 +58,7 @@ onMounted(() => {
     min-width: 15em;
     max-width: 40%;
     min-height: 3em;
+    max-height: 90%;
     max-height: calc(100vh - 2 * var(--abstand) - 4em);
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.95);
@@ -97,7 +98,6 @@ onMounted(() => {
         max-width: none;
         left: 5%;
         right: 5%;
-        top: inherit;
         bottom: 1em;
         margin: 0px;
         box-sizing: border-box;

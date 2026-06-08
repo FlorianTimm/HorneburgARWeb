@@ -117,7 +117,7 @@ header {
 }
 
 #header_default {
-    height: 6em;
+    height: 5em;
     margin-top: 1em;
     margin-bottom: 1em;
     grid-template-columns: 3fr 1fr;
@@ -169,6 +169,6 @@ header {
 
 #header_default #center h1 {
     font-size: 1.5em;
-    margin-bottom: 1em;
+    margin-bottom: 0;
 }
 </style>

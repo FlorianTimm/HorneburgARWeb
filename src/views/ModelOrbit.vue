@@ -183,6 +183,7 @@ onMounted(async () => {
         camera.position.set((entry?.breite ?? 0) * 2, (entry?.hoehe ?? 0) * .6, entry?.tiefe ?? 0);
 
         infotext.value = modelle.value[model]?.getDescription(locale.value) ?? '';
+        subheader.value = modelle.value[model]?.getSubheader(locale.value) ?? '';
 
     }
 

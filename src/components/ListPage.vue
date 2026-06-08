@@ -36,4 +36,8 @@ defineProps<{
     margin-left: 0;
     margin-top: -1em;
 }
+
+h1 {
+    margin-bottom: 0em;
+}
 </style>
