@@ -70,7 +70,7 @@ switch (props.type) {
 
 <style scoped>
 header {
-    height: 4em;
+    height: 4rem;
     display: grid;
     align-items: center;
     background-color: v-bind(background);
@@ -91,7 +91,7 @@ header {
     align-items: center;
     border: none;
     border-bottom: 2px solid #999;
-    padding-top: 1.5em;
+    padding-top: 1.5rem;
 }
 
 @media (max-width: 800px) {
@@ -110,16 +110,16 @@ header {
 #header_ar {
     width: 100%;
     grid-template-columns: auto 1fr auto;
-    gap: 2em;
+    gap: 2rem;
     margin: 0;
     padding: 0 var(--margin-sides);
     align-items: center;
 }
 
 #header_default {
-    height: 5em;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    height: 5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     grid-template-columns: 3fr 1fr;
     align-items: end;
 }
@@ -141,7 +141,7 @@ header {
 
 #left_container #left {
     align-items: flex-start;
-    margin-bottom: 0.3em;
+    margin-bottom: 0.3rem;
     z-index: 10;
 }
 
@@ -164,11 +164,11 @@ header {
 #header_homepage #right h1,
 #header_ar #center h1,
 #header_object #center h1 {
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 #header_default #center h1 {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     margin-bottom: 0;
 }
 </style>

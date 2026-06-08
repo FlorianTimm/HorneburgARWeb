@@ -48,7 +48,7 @@ onUnmounted(() => {
 
 <style lang="css" scoped>
 #map {
-    font-size: 0.8em;
+    font-size: 0.7rem;
     max-width: 100%;
     overflow: hidden;
 

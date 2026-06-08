@@ -21,6 +21,6 @@ const { t } = useI18n();
 
 <style scoped>
 #text {
-    margin-top: 1em;
+    margin-top: 1rem;
 }
 </style>

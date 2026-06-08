@@ -44,13 +44,13 @@ const filteredArtifacts = computed(() => {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 2em;
+    margin-top: 2rem;
 }
 
 a {
     display: block;
-    width: 12em;
-    margin: 1.5em;
+    width: 12rem;
+    margin: 1.5rem;
     height: auto;
     border-radius: 5px;
     transition: transform 0.3s ease, filter 0.3s ease;

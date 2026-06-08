@@ -35,10 +35,10 @@ a {
     color: #333;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 20em;
-    height: 20em;
-    margin: 1.5em;
-    padding: 1em;
+    width: 20rem;
+    height: 20rem;
+    margin: 1.5rem;
+    padding: 1rem;
     transition: background-color 0.3s ease;
     background-color: #fff;
     cursor: pointer;
@@ -64,9 +64,9 @@ a {
 
 @media (max-width: 750px) {
     a {
-        margin: 1em 0;
+        margin: 1rem 0;
         width: 100%;
-        max-width: 20em;
+        max-width: 20rem;
     }
 }
 

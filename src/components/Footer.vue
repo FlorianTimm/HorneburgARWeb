@@ -35,16 +35,16 @@ const { t } = useI18n();
 footer {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    gap: 2em;
+    gap: 1.6rem;
     width: 100%;
     align-items: center;
     float: none;
     clear: both;
     background-color: #fff;
     box-sizing: border-box;
-    padding: 1em var(--margin-sides);
+    padding: 1rem var(--margin-sides);
     text-align: left;
-    font-size: 0.8em;
+    font-size: 0.8rem;
 }
 
 #footer-text {
@@ -54,13 +54,13 @@ footer {
 #footer-logos {
     display: grid;
     grid-template-columns: repeat(3, auto);
-    gap: 2em;
+    gap: 1.6rem;
     justify-content: center;
 }
 
 #footer-links {
     display: grid;
-    gap: 2em;
+    gap: 1.6rem;
     grid-template-columns: auto auto;
 }
 
@@ -98,6 +98,6 @@ a:hover img {
 footer img {
     filter: grayscale(100%) contrast(80%) brightness(140%);
     transition: filter 0.3s;
-    height: 3em;
+    height: 2.4rem;
 }
 </style>

@@ -277,15 +277,15 @@ onUnmounted(() => {
 
 #vorzurueck {
     display: flex;
-    gap: 0.5em;
+    gap: 0.5rem;
 }
 
 #icon_drehen {
     position: absolute;
-    top: 6em;
-    left: 2em;
+    top: 6rem;
+    left: 2rem;
 
-    width: 1.7em;
-    height: 1.7em;
+    width: 1.7rem;
+    height: 1.7rem;
 }
 </style>

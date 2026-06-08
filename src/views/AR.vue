@@ -300,12 +300,12 @@ function beamMeToHorneburg() {
     left: 50%;
     transform: translateX(-50%) translateY(calc(-50% + 2em));
     width: 90%;
-    max-width: 30em;
+    max-width: 30rem;
     max-height: calc(100% - 5em);
     overflow-y: auto;
     background-color: rgba(255, 255, 255);
-    padding: 1.3em;
-    border-radius: 0.25em;
+    padding: 1.3rem;
+    border-radius: 0.25rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 15;
     text-align: left;
@@ -313,46 +313,46 @@ function beamMeToHorneburg() {
 }
 
 .ar_overlay h4 {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 }
 
 .ar_overlay #ar_close {
     position: absolute;
-    top: 1em;
-    right: 1em;
+    top: 1rem;
+    right: 1rem;
     background: none;
     border: none;
-    font-size: 1em;
+    font-size: 1rem;
     cursor: pointer;
 }
 
 .ar_overlay table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 0.9375em;
+    margin-bottom: 0.9375rem;
 }
 
 .ar_overlay table td {
-    padding: 1em;
+    padding: 1rem;
     vertical-align: middle;
     line-height: 1.5;
 }
 
 .ar_overlay table td img {
-    width: 2em;
-    height: 2em;
+    width: 2rem;
+    height: 2rem;
 }
 
 .ar_overlay #ar_start,
 #error #zumstart {
     display: block;
     width: auto;
-    margin: 1em auto;
-    padding: 1.25em;
+    margin: 1rem auto;
+    padding: 1.25rem;
     background-color: #4A594A;
     color: white;
     border: none;
-    border-radius: 0.1em;
+    border-radius: 0.1rem;
     cursor: pointer;
     font-weight: 600;
     text-align: center;
@@ -380,13 +380,13 @@ function beamMeToHorneburg() {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 1rem;
     width: 80%;
-    max-width: 25em;
+    max-width: 25rem;
 }
 
 #error img {
-    width: 4em;
+    width: 4rem;
     height: auto;
     margin: 0 auto;
     filter: invert()
@@ -394,7 +394,7 @@ function beamMeToHorneburg() {
 
 #beaming {
     text-decoration: underline;
-    font-size: 0.7em;
+    font-size: 0.7rem;
     cursor: pointer;
 }
 </style>

@@ -28,18 +28,18 @@ ModelFetcher.preload();
 }
 
 :root {
-  --margin-sides: 3em;
+  --margin-sides: 3rem;
 }
 
 @media (max-width: 800px) {
   :root {
-    --margin-sides: 1em;
+    --margin-sides: 1rem;
   }
 }
 
 @media (max-width: 400px) {
   :root {
-    --margin-sides: 0.5em;
+    --margin-sides: 0.5rem;
   }
 }
 
@@ -81,20 +81,20 @@ h5 {
 }
 
 h1 {
-  font-size: 2.8em;
+  font-size: 2.8rem;
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 
 h3 {
-  font-size: 1.2em;
-  margin-bottom: 0.5em;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
 h4 {
-  font-size: 1.1em;
+  font-size: 1.1rem;
 }
 
 main>p,
@@ -108,7 +108,7 @@ article>h3,
 main>h4,
 article>h4 {
   margin-left: 1rem;
-  margin-bottom: 0.7em;
+  margin-bottom: 0.7rem;
   width: 100%;
   max-width: 1000px;
 }
@@ -126,7 +126,7 @@ article>h4 {
   article>h2,
   article>h3,
   article>h4 {
-    margin-left: 0.1em;
+    margin-left: 0.1rem;
   }
 }
 
@@ -137,18 +137,18 @@ button {
 hr {
   border: none;
   border-bottom: 2px solid #999;
-  margin: 4em -0.5em;
+  margin: 4rem -0.5rem;
 }
 
 .arrow_in_front::before {
   content: "";
   display: inline-block;
-  height: 0.7em;
-  width: 1em;
+  height: 0.7rem;
+  width: 1rem;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom right;
-  margin-right: 0.3em;
+  margin-right: 0.3rem;
   background-image: url('@/assets/icons/arrow_right.svg');
 
 }

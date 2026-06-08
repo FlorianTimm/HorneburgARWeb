@@ -35,7 +35,7 @@ defineProps<{
 .textwithimages {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 4em;
+    gap: 4rem;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -43,7 +43,7 @@ defineProps<{
 .textwithimages>div {
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: 2rem;
 }
 
 .image-container {
@@ -68,8 +68,8 @@ img {
 
 .image-description {
     display: block;
-    font-size: 0.85em;
-    line-height: 1.4em;
+    font-size: 0.85rem;
+    line-height: 1.4rem;
 }
 
 @media(max-width: 800px) {
@@ -86,10 +86,10 @@ img {
 
 <style>
 .textwithimages #text h3 {
-    margin-top: 2em;
+    margin-top: 2rem;
 }
 
 .textwithimages #text h3:first-child {
-    margin-top: 0em;
+    margin-top: 0rem;
 }
 </style>

@@ -18,21 +18,21 @@ defineProps<{
 <style scoped>
 #sources {
     color: #555;
-    margin-top: 2em;
+    margin-top: 2rem;
 }
 
 #sources h4 {
-    font-size: 0.9em;
-    margin-bottom: 0.5em;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
 }
 
 #sources span {
-    font-size: 0.8em;
+    font-size: 0.8rem;
 }
 </style>
 
 <style>
 #sources p {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.5rem;
 }
 </style>

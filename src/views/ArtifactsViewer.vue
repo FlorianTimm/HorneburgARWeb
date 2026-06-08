@@ -168,7 +168,7 @@ function naechstes() {
 <style scoped>
 #vorzurueck {
     display: flex;
-    gap: 0.5em;
+    gap: 0.5rem;
 }
 
 #imgmap {
@@ -178,8 +178,8 @@ function naechstes() {
 
 #img_select {
     position: absolute;
-    top: 15em;
-    left: 0.5em;
+    top: 15rem;
+    left: 0.5rem;
     transform: translateY(-50%);
 }
 
@@ -189,8 +189,8 @@ function naechstes() {
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.1);
-    padding: 0.2em;
-    margin: 0.5em 0.5em;
+    padding: 0.2rem;
+    margin: 0.5rem 0.5rem;
 }
 
 #img_select button.active {
@@ -207,7 +207,7 @@ function naechstes() {
 }
 
 #img_select img {
-    height: 5em;
+    height: 5rem;
     width: auto;
 }
 </style>

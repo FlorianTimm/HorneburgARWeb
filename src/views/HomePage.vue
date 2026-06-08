@@ -50,7 +50,7 @@
         <div id="leftright">
           <Map :center="[9.58769, 53.50963]" :zoom="14.5" id="map" />
           <div>
-            <h3>Handswerksmuseum Horneburg</h3>
+            <h4>Handswerksmuseum Horneburg</h4>
             Marschdamm 2c, 21640 Horneburg<br />
             {{ t('museum_opening_hours') }}<br />
             {{ t('museum_price') }}<br />
@@ -199,7 +199,7 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2em var(--margin-sides);
+  padding: 2rem var(--margin-sides);
   color: white;
   pointer-events: none;
   /* Klicks gehen durch zum Container */
@@ -218,22 +218,22 @@ section {
 }
 
 #subheader {
-  margin: 1em auto 0;
+  margin: 1.5rem auto 0;
   width: 100%;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 
 @media (max-width: 800px) {
   #subheader {
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
 }
 
 #arrow {
   position: absolute;
-  height: 2em;
-  bottom: 3em;
+  height: 2rem;
+  bottom: 3rem;
   left: 50%;
   transform: translateX(-50%);
   animation: bounce 2s infinite;
@@ -262,7 +262,7 @@ section {
 
 main {
   text-align: center;
-  margin: 2em var(--margin-sides);
+  margin: 2rem var(--margin-sides);
   display: grid;
   grid-template-rows: auto 1fr auto;
   color: rgb(14, 10, 10);
@@ -275,14 +275,14 @@ main>* {
 #about_link,
 #museum_link {
   display: inline;
-  height: 0.7em;
+  height: 0.7rem;
 }
 
 #timeline_big {
   display: block;
   width: 100%;
   max-width: 1000px;
-  margin: 5em auto;
+  margin: 5rem auto;
 }
 
 #timeline_small {
@@ -323,10 +323,10 @@ main>* {
 #leftright {
   max-width: 1000px;
   width: 100%;
-  margin: 3em auto;
+  margin: 3rem auto;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  font-size: 0.85em;
+  font-size: 0.85rem;
   text-align: left;
   gap: 40px;
 }
@@ -359,7 +359,7 @@ header a {
   display: inline-block;
   text-decoration: none;
   color: #333;
-  font-size: 0.85em;
+  font-size: 0.85rem;
   font-weight: bold;
   border-radius: 5px;
 }

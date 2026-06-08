@@ -34,10 +34,10 @@ defineProps<{
 #intro {
     font-family: 'Karla italic', sans-serif;
     margin-left: 0;
-    margin-top: -1em;
+    margin-top: -1rem;
 }
 
 h1 {
-    margin-bottom: 0em;
+    margin-bottom: 0rem;
 }
 </style>
