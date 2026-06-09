@@ -116,6 +116,15 @@ header {
     align-items: center;
 }
 
+@media (max-width: 800px) {
+
+    #header_object,
+    #header_ar {
+        gap: 1rem;
+        padding: 0 calc(var(--margin-sides)*2);
+    }
+}
+
 #header_default {
     height: 5rem;
     margin-top: 1rem;
