@@ -11,19 +11,27 @@
         "images": [
             {
                 "small": "/artifacts/small/1_philippstaler_1.png",
-                "large": "/artifacts/large/1_philippstaler_1.png"
+                "large": "/artifacts/large/1_philippstaler_1.png",
+                "description": {
+                    "de": "Vorderseite",
+                    "en": "Obverse"
+                }
             },
             {
                 "small": "/artifacts/small/1_philippstaler_2.png",
-                "large": "/artifacts/large/1_philippstaler_2.png"
+                "large": "/artifacts/large/1_philippstaler_2.png",
+                "description": {
+                    "de": "Rückseite",
+                    "en": "Reverse"
+                }
             },
             {
-                "small": "/artifacts/extra_caption/1_philipp.svg",
-                "large": "/artifacts/extra_caption/1_philipp.svg"
+                "description": {
+                    "de": "Gut erhaltener Philippstaler, Quelle: Münzkabinett Berlin, Public domain, via Wikimedia Commons",
+                    "en": "Well-preserved Philippstaler, Source: Münzkabinett Berlin, Public domain, via Wikimedia Commons"
+                },
+                "large": "/artifacts/extra/1_spanische_niederlande_philipp_ii_munzkabinett_berlin_5478872.jpg"
             }
-        ],
-        "extra": [
-            "/artifacts/extra/1_spanische_niederlande_philipp_ii_munzkabinett_berlin_5478872.jpg"
         ]
     },
     "gloeckchen": {
@@ -81,12 +89,12 @@
                 "large": "/artifacts/large/4_schwertgurtanhanger.png"
             },
             {
-                "small": "/artifacts/extra_caption/4_soldat.svg",
-                "large": "/artifacts/extra_caption/4_soldat.svg"
+                "description": {
+                    "de": "Soldat mit Bandelier, Quelle: Jacob de Gheyn II, CC0, via Wikimedia Commons",
+                    "en": "Mercenary with bandolier, Source: Jacob de Gheyn II, CC0, via Wikimedia Commons"
+                },
+                "large": "/artifacts/extra/4_a_soldier_blowing_on_a_match_from_the_musketeers_series_plate_40_in_wapenhandelinghe_van_roers_musquetten_ende_spiessen_the_exercise_of_arms_met_dp828803.jpg"
             }
-        ],
-        "extra": [
-            "/artifacts/extra/4_a_soldier_blowing_on_a_match_from_the_musketeers_series_plate_40_in_wapenhandelinghe_van_roers_musquetten_ende_spiessen_the_exercise_of_arms_met_dp828803.jpg"
         ]
     },
     "steinzeugkrug_fragment": {
@@ -104,12 +112,12 @@
                 "large": "/artifacts/large/5_steinzeugkrug.png"
             },
             {
-                "small": "/artifacts/extra_caption/5_kanne.svg",
-                "large": "/artifacts/extra_caption/5_kanne.svg"
+                "large": "/artifacts/extra/5_siegburger_kanne_luhdorf.jpg",
+                "description": {
+                    "de": "Krug aus Siegburger Steinzeug, Quelle: Archäologisches Museum Hamburg, CC BY-SA 3.0 DE, via Wikimedia Commons",
+                    "en": "Jug from Siegburg stoneware, Source: Archäologisches Museum Hamburg, CC BY-SA 3.0 DE, via Wikimedia Commons"
+                }
             }
-        ],
-        "extra": [
-            "/artifacts/extra/5_siegburger_kanne_luhdorf_1.jpg"
         ]
     },
     "tabakpfeifen_stiele": {
@@ -127,12 +135,12 @@
                 "large": "/artifacts/large/6_tabakpfeifen.png"
             },
             {
-                "small": "/artifacts/extra_caption/6_pfeife.svg",
-                "large": "/artifacts/extra_caption/6_pfeife.svg"
+                "large": "/artifacts/extra/6_steckpfeife_26503_915142.jpg",
+                "description": {
+                    "de": "Tonpfeife, Quelle: Stadtarchäologie Soest, CC BY-NC-SA",
+                    "en": "Clay pipe, Source: Stadtarchäologie Soest, CC BY-NC-SA"
+                }
             }
-        ],
-        "extra": [
-            "/artifacts/extra/6_steckpfeife_26503_915142.jpg"
         ]
     },
     "gewehrkugeln": {

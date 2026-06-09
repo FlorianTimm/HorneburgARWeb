@@ -23,11 +23,12 @@
                 :text="artifacts[artifact]?.getDescription(locale) ?? ''" />
             <div id="img_select" v-if="(artifacts[artifact]?.images?.length ?? 0) > 1">
                 <button v-for="(image, index) in artifacts[artifact]?.images ?? []" :key="index"
-                    :title="`${t('image')} ${index + 1}`" @click="changeImg(image.large)"
-                    :class="{ 'active': currentImage === image.large }">
-                    <img :src="image.small" :alt="`${t('image')} ${index + 1}`" />
+                    :title="`${t('image')} ${index + 1}`" @click="changeImg(image)"
+                    :class="{ 'active': currentImage === image }">
+                    <img :src="image.previewUrl" :alt="`${t('image')} ${index + 1}`" />
                 </button>
             </div>
+            <div id="description" v-if="currentImage?.description">{{ currentImage?.description }}</div>
         </template>
     </DefaultPage>
 </template>
@@ -35,7 +36,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { ref } from 'vue';
-import { ArtifactJson } from '@/func/artifacts_json';
+import { ArtifactJson, Image as ArtifactImage } from '@/func/artifacts_json';
 import { type JsonFile } from '@/func/json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -62,7 +63,7 @@ const artifacts: Ref<JsonFile<ArtifactJson>> = ref({});
 
 let map: Map;
 
-let currentImage = ref<string>('');
+let currentImage = ref<ArtifactImage | null>(null);
 
 onMounted(async () => {
     artifacts.value = await ArtifactJson.load_json();
@@ -71,17 +72,18 @@ onMounted(async () => {
         target: 'imgmap',
     });
 
-    changeImg(artifacts.value[artifact]?.images[0]?.large ?? '');
+    changeImg(artifacts.value[artifact]?.images[0]);
 });
 
 
-function changeImg(src: string) {
-    let img = new Image();
-    currentImage.value = src;
-    img.src = currentImage.value;
-    img.onload = function () {
-        const extent = [0, 0, img.width, img.height];
-        const mapExtent = [-img.width, -img.height, img.width * 2, img.height * 2];
+function changeImg(img?: ArtifactImage) {
+    if (!img) return;
+    let imgElement = new Image();
+    currentImage.value = img;
+    imgElement.src = img.imageUrl;
+    imgElement.onload = function () {
+        const extent = [0, 0, imgElement.width, imgElement.height];
+        const mapExtent = [-imgElement.width, -imgElement.height, imgElement.width * 2, imgElement.height * 2];
         const projection = new Projection({
             code: 'xkcd-image',
             units: 'pixels',
@@ -90,7 +92,7 @@ function changeImg(src: string) {
 
         const imageLayer = new ImageLayer({
             source: new Static({
-                url: img.src,
+                url: img.imageUrl,
                 projection: projection,
                 imageExtent: extent,
             }),
@@ -209,5 +211,27 @@ function naechstes() {
 #img_select img {
     height: 5rem;
     width: auto;
+}
+
+#description {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    max-width: 40%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+@media (max-width: 800px) {
+    #description {
+        top: 4.5rem;
+        right: 0.5rem;
+        bottom: auto;
+        left: auto;
+        max-width: calc(100% - 5rem);
+        font-size: 0.8rem;
+        padding: 0.3rem;
+    }
 }
 </style>
