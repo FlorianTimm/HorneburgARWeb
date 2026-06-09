@@ -54,8 +54,26 @@ html {
   color: #000;
   line-height: 1.6;
   text-align: left;
-  hyphens: auto;
-  hyphenate-limit-chars: 12 4 4;
+}
+
+@media (max-width: 300px) {
+  body {
+    hyphens: auto;
+    hyphenate-limit-chars: 12 4 4;
+  }
+}
+
+/* Safari browser only */
+_::-webkit-full-page-media,
+_:future,
+:root .safari_only {
+  hyphens: manual;
+}
+
+@supports (font: -apple-system-body) {
+  .safari_only {
+    hyphens: manual;
+  }
 }
 
 * {
