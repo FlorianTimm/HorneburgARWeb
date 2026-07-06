@@ -1,55 +1,56 @@
 <template>
-    <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-back-button default-href="/orbit"></ion-back-button>
-                </ion-buttons>
-                <ion-title>{{ modelle ? (model == 'alle' ? $t('all_models') : modelle[model]?.getName($i18n.locale)) :
-                    ''
-                }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
+    <DefaultPage headertype="object" :footer="false">
+        <template #header_left>
+            <button @click="$router.push('/orbit')" :title="t('close')"><img src="@/assets/icons/close.svg"
+                    :alt="t('close')"></button>
+        </template>
+        <template #header_center>
+            <h1>{{ modelle ? (model == 'alle' ? t('all_models') : modelle[model]?.getName($i18n.locale)) : '' }}
+            </h1>
+        </template>
+        <template #header_right>
+            <div id="vorzurueck">
+                <button @click="vorheriges()" :title="t('previous')"><img src="@/assets/icons/arrow_left.svg"
+                        :alt="t('previous')"></button>
+                <button @click="naechstes()" :title="t('next')"><img src="@/assets/icons/arrow_right.svg"
+                        :alt="t('next')"></button>
+            </div>
+        </template>
+        <template #fullscreen>
+            <div id="orbit-container"><img src="@/assets/icons/drehen.svg" id="icon_drehen" /></div>
+            <Infobox
+                :header="header ? header : (modelle ? (model == 'alle' ? t('all_models') : modelle[model]?.getName($i18n.locale)) : '') ?? ''"
+                :subheader="subheader" :text="infotext" />
 
-        <ion-content :fullscreen="true">
-            <div id="orbit-container"></div>
-        </ion-content>
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button @click="infobox = !infobox; autoActivated = false;">
-                <ion-icon v-if="infobox" :icon="chevronDown"></ion-icon>
-                <ion-icon v-else :icon="chevronUp"></ion-icon>
-            </ion-fab-button>
-        </ion-fab>
-        <ion-card v-if="infobox"
-            style="position:absolute; bottom: 80px; top: 70px;  right: 0px; padding: 12px; width: 300px; max-width: 90%; z-index: 1000; background-color: rgba(255, 255, 255, 0.9);">
-            <div v-html="infotext"></div>
-        </ion-card>
-    </ion-page>
+        </template>
+    </DefaultPage>
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonBackButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonCard, IonFabButton, IonIcon } from '@ionic/vue';
-
 import { onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { ref } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
-import { JsonFile } from '@/func/json';
+import { type JsonFile } from '@/func/json';
 import type { Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { addLight, modelSelector } from '@/func/threed';
-import { chevronUp, chevronDown } from 'ionicons/icons';
-import { useI18n } from 'vue-i18n';
 import { ModelFetcher } from '@/func/modelFetcher';
+import DefaultPage from '@/components/DefaultPage.vue';
+import router from '@/router'
+import Infobox from '@/components/Infobox.vue';
 
-const { t, locale } = useI18n();
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n()
 
 const route = useRoute();
 const { model } = route.params as { model: string };
 const modelle: Ref<JsonFile<ModelJson>> = ref({});
 let infobox = ref(false);
 let autoActivated = ref(false);
+let header = ref("");
+let subheader = ref("");
 let infotext = ref("");
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -66,29 +67,30 @@ onMounted(async () => {
         return;
     }
 
-    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.001, 1000);
+    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.001, 1000);
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
 
 
     function freeSpaceForOverlay() {
-        if (window.innerWidth > 1000) {
+        if (!container) return;
+        if (container.clientWidth > 800) {
             infobox.value = true;
-            camera.setViewOffset(window.innerWidth, window.innerHeight, 0 + window.innerWidth / 10, 0, window.innerWidth + window.innerWidth / 10, window.innerHeight);
+            camera.setViewOffset(container.clientWidth, container.clientHeight, 0 + container.clientWidth / 10, 0, container.clientWidth + container.clientWidth / 10, container.clientHeight);
         }
         else {
-            camera.setViewOffset(window.innerWidth, window.innerHeight, 0, 0, window.innerWidth, window.innerHeight);
+            camera.setViewOffset(container.clientWidth, container.clientHeight, 0, 0, container.clientWidth, container.clientHeight);
         }
     }
 
     freeSpaceForOverlay();
 
     window.addEventListener("resize", e => {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.aspect = window.innerWidth / window.innerHeight;
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         freeSpaceForOverlay();
     });
@@ -96,7 +98,7 @@ onMounted(async () => {
     let cameraControls = new OrbitControls(camera, renderer.domElement);
 
     //cameraControls.update();
-
+    console.log("Model:", model);
     if (model == 'alle') {
 
         // Mittelwert von allen Breiten (latitude) und Längengeraden (longitude) berechnen
@@ -104,43 +106,42 @@ onMounted(async () => {
         let lngSum = 0;
         let count = 0;
         for (let key in modelle.value) {
-            latSum += modelle.value[key].latitude;
-            lngSum += modelle.value[key].longitude;
+            latSum += modelle.value[key]?.latitude ?? 0;
+            lngSum += modelle.value[key]?.longitude ?? 0;
             count++;
         }
         const latAvg = count > 0 ? latSum / count : 0;
         const lngAvg = count > 0 ? lngSum / count : 0;
-        //console.log('Mittelwert Latitude:', latAvg, 'Mittelwert Longitude:', lngAvg);
+        console.log('Mittelwert Latitude:', latAvg, 'Mittelwert Longitude:', lngAvg);
 
         let lngFactor = 2. * 6370000. * Math.cos(latAvg / 180. * Math.PI) * Math.PI / 360. * 1.1;
         let latFactor = 2. * 6370000. * Math.PI / 360. * 1.1;
 
-        //console.log('Längengrad Faktor:', lngFactor, 'Breitengrad Faktor:', latFactor);
+        console.log('Längengrad Faktor:', lngFactor, 'Breitengrad Faktor:', latFactor);
 
 
         for (let key in modelle.value) {
-            let object = await ModelFetcher.getModel(key);
+            ModelFetcher.getModel(key).
+                then(object => {
+                    let model = modelle.value[key];
+                    if (!model) {
+                        console.warn(`Model ${key} not found in modelle.json, skipping.`);
+                        return;
+                    }
 
-            // Positioning logic for grid layout
-            let lat = -(modelle.value[key].latitude - latAvg) * latFactor;
-            let lng = (modelle.value[key].longitude - lngAvg) * lngFactor;
-            let rot = Math.PI * modelle.value[key].rotation / 180.;
+                    let lat = -(model.latitude - latAvg) * latFactor;
+                    let lng = (model.longitude - lngAvg) * lngFactor;
+                    let rot = Math.PI * (model.rotation) / 180.;
 
-            object.translateX(lng);
-            object.translateZ(lat);
-            object.rotateY(rot);
+                    object.translateX(lng);
+                    object.translateZ(lat);
+                    object.rotateY(rot);
 
-            scene.add(object);
-
-            /*
-            let sphere = new THREE.SphereGeometry(0.1, 16, 16);
-            let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-            let marker = new THREE.Mesh(sphere, material);
-            marker.position.set(lng, 0, lat);
-            scene.add(marker);
-            */
-
-
+                    scene.add(object);
+                    console.log(`Model ${key} loaded and added to scene at lat: ${lat}, lng: ${lng}, rot: ${rot}`);
+                }).catch(e => {
+                    console.error(`Error loading model ${key}:`, e);
+                });
         };
         camera.position.set(-20, 33, -90);
         //cameraControls.target.set(0, 0, 0);
@@ -153,13 +154,16 @@ onMounted(async () => {
 
         modelSelector(container, camera, scene, (name) => {
             console.log("Model selected:", name);
-            infotext.value = (modelle.value[name]?.getName(locale.value) + '<br /><br />' +
-                modelle.value[name]?.getDescription(locale.value)) || t('all_models_description');
+            header.value = modelle.value[name]?.getName(locale.value) ?? '';
+            subheader.value = modelle.value[name]?.getSubheader(locale.value) ?? '';
+            infotext.value = modelle.value[name]?.getDescription(locale.value) ?? `<p>${t('all_models_description')}</p>`;
             if (!infobox.value) {
                 infobox.value = true;
                 autoActivated.value = true;
             }
         }, () => {
+            header.value = "";
+            subheader.value = "";
             infotext.value = t('all_models_description');
             if (autoActivated.value) {
                 infobox.value = false;
@@ -175,16 +179,17 @@ onMounted(async () => {
         ModelFetcher.getModel(model).then(object => {
             scene.add(object);
         })
-        cameraControls.target.set(entry.breite / 2, entry.hoehe / 2, -entry.tiefe / 2);
-        camera.position.set(entry.breite * 2, entry.hoehe * .6, entry.tiefe);
+        cameraControls.target.set((entry?.breite ?? 0) / 2, (entry?.hoehe ?? 0) / 2, -(entry?.tiefe ?? 0) / 2);
+        camera.position.set((entry?.breite ?? 0) * 2, (entry?.hoehe ?? 0) * .6, entry?.tiefe ?? 0);
 
-        infotext.value = modelle.value[model].getDescription(locale.value);
+        infotext.value = modelle.value[model]?.getDescription(locale.value) ?? '';
+        subheader.value = modelle.value[model]?.getSubheader(locale.value) ?? '';
 
     }
 
     addLight(scene)
 
-    scene.background = new THREE.Color(0xdde3dd);
+    scene.background = new THREE.Color(0xEBEDE9);
 
     renderer.setAnimationLoop(animate);
     cameraControls.update();
@@ -193,7 +198,65 @@ onMounted(async () => {
         cameraControls.update();
         renderer.render(scene, camera);
     }
+
+
 });
+
+function vorheriges() {
+
+    let index = -1;
+    let keys = Object.keys(modelle.value);
+    if (model != 'alle') {
+        index = keys.indexOf(model);
+    }
+
+    for (; ;) {
+        index--;
+        if (index < -1) {
+            index = keys.length - 1;
+            break;
+        }
+
+        if (index == -1 || (index >= 0 && index < keys.length && modelle.value[keys[index] ?? '']?.show_in_list)) {
+            break;
+        }
+    }
+
+    if (index >= 0 && index < keys.length) {
+        let nextModel = keys[index];
+        router.push(`/orbit/${nextModel}`);
+    } else {
+        router.push(`/orbit/alle`);
+    }
+}
+
+function naechstes() {
+    let index = -1;
+    let keys = Object.keys(modelle.value);
+    if (model != 'alle') {
+        index = keys.indexOf(model);
+    }
+
+    for (; ;) {
+        index++;
+
+        if (index >= keys.length) {
+            index = -1;
+            break;
+        }
+
+        if (index == -1 || (index >= 0 && index < keys.length && modelle.value[keys[index] ?? '']?.show_in_list)) {
+            break;
+        }
+    }
+
+    if (index >= 0 && index < keys.length) {
+        let nextModel = keys[index];
+        router.push(`/orbit/${nextModel}`);
+    } else {
+        router.push(`/orbit/alle`);
+    }
+}
 
 onUnmounted(() => {
     console.log("Orbit.vue unmounted");
@@ -208,11 +271,21 @@ onUnmounted(() => {
 
 <style scoped>
 #orbit-container {
-    width: 100%;
+    width: 98%;
     height: 100%;
-    overflow: hidden;
+}
+
+#vorzurueck {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#icon_drehen {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 6rem;
+    left: 2rem;
+
+    width: 1.7rem;
+    height: 1.7rem;
 }
 </style>

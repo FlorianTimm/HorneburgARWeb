@@ -1,61 +1,103 @@
 <template>
-    <ion-footer class="ion-no-border">
-        <ion-toolbar>
-            <ion-buttons slot="start">
-                <a href="https://www.horneburg.de" target="_blank" title="Flecken Horneburg"><img
-                        src="../assets/logo_horneburg.png" alt="Flecken Horneburg" /></a>
-                <a href="https://www.landkreis-stade.de" target="_blank" title="Landkreis Stade"><img
-                        src="../assets/logo_stade.png" alt="Landkreis Stade" /></a>
-                <a href="https://www.hcu-hamburg.de" target="_blank" title="HafenCity Universität Hamburg"><img
-                        src="../assets/logo_hcu.png" alt="HafenCity Universität Hamburg" /></a>
-            </ion-buttons>
-            <ion-title slot="start" class="footer-text">
-                {{ $t('footer_line1') }}<br />{{ $t('footer_line2') }}
-            </ion-title>
+    <footer>
 
-            <ion-buttons slot="end">
-                <a href="https://www.horneburg.de/portal/seiten/Seite-900000001-20450.html" target="_blank"
-                    class="footer-link">
-                    {{ $t('imprint') }}
-                </a>&nbsp;&nbsp;
-                <a href="https://www.horneburg.de/portal/seiten/Seite-900000002-20450.html" target="_blank"
-                    class="footer-link">
-                    {{ $t('privacy') }}
-                </a>
-            </ion-buttons>
-        </ion-toolbar>
-    </ion-footer>
+        <div id="footer-logos">
+            <a href="https://www.horneburg.de/portal/seiten/flecken-horneburg-900000077-20450.html" target="_blank"
+                title="Flecken Horneburg"><img src="../assets/logos/flecken_horneburg_rgb.svg"
+                    alt="Flecken Horneburg" /></a>
+            <a href="https://www.landkreis-stade.de" target="_blank" title="Landkreis Stade"><img
+                    src="../assets/logos/landkreis_stade_rgb.svg" alt="Landkreis Stade" /></a>
+            <a href="https://www.hcu-hamburg.de" target="_blank" title="HafenCity Universität Hamburg"><img
+                    src="../assets/logos/hcu_rgb.svg" alt="HafenCity Universität Hamburg" /></a>
+        </div>
+        <div id="footer-text" v-html="t('footer_text')" />
+
+        <div id="footer-links">
+            <router-link to="/imprint">
+                {{ t('imprint') }}
+            </router-link><router-link to="/privacy">
+                {{ t('privacy') }}
+            </router-link>
+        </div>
+
+    </footer>
 
 </template>
 
+
 <script setup lang="ts">
-import { IonFooter, IonToolbar, IonTitle, IonButtons } from '@ionic/vue';
-
-
-
-
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 </script>
 
+
 <style lang="css" scoped>
-.footer-text {
-    font-size: 0.8em;
-    color: #555;
+footer {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.6rem;
+    width: 100%;
+    align-items: center;
+    float: none;
+    clear: both;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 1rem var(--margin-sides);
+    text-align: left;
+    font-size: 0.8rem;
 }
 
-.footer-link {
-    font-size: 0.8em;
-    color: #555;
-    text-decoration: none;
+#footer-text {
+    line-height: 130%;
 }
 
-.footer-link:hover {
+#footer-logos {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 1.6rem;
+    justify-content: center;
+}
+
+#footer-links {
+    display: grid;
+    gap: 1.6rem;
+    grid-template-columns: auto auto;
+}
+
+@media (max-width: 800px) {
+    footer {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    #footer-text {
+        justify-self: center;
+    }
+
+    #footer-links {
+        justify-self: center;
+    }
+}
+
+@media (max-width: 400px) {
+    #footer-logos {
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+}
+
+a:hover {
     text-decoration: underline;
 }
 
-ion-footer img {
-    filter: grayscale(100%);
+a:hover img {
+    filter: grayscale(0%) contrast(100%) brightness(100%);
+}
+
+footer img {
+    filter: grayscale(100%) contrast(80%) brightness(140%);
     transition: filter 0.3s;
-    height: 35px;
-    margin-left: 20px;
+    height: 2.4rem;
 }
 </style>

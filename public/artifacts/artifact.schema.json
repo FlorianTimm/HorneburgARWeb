@@ -1,0 +1,72 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "object",
+                "properties": {
+                    "de": {
+                        "type": "string"
+                    },
+                    "en": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "de",
+                    "en"
+                ]
+            },
+            "description": {
+                "type": "object",
+                "properties": {
+                    "de": {
+                        "type": "string"
+                    },
+                    "en": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "de",
+                    "en"
+                ]
+            },
+            "images": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "small": {
+                            "type": "string"
+                        },
+                        "large": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "object",
+                            "properties": {
+                                "de": {
+                                    "type": "string"
+                                },
+                                "en": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "large"
+                    ]
+                }
+            }
+        },
+        "required": [
+            "name",
+            "description",
+            "images"
+        ]
+    }
+}

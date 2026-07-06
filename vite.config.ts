@@ -1,33 +1,25 @@
-/// <reference types="vitest" />
+import { fileURLToPath, URL } from 'node:url'
 
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-//import legacy from '@vitejs/plugin-legacy'
+import vueDevTools from 'vite-plugin-vue-devtools'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import path from 'path'
-import { defineConfig } from 'vite'
-import { VitePWA } from 'vite-plugin-pwa'
+import legacy from '@vitejs/plugin-legacy'
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    legacy(),
     vue(),
-    //legacy(),
-    VitePWA({
-      registerType: 'autoUpdate',
-      workbox: {
-        globPatterns: ['**/*.{js,css,html}',
-          'assets/**/*.{js,css,html,png,jpg,svg}',
-          '**/*.{gltf, bin, jpg, png, svg, json, webp}',
-        ],
-        maximumFileSizeToCacheInBytes: 30 * 1024 * 1024, // 30 MB
-      }
+    basicSsl(),
+    vueDevTools(),
 
-    }),
-    basicSsl()
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      'three': path.resolve(__dirname, 'node_modules/three'),
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     },
-  }
+  },
 })

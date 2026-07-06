@@ -1,13 +1,262 @@
 {
+    "phillipstaler": {
+        "name": {
+            "de": "Philippstaler",
+            "en": "Philip Taler"
+        },
+        "description": {
+            "de": "<p>Ein besonderer Fund ist eine stark abgenutzte und ehemals gefaltete Silberm&uuml;nze aus dem 16. Jahrhundert. Es handelt sich um einen 1/10-Philippstaler des spanischen K&ouml;nigs Philipp II., der von 1555 bis 1598 regierte. Die M&uuml;nze ist stark beschnitten, das hei&szlig;t, am Rand wurde in betr&uuml;gerischer Absicht Silber abgetrennt. Diese Form der Wertminderung stand zwar unter schwerer Strafe, wurde jedoch insbesondere in Notzeiten &ndash; etwa w&auml;hrend des Drei&szlig;igj&auml;hrigen Krieges &ndash; h&auml;ufig praktiziert.</p><p>Aufgrund der fehlenden Randbereiche ist die genaue Identifizierung der M&uuml;nze erschwert. Die Vorderseite zeigt die B&uuml;ste Philipps II. sowie die nur schwer lesbare Umschrift &bdquo;PHS D G HISP Z REX VX BRA&ldquo;. Diese l&auml;sst sich als &bdquo;Philipp, von Gottes Gnaden K&ouml;nig von Spanien und Herzog von Brabant&ldquo; aufl&ouml;sen. Unterhalb des Portr&auml;ts ist vermutlich das Pr&auml;gejahr 1571 zu erkennen.</p><p>Auf der R&uuml;ckseite sind ein gekr&ouml;ntes Burgunderkreuz sowie der Wahlspruch Philipps &bdquo;DOMINVS MIHI ADIVTOR&ldquo; (&bdquo;Der Herr ist mein Helfer&ldquo;) dargestellt.</p><p>Der Philippstaler wurde in Antwerpen im damaligen Herzogtum Brabant gepr&auml;gt, das zu den Spanischen Niederlanden geh&ouml;rte. Das verwendete Silber d&uuml;rfte aus den amerikanischen Kolonien stammen, aus denen im 16. Jahrhundert gro&szlig;e Mengen Edelmetall nach Spanien gelangten.</p>",
+            "en": "<p>A notable find is a heavily worn and formerly folded silver coin from the 16th century. It is a 1/10 Philip Taler of the Spanish king Philip II (reigned 1555&ndash;1598). The coin has been heavily clipped at the edge, a fraudulent form of debasement that, although punishable, was frequently practiced in times of need such as during the Thirty Years' War.</p><p>Because the rim is missing in places, exact identification is difficult. The obverse shows the bust of Philip II and the barely legible inscription 'PHS D G HISP Z REX VX BRA', which expands to 'Philip, by the grace of God King of Spain and Duke of Brabant'. Below the portrait the mint year 1571 can probably be seen.</p><p>The reverse displays a crowned Burgundian cross and Philip's motto 'DOMINVS MIHI ADIVTOR' ('The Lord is my helper').</p><p>The Philip Taler was struck in Antwerp in the then Duchy of Brabant, part of the Spanish Netherlands. The silver likely originated from the American colonies, from which large quantities of precious metal were brought to Spain in the 16th century.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/1_philippstaler_1.png",
+                "large": "/artifacts/large/1_philippstaler_1.png",
+                "description": {
+                    "de": "Vorderseite",
+                    "en": "Obverse"
+                }
+            },
+            {
+                "small": "/artifacts/small/1_philippstaler_2.png",
+                "large": "/artifacts/large/1_philippstaler_2.png",
+                "description": {
+                    "de": "Rückseite",
+                    "en": "Reverse"
+                }
+            },
+            {
+                "description": {
+                    "de": "Gut erhaltener Philippstaler, Quelle: Münzkabinett Berlin, Public domain, via Wikimedia Commons",
+                    "en": "Well-preserved Philippstaler, Source: Münzkabinett Berlin, Public domain, via Wikimedia Commons"
+                },
+                "large": "/artifacts/extra/1_spanische_niederlande_philipp_ii_munzkabinett_berlin_5478872.jpg"
+            }
+        ]
+    },
+    "gloeckchen": {
+        "name": {
+            "de": "Glöckchen",
+            "en": "Bronze Bell"
+        },
+        "description": {
+            "de": "<p>Das kleine Bronzegl&ouml;ckchen, das auf der Burg gefunden wurde, wirkt auf den ersten Blick unscheinbar, doch seine Besch&auml;digungen erz&auml;hlen eine eindr&uuml;ckliche Geschichte. Auf zwei Seiten sind deutliche Hackspuren zu erkennen, die vermutlich mit einer kleinen Axt oder einem &auml;hnlichen Werkzeug ausgef&uuml;hrt wurden. Durch diese gewaltsamen Eingriffe ist ein Teil der Wandung herausgebrochen, die Form der Glocke wurde sichtbar deformiert, und auch der Kl&ouml;ppel fehlt. In ihrem heutigen Zustand ist das Gl&ouml;ckchen nicht mehr funktionsf&auml;hig &ndash; sein einst heller Klang ist verstummt.</p><p>Solche Gl&ouml;ckchen konnten vielf&auml;ltige Funktionen erf&uuml;llen, etwa als Signalgeber im Alltag der Burg oder im Zusammenhang mit Tieren oder Ausr&uuml;stung. Die gezielte Zerst&ouml;rung wirft daher Fragen auf. Eine m&ouml;gliche Erkl&auml;rung liegt in den kriegerischen Auseinandersetzungen des Drei&szlig;igj&auml;hrigen Krieges. In dieser Zeit wurden Metallobjekte h&auml;ufig eingeschmolzen oder beschädigt, um an das wertvolle Material zu gelangen oder es unbrauchbar zu machen. Vielleicht sollte das Gl&ouml;ckchen gezielt zerst&ouml;rt werden, um das Metall weiterzuverwenden &ndash; oder es fiel einer gewaltsamen Pl&uuml;nderung zum Opfer. So wird das fragmentierte Objekt zu einem stillen Zeugnis von Konflikt, Zerst&ouml;rung und den Umbr&uuml;chen einer bewegten Epoche.</p>",
+            "en": "<p>The small bronze bell found at the castle appears unremarkable at first glance, but its damage tells a striking story. There are clear axe marks on two sides, probably made with a small hatchet or similar tool. These violent blows have broken out part of the bell's wall, deforming its shape, and the clapper is missing. In its present condition the bell is no longer functional &ndash; its once bright sound is silenced.</p><p>Such bells could serve various functions, for example as signals in everyday castle life or in relation to animals or equipment. The deliberate destruction raises questions. One possible explanation lies in the warfare of the Thirty Years' War, when metal objects were often melted down or damaged to recover valuable material or render them unusable. Perhaps the bell was intentionally destroyed to reuse the metal, or it fell victim to violent plundering. The fragmented object thus becomes a mute witness to conflict, destruction and the upheavals of a turbulent era.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/2_gloeckchen_1.png",
+                "large": "/artifacts/large/2_gloeckchen_1.png"
+            },
+            {
+                "small": "/artifacts/small/2_gloeckchen_2.png",
+                "large": "/artifacts/large/2_gloeckchen_2.png"
+            }
+        ]
+    },
+    "bleiglas_fragmente": {
+        "name": {
+            "de": "Fragmente von Bleiglasfenstern",
+            "en": "Leaded Glass Window Fragments"
+        },
+        "description": {
+            "de": "<p>Die beiden Fragmente eines mittelalterlichen Bleiglasfensters &ndash; ein dreieckiges und ein trapezf&ouml;rmiges St&uuml;ck &ndash; zeugen von der einstigen Ausstattung der Burg mit qualit&auml;tsvollen Bauelementen. Das orangefarbene Glas, durchzogen von kleinen Luftblasen, verr&auml;t seine handwerkliche Herstellung: Solche Einschl&uuml;sse entstanden beim Schmelzprozess und sind typische Merkmale historischen Glases. Die umlaufende Fassung aus Blei hielt die einzelnen Scheiben in einem stabilen Gef&uuml;ge zusammen und erm&ouml;glichte zugleich die Gestaltung gr&ouml;&szlig;erer Fensterfl&auml;chen.</p><p>Aufgrund ihrer Farbigkeit und Verarbeitung d&uuml;rften die Fragmente urspr&uuml;nglich zu einem repr&auml;sentativen Bau der Burg geh&ouml;rt haben, etwa einem Saal oder einer Kapelle. Zugleich er&ouml;ffnen sie Spielraum f&uuml;r andere Deutungen: In unruhigen Zeiten war Blei ein begehrter Rohstoff, der sich vergleichsweise leicht einschmelzen lie&szlig;. Es ist daher nicht auszuschlie&szlig;en, dass w&auml;hrend des Drei&szlig;igj&auml;hrigen Krieges Landsknechte die Bleifassungen &ndash; m&ouml;glicherweise auch aus der nahegelegenen Kirche &ndash; entfernten, um daraus Gewehrkugeln zu gie&szlig;en. Die Fragmente stehen somit nicht nur f&uuml;r handwerkliche Kunstfertigkeit, sondern auch f&uuml;r die wechselvolle Geschichte Horneburgs.</p>",
+            "en": "<p>The two fragments of a medieval leaded glass window &ndash; one triangular and one trapezoid &ndash; testify to the castle's former fittings with high-quality architectural elements. The orange-coloured glass, streaked with small air bubbles, reveals its artisanal manufacture: such inclusions arise during the melting process and are typical markers of historic glass. The surrounding lead cames held the individual panes in a stable structure and enabled the design of larger window surfaces.</p><p>Given their colour and workmanship, the fragments likely belonged to a representative building of the castle, such as a hall or chapel. They also allow other readings: in troubled times lead was a sought-after raw material that could be melted down relatively easily. It is therefore possible that during the Thirty Years' War soldiers removed the lead cames &ndash; perhaps even from a nearby church &ndash; to cast musket balls. The fragments thus stand not only for craft skill but also for the eventful history of Horneburg.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/3_bleiglas_1.png",
+                "large": "/artifacts/large/3_bleiglas_1.png"
+            },
+            {
+                "small": "/artifacts/small/3_bleiglas_2.png",
+                "large": "/artifacts/large/3_bleiglas_2.png"
+            }
+        ]
+    },
     "schwertgurtanhaenger": {
         "name": {
             "de": "Schwertgurtanhänger",
             "en": "Sword Belt Pendant"
         },
         "description": {
-            "de": "Beschreibung auf Deutsch",
-            "en": "Description in English"
+            "de": "<p>Der hier vorgestellte Fund l&auml;sst sich als sogenannter Schwertgurtanh&auml;nger aus einer Kupferlegierung ansprechen und geh&ouml;rt damit zur Ausr&uuml;stung, mit der im 17. Jahrhundert Hieb- und Stichwaffen am K&ouml;rper getragen wurden. Solche Beschl&auml;ge waren Teil eines komplexen Geh&auml;ngesystems aus Lederriemen &ndash; ein sogenanntes Bandelier, das es erlaubte, Degen oder Schwerter seitlich am K&ouml;rper zu befestigen und zugleich eine gewisse Beweglichkeit zu gew&auml;hrleisten. Der Anh&auml;nger fungierte dabei als verbindendes Element zwischen den einzelnen Riemen und sorgte f&uuml;r eine stabile, aber flexible Aufh&auml;ngung der Waffe.</p><p>Auff&auml;llig ist die Gestaltung des oberen Bereichs: Ein s-f&ouml;rmig geschwungener Haken mit rundem Durchbruch diente der Befestigung am G&uuml;rtel oder an einem Trageriemen. Diese Form ist nicht nur dekorativ, sondern auch funktional, da sie das Einh&auml;ngen erleichtert und ein Verdrehen der Riemen reduziert. Der darunter anschlie&szlig;ende, tropfenf&ouml;rmige K&ouml;rper wirkt massiver und verj&uuml;ngt sich nach unten. Am unteren Ende befindet sich eine kleine Durchlochung, an der ein weiterer Riemen befestigt gewesen sein d&uuml;rfte, die direkt mit dem Waffengeh&auml;nge verbunden war. Formale Vergleiche mit &auml;hnlichen Funden sprechen f&uuml;r eine Datierung in das 17. Jahrhundert.</p><p>Besondere Aussagekraft gewinnt der Anh&auml;nger durch seinen Fundkontext: Er stammt von der Horneburg, die im Zuge des Drei&szlig;igj&auml;hrigen Krieges zerst&ouml;rt wurde. In dieser Zeit war die Region von Truppendurchz&uuml;gen, Belagerungen und Pl&uuml;nderungen gepr&auml;gt. Der Anh&auml;nger k&ouml;nnte somit einst zu der Ausr&uuml;stung eines Landsknechts oder Burgbewohners geh&ouml;rt haben und im Zuge der gewaltsamen Ereignisse verloren gegangen sein. Als Bestandteil milit&auml;rischer Alltagsausstattung bietet das St&uuml;ck einen unmittelbaren Zugang zur materiellen Kultur dieser konfliktreichen Epoche und macht die historischen Vorg&auml;nge anschaulich.</p>",
+            "en": "<p>This find can be identified as a sword-belt pendant made of a copper alloy and belongs to the equipment used to carry cutting and thrusting weapons on the body in the 17th century. Such fittings were part of a complex suspension system of leather straps &ndash; a so-called bandolier &ndash; which allowed daggers or swords to be fastened at the side while permitting a degree of mobility. The pendant served as a linking element between individual straps, providing a stable but flexible suspension for the weapon.</p><p>Notable is the design of the upper section: an S-shaped hook with a round perforation served to attach it to the belt or a carrying strap. This shape is not only decorative but also functional, as it facilitates hooking and reduces twisting of the straps. The teardrop-shaped body below appears more massive and tapers downward. At the lower end there is a small perforation where another strap was likely attached, directly connected to the weapon harness. Formal comparisons with similar finds suggest a 17th-century date.</p><p>The pendant gains particular significance through its find context: it comes from Horneburg, which was destroyed during the Thirty Years' War. The region was marked by troop movements, sieges and plundering. The pendant may once have belonged to a mercenary or castle resident and been lost during these violent events. As part of military everyday equipment, the object provides direct access to the material culture of this conflict-ridden period and illustrates the historical circumstances vividly.</p>"
         },
-        "path": "/artifacts/schwertgurtanhaenger.jpg"
+        "images": [
+            {
+                "small": "/artifacts/small/4_schwertgurtanhanger.png",
+                "large": "/artifacts/large/4_schwertgurtanhanger.png"
+            },
+            {
+                "description": {
+                    "de": "Soldat mit Bandelier, Quelle: Jacob de Gheyn II, CC0, via Wikimedia Commons",
+                    "en": "Mercenary with bandolier, Source: Jacob de Gheyn II, CC0, via Wikimedia Commons"
+                },
+                "large": "/artifacts/extra/4_a_soldier_blowing_on_a_match_from_the_musketeers_series_plate_40_in_wapenhandelinghe_van_roers_musquetten_ende_spiessen_the_exercise_of_arms_met_dp828803.jpg"
+            }
+        ]
+    },
+    "steinzeugkrug_fragment": {
+        "name": {
+            "de": "Fragment eines Steinzeugkruges",
+            "en": "Stoneware Jug Fragment"
+        },
+        "description": {
+            "de": "<p>Das Fragment eines mittelalterlichen Steinzeugkruges, bestehend aus dem Unterteil mit Boden und charakteristischem Wellenfu&szlig;, vermittelt einen anschaulichen Eindruck vom allt&auml;glichen Leben auf der Burg. Solche robuste Gef&auml;&szlig;e waren fester Bestandteil der Trinkkultur, die unter den Burgmannen sicher eine bedeutende Rolle spielte. In einer Zeit, in der Wasser oft von zweifelhafter Qualit&auml;t war, griff man bevorzugt zu Bier oder Wein &ndash; nicht nur aus Genuss, sondern auch aus praktischen Gr&uuml;nden. Der sorgf&auml;ltig ausgeformte Wellenfu&szlig; verlieh dem Krug Standfestigkeit auf unebenen Untergr&uuml;nden und zeugt zugleich von handwerklichem K&ouml;nnen.</p><p>Im geselligen Beisammensein, bei Festen oder nach einem langen Tag im Dienst d&uuml;rften Kr&uuml;ge wie dieser h&auml;ufig zum Einsatz gekommen sein.</p>",
+            "en": "<p>The fragment of a medieval stoneware jug, consisting of the lower part with base and characteristic wavy foot, gives a vivid impression of everyday life at the castle. Such robust vessels were an integral part of the drinking culture among the castle's inhabitants. At a time when water was often of dubious quality, people typically drank beer or wine &ndash; not only for pleasure but for practical reasons. The carefully formed wavy foot provided stability on uneven surfaces and attests to skilled craftsmanship.</p><p>Vessels like this would have been commonly used in social gatherings, during festivities or after a long day's service.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/5_steinzeugkrug.png",
+                "large": "/artifacts/large/5_steinzeugkrug.png"
+            },
+            {
+                "large": "/artifacts/extra/5_siegburger_kanne_luhdorf.jpg",
+                "description": {
+                    "de": "Krug aus Siegburger Steinzeug, Quelle: Archäologisches Museum Hamburg, CC BY-SA 3.0 DE, via Wikimedia Commons",
+                    "en": "Jug from Siegburg stoneware, Source: Archäologisches Museum Hamburg, CC BY-SA 3.0 DE, via Wikimedia Commons"
+                }
+            }
+        ]
+    },
+    "tabakpfeifen_stiele": {
+        "name": {
+            "de": "Stiele von Tabakpfeifen",
+            "en": "Tobacco Pipe Stems"
+        },
+        "description": {
+            "de": "<p>Die Landsknechte des Drei&szlig;igj&auml;hrigen Krieges verbreiteten das Tabakrauchen &uuml;ber weite Teile Europas und machten das Rauchen ab dem 17. Jahrhundert zu einem Massenph&auml;nomen. Die auf der Burg entdeckten Fragmente von Tonpfeifen belegen dies anschaulich. Besonders unter Seeleuten und Soldaten war das Rauchen zu dieser Zeit weit verbreitet: Tabak galt nicht nur als Genussmittel, sondern auch als Mittel zur Entspannung in den oft entbehrungsreichen und von Unsicherheit gepr&auml;gten Lebensumst&auml;nden. Die zerbrochenen Stielreste zeugen davon, dass das Rauchen fest zum t&auml;glichen Leben geh&ouml;rte.</p><p>Zugleich verweisen die Funde auf Handelsverbindungen, denn Tonpfeifen wurden insbesondere in den Niederlanden in gro&szlig;en Mengen produziert und &uuml;ber weite Strecken verbreitet.</p>",
+            "en": "<p>Mercenaries of the Thirty Years' War helped spread tobacco smoking across much of Europe, making it a mass phenomenon from the 17th century. The clay pipe fragments found at the castle clearly attest to this. Smoking was particularly common among sailors and soldiers: tobacco served not only as a pleasure but also as a means of relaxation in often austere and uncertain circumstances. The broken stem pieces show that smoking formed an established part of daily life.</p><p>The finds also indicate trade connections, since clay pipes were produced in large numbers in the Netherlands and distributed widely.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/6_tabakpfeifen.png",
+                "large": "/artifacts/large/6_tabakpfeifen.png"
+            },
+            {
+                "large": "/artifacts/extra/6_steckpfeife_26503_915142.jpg",
+                "description": {
+                    "de": "Tonpfeife, Quelle: Stadtarchäologie Soest, CC BY-NC-SA",
+                    "en": "Clay pipe, Source: Stadtarchäologie Soest, CC BY-NC-SA"
+                }
+            }
+        ]
+    },
+    "gewehrkugeln": {
+        "name": {
+            "de": "Gewehrkugeln aus Blei",
+            "en": "Lead Musket Balls"
+        },
+        "description": {
+            "de": "<p>Die auf dem Foto gezeigten Bleikugeln stammen von der Horneburg, die im Drei&szlig;igj&auml;hrigen Krieg zerst&ouml;rt wurde. Sie sind eindrucksvolle Zeugnisse der gewaltsamen Auseinandersetzungen, die sich einst um die Anlage abspielten. Die Geschosse liegen in unterschiedlichen Kalibern vor und spiegeln damit die Vielfalt der verwendeten Feuerwaffen wider &ndash; von kleineren Handfeuerwaffen bis hin zu schwereren B&uuml;chsen.</p><p>Auff&auml;llig ist, dass viele der Kugeln deutliche Deformationsspuren aufweisen. Abplattungen, Risse und unregelm&auml;&szlig;ige Verformungen belegen, dass sie tats&auml;chlich abgefeuert wurden und ihr Ziel trafen. Das gr&ouml;&szlig;te Exemplar mit einem Kaliber von etwa 2,5 cm d&uuml;rfte aus einer schweren Hakenb&uuml;chse stammen.</p><p>In ihrer Gesamtheit vermitteln die Funde ein eindr&uuml;ckliches Bild der Belagerung und Zerst&ouml;rung der Horneburg.</p>",
+            "en": "<p>The lead balls shown in the photo come from Horneburg, which was destroyed during the Thirty Years' War. They are striking witnesses to the violent confrontations that took place around the site. The projectiles occur in various calibres, reflecting the range of firearms used &ndash; from small hand weapons to heavier guns.</p><p>Notably, many of the balls show clear deformation marks: flattening, cracks and irregular distortions indicate that they were actually fired and hit targets. The largest specimen, at about 2.5 cm calibre, likely originates from a heavy hook-bore firearm.</p><p>Taken together, the finds convey an impressive picture of the siege and destruction of Horneburg.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/7_gewehrkugeln.png",
+                "large": "/artifacts/large/7_gewehrkugeln.png"
+            }
+        ]
+    },
+    "geschmolzenes_silber": {
+        "name": {
+            "de": "Geschmolzenes Silber",
+            "en": "Melted Silver"
+        },
+        "description": {
+            "de": "<p>Das auf dem Foto gezeigte Fragment aus geschmolzenem Silber ist ein unscheinbares, zugleich aber &auml;u&szlig;erst aussagekr&auml;ftiges Fundst&uuml;ck: Die unregelm&auml;&szlig;ige Form und die erstarrten Flie&szlig;strukturen belegen, dass das Metall einst gro&szlig;er Hitze ausgesetzt war und im Feuer aufschmolz. Erst beim Abk&uuml;hlen nahm es seine heutige, amorphe Gestalt an.</p><p>Dieses St&uuml;ck Silber ist ein direkter Hinweis auf die Feuersbrunst, die im Zuge der Zerst&ouml;rung &uuml;ber die Horneburg hinwegfegte. In den Flammen gingen nicht nur Geb&auml;ude und Vorr&auml;te verloren, sondern auch pers&ouml;nliche Besitzt&uuml;mer. Das geschmolzene Fragment l&auml;sst vermuten, dass hier urspr&uuml;nglich ein wertvoller Gegenstand existierte &ndash; m&ouml;glicherweise ein Schmuckst&uuml;ck oder ein Silbergef&auml;&szlig;.</p><p>Das Schmelzfragment steht stellvertretend f&uuml;r die Verluste, die mit Krieg und Zerst&ouml;rung einhergehen, und verweist zugleich auf den einstigen Reichtum und die materielle Kultur der Burgbewohner.</p>",
+            "en": "<p>The melted silver fragment shown in the photo is an unassuming yet highly telling find: its irregular shape and solidified flow structures show that the metal was exposed to intense heat and melted in the fire, only taking its present amorphous form as it cooled.</p><p>This piece of silver is a direct indicator of the blaze that swept Horneburg during its destruction. Not only buildings and supplies were lost in the flames, but also personal possessions. The melted fragment suggests that a once valuable object lay here originally &ndash; perhaps a piece of jewellery or a silver vessel.</p><p>The melt fragment stands for the losses associated with war and destruction and also points to the former wealth and material culture of the castle's inhabitants.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/8_geschmolzenes_silber.png",
+                "large": "/artifacts/large/8_geschmolzenes_silber.png"
+            }
+        ]
+    },
+    "geschmolzenes_buntmetall": {
+        "name": {
+            "de": "Geschmolzenes Buntmetall",
+            "en": "Melted Non-Ferrous Metal"
+        },
+        "description": {
+            "de": "<p>Die geschmolzenen Buntmetallfragmente z&auml;hlen zu den eindr&uuml;cklichen Funden von der Burg Horneburg. Ihre deformierten, teils blasenartig aufgeworfenen Oberfl&auml;chen sind deutliche Spuren extremer Hitzeeinwirkung. Sie zeugen von einer verheerenden Brandkatastrophe, die im Zuge der Zerst&ouml;rung der Anlage w&auml;hrend des Drei&szlig;igj&auml;hrigen Krieges stattfand.</p><p>In diesem Moment des gewaltsamen Untergangs wurden zahlreiche Gegenst&auml;nde aus Kupferlegierungen &ndash; etwa Gef&auml;&szlig;e, Beschl&auml;ge, Ausr&uuml;stungsbestandteile oder Schmuck &ndash; dem Feuer ausgesetzt und dabei teilweise oder vollst&auml;ndig aufgeschmolzen. Die Fragmente lassen heute nur noch erahnen, welche Formen und Funktionen die urspr&uuml;nglichen Objekte besa&szlig;en. Gerade diese Unbestimmtheit macht ihren besonderen Quellenwert aus.</p><p>Zugleich verweisen die Funde auf den materiellen Reichtum und die Vielfalt des einstigen Burginventars.</p>",
+            "en": "<p>The melted non-ferrous metal fragments are among the most striking finds from Horneburg. Their deformed, sometimes blistered surfaces are clear traces of extreme heat exposure. They testify to a devastating blaze that occurred during the castle's destruction in the Thirty Years' War.</p><p>At that moment of violent ruin, numerous objects made of copper alloys &ndash; vessels, fittings, equipment parts or jewellery &ndash; were exposed to the fire and partly or completely melted. The fragments now only hint at the shapes and functions of the original objects; this indeterminacy is precisely what gives them particular source value.</p><p>At the same time, the finds point to the material wealth and variety of the former castle inventory.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/9_geschmolzenes_buntmetall_1.png",
+                "large": "/artifacts/large/9_geschmolzenes_buntmetall_1.png"
+            },
+            {
+                "small": "/artifacts/small/9_geschmolzenes_buntmetall_2.png",
+                "large": "/artifacts/large/9_geschmolzenes_buntmetall_2.png"
+            }
+        ]
+    },
+    "geschmolzenes_fensterglas": {
+        "name": {
+            "de": "Geschmolzenes Fensterglas",
+            "en": "Melted Window Glass"
+        },
+        "description": {
+            "de": "<p>Die drei angeschmolzenen Fensterglasfragmente auf dem Foto geh&ouml;ren zu den aussagekr&auml;ftigen Kleinfunden von der Burg Horneburg. Ihre unregelm&auml;&szlig;ig verformten Kanten, die teils wellige Oberfl&auml;che und die sichtbaren Schmelzspuren lassen keinen Zweifel daran, dass sie extremer Hitze ausgesetzt waren. Sie stehen damit in unmittelbarem Zusammenhang mit der Brandkatastrophe, die sich w&auml;hrend der Zerst&ouml;rung der Burg im Drei&szlig;igj&auml;hrigen Krieg ereignete.</p><p>Urspr&uuml;nglich waren diese Glasst&uuml;cke Teil von Fenstern in den Geb&auml;uden der Burg. Auch wenn ihre urspr&uuml;ngliche Form heute nicht mehr rekonstruierbar ist, belegen sie doch, dass die Horneburg zumindest in Teilen verglaste Fenster besa&szlig; &ndash; ein Hinweis auf den baulichen Standard und Komfort der Anlage.</p>",
+            "en": "<p>The three partially melted window glass fragments in the photo are among the informative small finds from Horneburg. Their irregularly deformed edges, partly wavy surfaces and visible melting traces leave no doubt that they were exposed to extreme heat and are directly linked to the fire that accompanied the castle's destruction during the Thirty Years' War.</p><p>Originally, these pieces were part of windows in the castle's buildings. Although their original shapes can no longer be reconstructed, they nonetheless demonstrate that Horneburg had glazed windows in parts &ndash; an indicator of the site's building standard and comfort.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/10_fensterglas.png",
+                "large": "/artifacts/large/10_fensterglas.png"
+            }
+        ]
+    },
+    "ofenkachel_fragment": {
+        "name": {
+            "de": "Fragment einer Ofenkachel",
+            "en": "Tile Stove Fragment"
+        },
+        "description": {
+            "de": "<p>Das auf dem Foto gezeigte Fragment einer glasierten Ofenkachel stammt aus der fr&uuml;hen Neuzeit und wurde bei arch&auml;ologischen Untersuchungen auf der Burg Horneburg entdeckt. Trotz seiner fragmentarischen Erhaltung l&auml;sst sich die urspr&uuml;ngliche Funktion des St&uuml;cks noch gut erkennen: Es war einst Bestandteil eines Kachelofens, wie er in repr&auml;sentativen wie auch beheizbaren Wohnr&auml;umen Verwendung fand. Die Glasur, die sich stellenweise noch erhalten hat, verweist auf eine sorgf&auml;ltige handwerkliche Ausf&uuml;hrung und deutet darauf hin, dass der Ofen nicht nur der W&auml;rmeversorgung diente, sondern zugleich auch einen gestalterischen Anspruch erf&uuml;llte.</p><p>Kachel&ouml;fen spielten in Burgen und herrschaftlichen Geb&auml;uden der fr&uuml;hen Neuzeit eine zentrale Rolle f&uuml;r den Wohnkomfort. Das Fragment belegt somit, dass die Burg Horneburg &uuml;ber entsprechend ausgestattete R&auml;ume verf&uuml;gte.</p>",
+            "en": "<p>The fragment of a glazed stove tile shown in the photo dates from the early modern period and was discovered during archaeological investigations at Horneburg. Despite its fragmentary preservation, its original function is still clear: it was once part of a tiled stove used in representative or heated living rooms. The remaining glaze points to careful craftsmanship and suggests that the stove served not only for heating but also as a decorative element.</p><p>Tiled stoves played a central role in providing comfort in castles and manor houses of the early modern period. The fragment therefore indicates that Horneburg had rooms equipped to a higher standard.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/11_ofenkachel.png",
+                "large": "/artifacts/large/11_ofenkachel.png"
+            }
+        ]
+    },
+    "spinnwirtel_blei": {
+        "name": {
+            "de": "Spinnwirtel aus Blei",
+            "en": "Lead Spindle Whorl"
+        },
+        "description": {
+            "de": "<p>Der Spinnwirtel aus Blei geh&ouml;rt zu den eher unscheinbaren, zugleich aber aufschlussreichen Funden von der Burg Horneburg. Es handelt sich um ein kleines, durchlochtes Gewicht, das urspr&uuml;nglich auf einer h&ouml;lzernen Spindel befestigt war und beim Spinnen von Fasern &ndash; etwa Wolle oder Flachs &ndash; f&uuml;r die n&ouml;tige Schwungmasse sorgte. Durch sein Eigengewicht stabilisierte der Wirtel die Drehbewegung der Spindel und erm&ouml;glichte so die Herstellung gleichm&auml;&szlig;iger F&auml;den.</p><p>Die Verwendung von Blei als Material ist bemerkenswert. Es verleiht dem Wirtel ein vergleichsweise hohes Gewicht bei geringer Gr&ouml;&szlig;e und spricht f&uuml;r eine gezielte Anpassung an bestimmte Spinntechniken. Der Fund belegt, dass auf der Burg nicht nur gelebt, sondern auch gearbeitet wurde.</p>",
+            "en": "<p>The lead spindle whorl is among the rather inconspicuous yet revealing finds from Horneburg. It is a small perforated weight that was originally fitted to a wooden spindle and provided the necessary momentum when spinning fibres such as wool or flax. By its own weight the whorl stabilised the spindle's rotation and helped produce even yarn.</p><p>The use of lead is notable: it gives the whorl relatively high mass in a small size, suggesting adaptation to particular spinning techniques. The find shows that the castle was not only a place of residence but also a place of production and work.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/12_spinnwirtel.png",
+                "large": "/artifacts/large/12_spinnwirtel.png"
+            }
+        ]
+    },
+    "dachziegel": {
+        "name": {
+            "de": "Dachziegelfragmente",
+            "en": "Roof Tile Fragments"
+        },
+        "description": {
+            "de": "<p>W&auml;hrend der Umgestaltung der Horneburger Burginsel wurden bei den Erdarbeiten gr&ouml;&szlig;ere Schuttmengen beobachtet, die von den zerst&ouml;rten Burggeb&auml;uden stammen. Auf dem Foto sind exemplarisch zwei Fragmente mittelalterlicher Dachziegel zu sehen. Diese gebrannten Tonziegel waren urspr&uuml;nglich Teil der Dachdeckung und belegen, dass zumindest zentrale Geb&auml;ude der Burg mit einem sogenannten Hartdach versehen waren.</p><p>Dies ist insofern bemerkenswert, als im l&auml;ndlichen Umfeld zur gleichen Zeit vielfach reetgedeckte H&auml;user vorherrschten. Die Verwendung von Dachziegeln erforderte h&ouml;heren Aufwand, bot aber zugleich besseren Schutz vor Feuer und eine l&auml;ngere Haltbarkeit. Die Ziegelfragmente verweisen auf einen gehobenen baulichen Standard und unterstreichen den besonderen Status der Burg.</p>",
+            "en": "<p>During earthworks on the Horneburg island, large amounts of rubble from the destroyed castle buildings were observed. The photo shows two fragments of medieval roof tiles. These fired clay tiles were originally part of the roof covering and indicate that at least central buildings of the castle had a so-called hard roof.</p><p>This is notable because in the rural surroundings thatched roofs were common at the time. Tiles required greater material and organisational effort but offered better fire protection and durability. The tile fragments point to a higher building standard and underline the castle's special status.</p>"
+        },
+        "images": [
+            {
+                "small": "/artifacts/small/13_dachziegel.png",
+                "large": "/artifacts/large/13_dachziegel.png"
+            }
+        ]
     }
 }

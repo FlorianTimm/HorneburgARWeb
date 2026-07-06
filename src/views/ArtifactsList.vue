@@ -1,46 +1,24 @@
 <template>
-    <ion-page>
-        <ion-header :translucent="true" class="ion-no-border">
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-back-button default-href="/"></ion-back-button>
-                </ion-buttons>
-                <ion-title>{{ $t('artifacts') }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
-
-        <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">{{ $t('artifacts') }}</ion-title>
-                </ion-toolbar>
-            </ion-header>
-
-            <div class="cards-content">
-                <ion-card :router-link="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key"
-                    class="cards">
-                    <img src="../assets/beispielhaus.svg" :alt="`${artifact.getName($i18n.locale)} Vorschau`"
-                        style="width: 100%; margin-top: 10px;" />
-                    <ion-card-header>
-                        <ion-card-title>{{ artifact.getName($i18n.locale) }}</ion-card-title>
-                    </ion-card-header>
-
-                    <ion-card-content>{{ artifact.getDescription($i18n.locale) }}</ion-card-content>
-                </ion-card>
-            </div>
-        </ion-content>
-        <Footer />
-    </ion-page>
+    <ListPage :header="t('artifacts_header')" :intro="t('artifacts_intro')">
+        <div id="images">
+            <a :href="`/artifacts/${key}`" v-for="(artifact, key) in filteredArtifacts" :key="key">
+                <img :src="artifact.getPreviewImage()" :alt="artifact.getName($i18n.locale)" />
+            </a>
+        </div>
+    </ListPage>
 </template>
 
 <script setup lang="ts">
-import { IonCard, IonCardContent, IonCardHeader, IonButtons, IonBackButton, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { ref, onMounted, computed } from 'vue';
-import { JsonFile } from '@/func/json';
+import { type JsonFile } from '@/func/json';
 import { ArtifactJson } from '@/func/artifacts_json';
+import ListPage from '@/components/ListPage.vue';
 
 import type { Ref } from 'vue';
-import Footer from '@/components/Footer.vue';
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 const artifacts: Ref<JsonFile<ArtifactJson>> = ref({});
 
 onMounted(async () => {
@@ -53,7 +31,8 @@ const filteredArtifacts = computed(() => {
     const result: JsonFile<ArtifactJson> = {};
     for (const key in artifacts.value) {
         const artifact = artifacts.value[key];
-        result[key] = artifact;
+        if (artifact)
+            result[key] = artifact;
     }
     return result;
 });
@@ -61,8 +40,32 @@ const filteredArtifacts = computed(() => {
 </script>
 
 <style scoped>
-ion-card:hover {
-    cursor: pointer;
-    background-color: #f0f0f0;
+#images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+a {
+    display: block;
+    width: 12rem;
+    margin: 1.5rem;
+    height: auto;
+    border-radius: 5px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+a img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+}
+
+a:hover img {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    filter: drop-shadow(4px 4px 4px #919191);
 }
 </style>

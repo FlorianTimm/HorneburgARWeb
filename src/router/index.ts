@@ -1,52 +1,61 @@
-import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { RouteRecordRaw } from 'vue-router';
-import HomePage from '../views/HomePage.vue'
-import AR from '../views/AR.vue';
-import Liste from '../views/ModelList.vue';
-import Orbit from '../views/ModelOrbit.vue';
-import Artifacts from '@/views/ArtifactsList.vue';
-import ArtifactsViewer from '@/views/ArtifactsViewer.vue';
-
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    redirect: '/home'
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: HomePage
-  },
-  {
-    path: '/ar',
-    name: 'AR',
-    component: AR,
-  },
-  {
-    path: '/orbit',
-    name: 'Liste',
-    component: Liste,
-  },
-  {
-    path: '/orbit/:model',
-    name: 'Orbit',
-    component: Orbit,
-  },
-  {
-    path: '/artifacts',
-    name: 'Artifacts',
-    component: Artifacts,
-  },
-  {
-    path: '/artifacts/:artifact',
-    name: 'ArtifactDetail',
-    component: ArtifactsViewer,
-  },
-]
+import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: () => import('../views/HomePage.vue'),
+    },
+    {
+      path: '/ar',
+      name: 'AR',
+      component: () => import('../views/AR.vue'),
+    },
+
+    {
+      path: '/orbit',
+      name: 'Liste',
+      component: () => import('../views/ModelList.vue'),
+    },
+    {
+      path: '/orbit/:model',
+      name: 'Orbit',
+      component: () => import('../views/ModelOrbit.vue'),
+    },
+
+    {
+      path: '/artifacts',
+      name: 'Artifacts',
+      component: () => import('../views/ArtifactsList.vue'),
+    },
+    {
+      path: '/artifacts/:artifact',
+      name: 'ArtifactDetail',
+      component: () => import('../views/ArtifactsViewer.vue'),
+    },
+    {
+      path: "/about",
+      name: "About",
+      component: () => import("../views/About.vue"),
+    },
+    {
+      path: "/history",
+      name: "History",
+      component: () => import("../views/History.vue"),
+    },
+    {
+      path: "/imprint",
+      name: "Imprint",
+      component: () => import("../views/Imprint.vue"),
+    },
+    {
+      path: "/privacy",
+      name: "Privacy",
+      component: () => import("../views/Privacy.vue"),
+    }
+  ],
 })
 
 export default router

@@ -1,153 +1,366 @@
 <template>
-  <ion-page>
-    <transition name="fade">
-      <div v-if="showSplash" class="splash-overlay">
-        <img src="../assets/storch.png" alt="Storch" />
-        <div class="splash-content">
-          <ion-icon :icon="homeOutline" size="large" />
-          <h1>{{ $t('welcome') }}</h1>
-          <!--<p><ion-icon :icon="arrowDownOutline" size="large" /></p>-->
+
+  <div id="scroll-container">
+    <section id="lock-screen">
+      <img src="../assets/grafiken/burginsel.gif" />
+      <h1>{{ t('welcome') }}</h1>
+      <h2 id="subheader">
+        {{ t('subheader') }}
+      </h2>
+      <img id="arrow" src="../assets/icons/arrow_down.svg" :alt="t('scroll_hint')" />
+    </section>
+
+    <section id="main-content">
+      <Header type="homepage">
+        <template #left><img src="../assets/logos/burginsel_wort_bild.svg" alt="Horneburg Logo" /></template>
+        <template #right>
+          <router-link to="/about" class="arrow_in_front">{{ t('about') }}</router-link>
+        </template>
+      </Header>
+
+      <main>
+
+        <p>{{ t('welcome_text') }}</p>
+
+
+        <Cards>
+
+          <Card :title="t('island')" :description="t('island_description')" link="/ar" :image="svg_inselansicht" />
+
+          <Card :title="t('single')" :description="t('single_description')" link="/orbit" :image="svg_einzelgebaeude" />
+
+          <Card :title="t('artifacts')" :description="t('artifacts_description')" link="/artifacts"
+            :image="svg_fundstuecke" />
+        </Cards>
+        <hr />
+
+        <h3>{{ t('history') }}</h3>
+        <p>{{ t('history_text') }}</p>
+        <img src="../assets/grafiken/zeitstrahl_gross.svg" id="timeline_big" />
+        <img src="../assets/grafiken/zeitstrahl_klein.svg" id="timeline_small" />
+        <router-link to="/history" custom v-slot="{ navigate }">
+          <button @click="navigate" id="historybutton">{{ t('history_more') }}</button>
+        </router-link>
+
+        <hr />
+
+        <h3>{{ t('visit') }}</h3>
+        <p>{{ t('visit_text') }}</p>
+
+        <div id="leftright">
+          <Map :center="[9.58769, 53.50963]" :zoom="14.5" id="map" />
+          <div>
+            <h4>Handswerksmuseum Horneburg</h4>
+            Marschdamm 2c, 21640 Horneburg<br />
+            {{ t('museum_opening_hours') }}<br />
+            {{ t('museum_price') }}<br />
+            <a href="https://handwerksmuseum-horneburg.de/" target="_blank"
+              class="arrow_in_front">handwerksmuseum-horneburg.de</a>
+          </div>
         </div>
-      </div>
-    </transition>
+      </main>
+      <Footer />
+    </section>
 
-    <ion-header :translucent="true" class="ion-no-border">
-      <ion-toolbar>
-        <ion-title>{{ $t('welcome') }}
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
+  </div>
 
-    <ion-content :fullscreen="true" :scroll-events="true" @ionScroll="handleScroll">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">{{ $t('welcome') }}</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <div class="main-content">{{ $t('welcome_text') }}
-      </div>
-
-      <div class="cards-content">
-
-        <ion-card router-link="/ar" class="cards">
-          <ion-card-header>
-            <ion-card-title>{{ $t('island') }}</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            {{ $t('island_description') }}
-          </ion-card-content>
-          <img src="../assets/inselansicht.svg" :alt="$t('island')" style="width: 100%; margin-top: 10px;" />
-        </ion-card>
-
-        <ion-card router-link="/orbit" class="cards">
-          <ion-card-header>
-            <ion-card-title>{{ $t('single') }}</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            {{ $t('single_description') }}
-          </ion-card-content>
-          <img src="../assets/einzelansicht2.svg" :alt="$t('single')" style="width: 100%; margin-top: 10px;" />
-        </ion-card>
-
-        <ion-card router-link="/artifacts" class="cards">
-          <ion-card-header>
-            <ion-card-title>{{ $t('artifacts') }}</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            {{ $t('artifacts_description') }}
-          </ion-card-content>
-          <img src="../assets/artifacts.svg" :alt="$t('artifacts')"
-            style="width: 100%; margin-top: 10px; max-height: 152px;" />
-        </ion-card>
-
-      </div>
-      <hr />
-      <div class="main-content">{{ $t('welcome_text') }}
-      </div>
-    </ion-content>
-    <Footer />
-  </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { ref, onMounted } from 'vue';
-import { IonIcon } from '@ionic/vue';
-import { homeOutline } from 'ionicons/icons';
-import type { ScrollDetail } from '@ionic/vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import Footer from '@/components/Footer.vue';
+import Card from '@/components/Card.vue';
+import Cards from '@/components/Cards.vue';
+import Map from '@/components/Map.vue';
+import Header from '@/components/Header.vue';
 
-const showSplash = ref(true);
+import svg_inselansicht from '@/assets/grafiken/modus_inselansicht.svg';
+import svg_einzelgebaeude from '@/assets/grafiken/modus_einzelgebaeude.svg';
+import svg_fundstuecke from '@/assets/grafiken/modus_fundstuecke.svg';
 
-// Funktion zum Ausblenden
-const dismissSplash = () => {
-  showSplash.value = false;
-};
+import { useSplashStore } from '@/stores/splash';
+const splash = useSplashStore()
 
-// Timer: Nach 3 Sekunden automatisch ausblenden
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+let splashTimer: ReturnType<typeof setTimeout>;
+
+
+// 2. MAUS-DRAG LOGIK
 onMounted(() => {
-  setTimeout(() => {
-    dismissSplash();
-  }, 3000);
-});
+  const container = document.getElementById('scroll-container');
+  if (container) {
+    let isPressed = false;
+    let startY: number;
+    let scrollTop: number;
 
-// Scroll: Sobald der User scrollt, Splash entfernen
-const handleScroll = (event: CustomEvent<ScrollDetail>) => {
-  console.log("Scroll event detected, scrollTop:", event.detail.scrollTop);
-  if (showSplash.value && event.detail.scrollTop > 10) {
-    dismissSplash();
+    container.addEventListener('scroll', () => {
+      if (container.scrollTop > window.innerHeight / 2) {
+        window.history.replaceState(null, '', "#main");
+      } else {
+        window.history.replaceState(null, '', "#splash");
+      }
+    });
+
+    container.addEventListener('mousedown', (e) => {
+      isPressed = true;
+      startY = e.pageY - container.offsetTop;
+      scrollTop = container.scrollTop;
+      container.style.scrollSnapType = 'none'; // Snap kurz aus für freies Ziehen
+      container.style.scrollBehavior = 'auto';
+    });
+
+    container.addEventListener('mouseleave', () => { isPressed = false; });
+    container.addEventListener('mouseup', () => {
+      isPressed = false;
+      container.style.scrollSnapType = 'y mandatory'; // Snap wieder an
+      container.style.scrollBehavior = 'smooth';
+
+      // Prüfen, ob weit genug gezogen wurde
+      if (document.querySelector('#map:hover')) {
+      } else if (container.scrollTop > 100 && container.scrollTop < window.innerHeight) {
+        container.scrollTo(0, window.innerHeight);
+        window.history.replaceState(null, '', "#main");
+      } else if (container.scrollTop <= 100) {
+        container.scrollTo(0, 0);
+      }
+    });
+
+    container.addEventListener('mousemove', (e) => {
+      if (!isPressed) return;
+      if (document.querySelector('#map:hover')) return;
+      e.preventDefault();
+      const y = e.pageY - container.offsetTop;
+      const walk = (y - startY) * 1.5; // Geschwindigkeit des Ziehens
+      container.scrollTop = scrollTop - walk;
+    });
+
+    if (container.scrollTop < 100) {
+      splashTimer = setTimeout(() => {
+        if (container.scrollTop < 100) {
+          container.style.scrollBehavior = 'smooth';
+          container.scrollTo(0, window.innerHeight);
+          window.history.replaceState(null, '', "#main");
+        }
+      }, 20000);
+    }
+
+    if (!splash.shouldShow() || window.location.hash === '#main') {
+      container.scrollTo(0, window.innerHeight);
+    }
+    splash.wasShown();
+  } else {
+    console.error("Container für Scrollen nicht gefunden");
   }
-};
 
+  onUnmounted(() => {
+    console.log("HomePage.vue unmounted");
+    if (splashTimer) {
+      clearTimeout(splashTimer);
+    }
+  });
+});
 </script>
 
 <style scoped>
-/* Splash-Screen Styling */
-.splash-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+/* Container mit Scroll-Snap für Touch & Scrollrad */
+#scroll-container {
   height: 100%;
-  background: linear-gradient(135deg, #3880ff, #2dd36f);
-  background-image: url('@/assets/startscreen.png');
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+
+  /* Zeigt an, dass man ziehen kann */
+}
+
+#scroll-container:active {
+  cursor: grabbing;
+}
+
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+}
+
+#lock-screen {
+  height: 100vh;
+  width: 100%;
+  background-image: url('@/assets/bilder/burginsel.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  z-index: 999;
+  padding: 2rem var(--margin-sides);
   color: white;
+  pointer-events: none;
+  /* Klicks gehen durch zum Container */
+}
+
+#lock-screen img {
+  width: 130px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+#lock-screen h1 {
+  margin: 0 auto;
   text-align: center;
+  display: block;
 }
 
-.splash-overlay img {
-  position: absolute;
-  top: 0;
-  left: 0;
+#subheader {
+  margin: 1.5rem auto 0;
   width: 100%;
-  max-width: 400px;
+  text-align: center;
+  font-size: 1.5rem;
 }
 
-/* Vue Fade-Animation */
-.fade-leave-active {
-  transition: opacity 0.8s ease, transform 0.8s ease;
+@media (max-width: 800px) {
+  #subheader {
+    font-size: 1.2rem;
+  }
 }
 
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(-20px);
+#arrow {
+  position: absolute;
+  height: 2rem;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite;
+  animation-delay: 10s;
 }
 
-.main-content {
-  padding: 16px;
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
 }
 
-ion-header ion-title {
-  font-size: 2em;
+
+main {
+  text-align: center;
+  margin: 2rem var(--margin-sides);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  color: rgb(14, 10, 10);
+}
+
+main>* {
+  text-align: left;
+}
+
+#about_link,
+#museum_link {
+  display: inline;
+  height: 0.7rem;
+}
+
+#timeline_big {
+  display: block;
+  width: 100%;
+  max-width: 1000px;
+  margin: 5rem auto;
+}
+
+#timeline_small {
+  display: none;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+@media (max-width: 800px) {
+  #timeline_big {
+    display: none;
+  }
+
+  #timeline_small {
+    display: block;
+  }
+}
+
+#historybutton {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  color: #222;
+  border: 1px solid #222;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+
+#map {
+  min-height: 300px;
+  max-height: 400px;
+  width: 100%;
+  aspect-ratio: 2;
+}
+
+#leftright {
+  max-width: 1000px;
+  width: 100%;
+  margin: 3rem auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  font-size: 0.85rem;
+  text-align: left;
+  gap: 40px;
+}
+
+@media (max-width: 800px) {
+  #leftright {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+}
+
+#leftright div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 2;
+}
+
+#leftright a {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+header img {
+  display: block;
+  height: auto;
+}
+
+header a {
+  display: inline-block;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-radius: 5px;
 }
 </style>

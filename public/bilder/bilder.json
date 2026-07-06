@@ -1,0 +1,97 @@
+{
+    "history": [
+        {
+            "src": "./bilder/history/1_Burginsel_aufgehellt.jpeg",
+            "description": {
+                "de": "So könnte die Burg ausgesehen haben, Visualisierung basierend auf den letzten Forschungsergebnissen",
+                "en": "This is how the castle might have looked, visualization based on the latest research findings"
+            }
+        },
+        {
+            "src": "./bilder/history/2_Karte_Horneburg.png",
+            "description": {
+                "de": "Karte Horneburgs aus dem Jahr 1789, die Burginsel wurde damals als Garten der Familie v. Düring – Nachkommen der Burgmannen – genutzt",
+                "en": "Map of Horneburg from the year 1789, the castle island was then used as a garden by the v. Düring family – descendants of the Burgmannen"
+            }
+        },
+        {
+            "src": "./bilder/history/3_Gemeinschaftssiegel_Horneburg.png",
+            "description": {
+                "de": "Das Gemeinschaftssiegel der Burggemeinschaft in Form eines Wappens, mit dem namensgebenden Horn der Horneburg",
+                "en": "The community seal of the castle community in the form of a coat of arms, with the eponymous horn of Horneburg"
+            }
+        },
+        {
+            "src": "./bilder/history/4_Burgmannen_Wappen.png",
+            "description": {
+                "de": "Die Wappen der Burgmannen",
+                "en": "The coats of arms of the Burgmannen"
+            }
+        },
+        {
+            "src": "./bilder/history/5_Zeichnung_Burg.png",
+            "description": {
+                "de": "Spekulation über das Aussehen der Burg – Zeichnung nach Hörensagen von „Geh. Rath Freyherr Casper Schulte“, Anfang des 18. Jahrhunderts",
+                "en": "Speculation about the appearance of the castle – drawing based on hearsay by “Geh. Rath Freyherr Casper Schulte”, early 18th century"
+            }
+        }
+    ],
+    "about": [
+        {
+            "src": "./bilder/about/1_Burginsel_Luftbild_2021.jpg",
+            "description": {
+                "de": "Luftbild der Burginsel vor der Umgestaltung, 2021",
+                "en": "Aerial view of the Burginsel before redesign, 2021"
+            }
+        },
+        {
+            "src": "./bilder/about/2_Horneburg_Laserscan.png",
+            "description": {
+                "de": "Digitales Geländemodell der Horneburg und des historischen Ortskerns – die runde Burginsel mit Wassergraben ist gut zu erkennen, 2020",
+                "en": "Digital terrain model of Horneburg and the historic town center – the round castle island with moat is clearly visible, 2020"
+            }
+        },
+        {
+            "src": "./bilder/about/3_Geomagnetik.png",
+            "description": {
+                "de": "Ein Archäologe und Studenten vom Institut für Vor- und Frühgeschichtliche Archäologie an der Universität Hamburg untersuchen die Burginsel in Horneburg mit einem Geomagnetik-Messgerät",
+                "en": "An archaeologist and students from the Institute for Pre- and Early Historical Archaeology at the University of Hamburg examine the Burginsel in Horneburg using a mobile geomagnetic survey device"
+            }
+        },
+        {
+            "src": "./bilder/about/4_Burginsel_Bodenradar.png",
+            "description": {
+                "de": "Ergebnisse der Bodenradarprospektion zeigen Fundamentstrukturen auf der Burginsel",
+                "en": "Ground-penetrating radar survey results show foundation structures on the Burginsel"
+            }
+        },
+        {
+            "src": "./bilder/about/5_Burginsel_Lageplan.png",
+            "description": {
+                "de": "Lageplan der Gebäude auf der Hauptburg, erstellt von den Burgenforschern Menno Mennenga und Joachim Zeune",
+                "en": "Site plan of the buildings on the main castle, created by castle researchers Menno Mennenga and Joachim Zeune"
+            }
+        },
+        {
+            "src": "./bilder/about/6_Burginsel_Landschaftsarchitektur_Entwurf.jpg",
+            "description": {
+                "de": "Entwurf für die Umgestaltung der Burginsel zur Park- und Veranstaltungsfläche vom Büro Landschaftsarchitektur+",
+                "en": "Design for the redesign of the Burginsel into a park and event area by Büro Landschaftsarchitektur+"
+            }
+        },
+        {
+            "src": "./bilder/about/7_VR_Ausstellung.png",
+            "description": {
+                "de": "Ausschnitt aus der VR-Version, zu sehen im Handwerksmuseum Horneburg",
+                "en": "Excerpt from the VR version, on display at the Handwerksmuseum Horneburg"
+            }
+        },
+        {
+            "src": "./bilder/about/8_Burginsel_Luftbild_2026.jpg",
+            "description": {
+                "de": "Luftbild der Burginsel nach der Umgestaltung, 2026",
+                "en": "Aerial view of the Burginsel after the redesign, 2026"
+            }
+        }
+    ]
+}

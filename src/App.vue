@@ -1,63 +1,173 @@
-<template>
-  <ion-app mode="ios">
-    <ion-router-outlet />
-  </ion-app>
-</template>
-
 <script setup lang="ts">
-import { IonApp, IonRouterOutlet } from '@ionic/vue';
-import { ModelFetcher } from './func/modelFetcher';
+import { RouterView } from 'vue-router'
+import { useSplashStore } from './stores/splash';
+const splash = useSplashStore()
+splash.shouldShow();
 
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+import { ModelFetcher } from '@/func/modelFetcher';
 ModelFetcher.preload();
 </script>
 
+<template>
+  <RouterView :key="$route.fullPath"></RouterView>
+</template>
+
+
 <style>
-ion-content {
-  font-size: 1.2em;
+@font-face {
+  font-family: 'Karla';
+  src: url('@/assets/font/Karla/Karla-VariableFont_wght.ttf') format('truetype');
 }
 
-ion-card.cards {
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: 30px auto;
-  display: block;
-  transition: background-color 0.3s ease;
+@font-face {
+  font-family: 'Karla italic';
+  src: url('@/assets/font/Karla/Karla-Italic-VariableFont_wght.ttf') format('truetype');
 }
 
-ion-card.cards:hover {
-  cursor: pointer;
-  background-color: var(--ion-color-light-tint);
+:root {
+  --margin-sides: 3rem;
 }
 
-
-@media (min-width: 800px) {
-  div.cards-content {
-    text-align: center;
-    padding: 30px;
-  }
-
-  ion-card.cards {
-    display: inline-block;
-    vertical-align: top;
-    margin: 30px;
-    width: 380px;
+@media (max-width: 800px) {
+  :root {
+    --margin-sides: 1rem;
   }
 }
 
-/* Desktop */
-@media (min-width: 1000px) {
-  div.main-content {
-    width: 800px;
-    margin: auto;
-    margin-top: 40px;
-    position: relative;
+@media (max-width: 400px) {
+  :root {
+    --margin-sides: 0.5rem;
   }
+}
 
-  ion-header {
-    margin: auto;
-    width: 800px;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #EBEDE9;
+  font-size: 18px;
+  color: #000;
+  line-height: 1.6;
+  text-align: left;
+}
+
+@media (max-width: 300px) {
+  body {
+    hyphens: auto;
+    hyphenate-limit-chars: 12 4 4;
   }
+}
+
+/* Safari browser only */
+_::-webkit-full-page-media,
+_:future,
+:root .safari_only {
+  hyphens: manual;
+}
+
+@supports (font: -apple-system-body) {
+  .safari_only {
+    hyphens: manual;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Karla', sans-serif;
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 2.8rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+h4 {
+  font-size: 1.1rem;
+}
+
+main>p,
+article>p,
+main>h1,
+article>h1,
+main>h2,
+article>h2,
+main>h3,
+article>h3,
+main>h4,
+article>h4 {
+  margin-left: 1rem;
+  margin-bottom: 0.7rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+
+@media (max-width: 800px) {
+
+  main>p,
+  article>p,
+  main>h1,
+  main>h2,
+  main>h3,
+  main>h4,
+  article>h1,
+  article>h2,
+  article>h3,
+  article>h4 {
+    margin-left: 0.1rem;
+  }
+}
+
+button {
+  font-weight: 600;
+}
+
+hr {
+  border: none;
+  border-bottom: 2px solid #999;
+  margin: 4rem -0.5rem;
+}
+
+.arrow_in_front::before {
+  content: "";
+  display: inline-block;
+  height: 0.7rem;
+  width: 1rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  margin-right: 0.3rem;
+  background-image: url('@/assets/icons/arrow_right.svg');
 
 }
 </style>

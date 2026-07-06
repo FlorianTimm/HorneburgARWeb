@@ -1,7 +1,0 @@
-{
-  "name": "horneburgArWeb",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue-vite"
-}

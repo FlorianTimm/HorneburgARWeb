@@ -1,234 +1,406 @@
 <template>
-    <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-back-button default-href="/"></ion-back-button>
-                </ion-buttons>
-                <ion-title>{{ $t('armode') }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <div id="ar-container"></div>
-        </ion-content>
-    </ion-page>
+
+    <Header :type="'ar'">
+        <template #left>
+            <button @click="$router.push('/#main')"><img src="@/assets/icons/close.svg" :title="t('close')"></button>
+        </template>
+        <template #center>
+            <h1>{{ t('armode') }} </h1>
+        </template>
+        <template #right>
+            <button @click="reload()"><img src="@/assets/icons/reload.svg" :title="t('reload')"></button>
+        </template>
+    </Header>
+
+    <main>
+        <canvas id="ar-container">
+
+        </canvas>
+        <div id="error">
+            <div>
+                <img src="../assets/grafiken/burginsel.gif" />
+                <h3>{{ t('ar_error', { distance: distanceToCastle }) }}</h3>
+                <router-link to="/#main" id="zumstart">{{ t('ar_error_back') }}</router-link>
+
+                <a @click="beamMeToHorneburg()" id="beaming">{{ t('ar_error_teleport') }}</a>
+            </div>
+        </div>
+        <Infobox :header="infobox_header" :subheader="infobox_subheader" :text="infotext" />
+
+        <div v-if="ar_instruction_overlay && geo_permission == 'granted' && webcam_permission == 'granted'"
+            class="ar_overlay">
+            <button id="ar_close" @click="ar_instruction_overlay = false"><img src="@/assets/icons/close.svg"
+                    :button="t('close')"></button>
+            <h4>{{ t('ar_overlay_header') }}</h4>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><img src="@/assets/icons/left_right.svg" :alt="t('ar_overlay_instruction_1')"></td>
+                        <td>{{ t('ar_overlay_instruction_1') }}</td>
+                    </tr>
+                    <tr>
+                        <td><img src="@/assets/icons/footprints.svg" :alt="t('ar_overlay_instruction_2')"></td>
+                        <td>{{ t('ar_overlay_instruction_2') }}</td>
+                    </tr>
+                    <tr>
+                        <td><img src="@/assets/icons/house.svg" :alt="t('ar_overlay_instruction_3')"></td>
+                        <td>{{ t('ar_overlay_instruction_3') }}</td>
+                    </tr>
+                    <tr>
+                        <td><img src="@/assets/icons/reload.svg" :alt="t('ar_overlay_instruction_4')"></td>
+                        <td>{{ t('ar_overlay_instruction_4') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button id="ar_start" @click="ar_instruction_overlay = false">{{ t('ar_start') }}</button>
+        </div>
+
+        <div v-if="geo_permission != 'granted' || webcam_permission != 'granted'" class="ar_overlay">
+            <h4>{{ t('ar_permission_header') }}</h4>
+            <p v-if="geo_permission != 'denied' && webcam_permission != 'denied'">{{ t('ar_permission_start') }}</p>
+            <p v-else>{{ t('ar_permission_decline') }}</p>
+            <button v-if="geo_permission != 'denied' && webcam_permission != 'denied'" id="ar_start"
+                @click="startAR()">{{
+                    t('ar_start_permissions')
+                }}</button>
+            <router-link to="/orbit" id="link" class="arrow_in_front">{{ t('ar_alternative') }}</router-link>
+        </div>
+
+    </main>
+
 </template>
 
 <script setup lang="ts">
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import * as THREE from 'three';
-import * as LocAR from 'locar';
-import { onMounted, onUnmounted } from 'vue';
+import { App, type LocAR } from 'locar';
+import { onMounted, onUnmounted, watch } from 'vue';
 import { ModelJson } from '@/func/modelle_json';
 import { toast } from '@/func/toast';
 import { addLight, getDistance, modelSelector } from '@/func/threed';
-import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import { ModelFetcher } from '@/func/modelFetcher';
-import { alertController } from '@ionic/vue';
 
+import Header from '@/components/Header.vue';
+import Infobox from '@/components/Infobox.vue';
+
+import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
 
-const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.001, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-const scene = new THREE.Scene();
-const locar = new LocAR.LocationBased(scene, camera);
-const cam = new LocAR.Webcam({
-    video: {
-        facingMode: "environment"
-    }
+let locar: LocAR;
+let app: App;
+
+let infotext = ref("");
+let infobox_header = ref("");
+let infobox_subheader = ref("");
+let ar_instruction_overlay = ref(false);
+let geo_permission = ref<PermissionState | undefined>(undefined);
+let webcam_permission = ref<PermissionState | undefined>(undefined);
+let started = false;
+let distanceToCastle = ref(t('ar_distance_placeholder'));
+
+let diffLat = 0;
+let diffLong = 0;
+
+let firstLocation = true;
+
+onMounted(async () => {
+    firstLocation = true;
+    diffLat = 0;
+    diffLong = 0;
+
+    watch(webcam_permission, () => {
+        console.log("Webcam permission changed:", webcam_permission.value);
+    });
+    watch(geo_permission, () => {
+        console.log("Geolocation permission changed:", geo_permission.value);
+    });
+    navigator.permissions.query({ name: "geolocation" }).then(result => {
+        geo_permission.value = result.state;
+        checkARSupport();
+    });
+
+    (await navigator.permissions.query({ name: "geolocation" })).addEventListener('change', function () {
+        geo_permission.value = this.state;
+        checkARSupport();
+    });
+
+    navigator.permissions.query({ name: "camera" }).then(result => {
+        webcam_permission.value = result.state;
+        checkARSupport();
+    });
+    (await navigator.permissions.query({ name: "camera" })).addEventListener('change', function () {
+        webcam_permission.value = this.state;
+        checkARSupport();
+    });
+
+
+
 });
 
-let infobox = ref(false);
-let infotext = ref("");
+function checkARSupport() {
+    if (geo_permission.value == 'granted' && webcam_permission.value == 'granted') {
+        startAR();
+    } else if (geo_permission.value == 'denied' || webcam_permission.value == 'denied') {
+        stopAR();
+    }
+}
 
-onMounted(() => {
-    alertController.create({
-        header: 'AR-Modus',
-        subHeader: 'Dieser Modus ist für die Nutzung auf einem Smartphone gedacht. Bitte wechsle zu einem mobilen Gerät, um die AR-Funktionalität zu nutzen.',
-        message: 'Falls du bereits auf einem Smartphone bist, könnte es sein, dass die Kamera-Berechtigungen nicht erteilt wurden. Bitte erlaube den Zugriff auf die Kamera, um fortzufahren.',
-        buttons: ['Loslegen'],
-    }).then(alert => alert.present());
+async function startAR() {
+    if (started) {
+        return;
+    }
+    started = true;
+    let container = document.getElementById('ar-container') as HTMLCanvasElement;
+    if (!container) {
+        console.error("AR container not found");
+        return;
+    }
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById('ar-container')?.appendChild(renderer.domElement);
-
-    window.addEventListener("resize", e => {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
+    app = new App({
+        cameraOptions: { hFov: 80, near: 0.001, far: 1000 },
+        gpsOptions: { gpsMinDistance: 1.5 },
+        canvas: container
     });
-
-    cam.on("webcamstarted", ev => {
-        scene.background = ev.texture;
-    });
-
-    cam.on("webcamerror", error => {
-        alert(`Webcam error: code ${error.code} message ${error.message}`);
-    });
-
-    let firstLocation = true;
-
-    const deviceOrientationControls = new LocAR.DeviceOrientationControls(camera,
-        {
-            smoothingFactor: 0.1,
-            enablePermissionDialog: true
-
-        }
-    );
-
-    deviceOrientationControls.on("deviceorientationgranted", ev => {
-        ev.target.connect();
-    });
-
-    deviceOrientationControls.on("deviceorientationerror", error => {
-        alert(`Device orientation error: code ${error.code} message ${error.message}`);
-    });
-
-    deviceOrientationControls.init();
-
-    locar.setGpsOptions({
-        gpsMinDistance: 1.5 // meters
-    });
+    locar = await app.start();
 
     locar.on("gpserror", error => {
         toast(`GPS Fehler: Code ${error.code}`);
-        alertController.create({
-            header: 'GPS-Fehler',
-            subHeader: 'Es gab ein Problem mit der GPS-Verbindung.',
-            message: 'Bitte stelle sicher, dass GPS aktiviert ist und die App die notwendigen Berechtigungen hat.',
-            buttons: ['OK']
-        }).then(alert => alert.present());
     });
 
     locar.on("gpsupdate", async (ev: { position: GeolocationPosition }, distMoved: number) => {
-        toast(`GPS Update: Lat ${ev.position.coords.latitude.toFixed(6)}, Lon ${ev.position.coords.longitude.toFixed(6)}, Accuracy ${ev.position.coords.accuracy}m`);
-        if (firstLocation) {
-            firstLocation = false;
-            loadModels(ev);
-        }
+        gpsUpdate(ev, distMoved);
     });
 
-    if (window.location.search.includes("debug")) {
-        console.debug("Debug mode: Simulating GPS location");
-        locar.fakeGps(53.54025627076634, 10.006360171632716);
-    }
-
-    modelSelector(document.getElementById('ar-container')!, camera, scene, async (name) => {
+    modelSelector(document.getElementById('ar-container')!, app.camera, app.scene, async (name) => {
         console.log("Model selected:", name);
         let liste = await ModelJson.load_json()
         let ganzerName = liste[name]?.getName(locale.value);
         if (ganzerName) {
             toast(ganzerName);
         }
+        infobox_header.value = ganzerName || '';
+        infobox_subheader.value = liste[name]?.getSubheader(locale.value) || '';
+        infotext.value = liste[name]?.getDescription(locale.value) || '';
     }, () => {
         console.log("No model selected");
-        infotext.value = t('all_models_description');
+        infobox_header.value = '';
+        infobox_subheader.value = '';
+        infotext.value = '';
     });
-
 
     locar.startGps();
 
-    renderer.setAnimationLoop(animate);
+    ar_instruction_overlay.value = true;
+};
 
-    function animate() {
-        deviceOrientationControls.update();
-        renderer.render(scene, camera);
+async function loadModels() {
+    let liste = await ModelJson.load_json();
+
+    for (let name in liste) {
+        let obj = liste[name];
+
+        if (!obj) continue;
+
+
+        let object = await ModelFetcher.getModel(name);
+        object.rotation.y = Math.PI * obj.rotation / 180;
+
+        locar.add(object,
+            obj.longitude + diffLong,
+            obj.latitude + diffLat,
+            -1.5);
     }
 
-    async function loadModels(ev: { position: GeolocationPosition }) {
-        let liste = await ModelJson.load_json();
-
-        const { diffLat, diffLong, nearest } = debugPositions(ev);
-        toast(`Nächster Standort: ${nearest.name}`);
-
-        for (let name in liste) {
-            let obj = liste[name];
+    addLight(app.scene)
+}
 
 
-            let object = await ModelFetcher.getModel(name);
-            object.rotation.y = Math.PI * obj.rotation / 180;
+function gpsUpdate(ev: { position: GeolocationPosition }, distMoved: number) {
+    let dist = getDistance(ev.position.coords.latitude - diffLat, ev.position.coords.longitude - diffLong, 53.509736171441112, 9.5873684507624617);
 
-            locar.add(object,
-                obj.longitude + diffLong,
-                obj.latitude + diffLat,
-                -1.5);
+    console.log(`Entfernung zur Burginsel: ${dist}m`);
+    if (dist > 1500) {
+        distanceToCastle.value = (dist / 1000).toFixed(1) + " km";
+        document.getElementById("error")!.style.visibility = "visible";
+    } else if (dist > 300) {
+        distanceToCastle.value = Math.round(dist) + " m";
+        document.getElementById("error")!.style.visibility = "visible";
+    }
+    else {
+        document.getElementById("error")!.style.visibility = "hidden";
+
+        if (firstLocation) {
+            firstLocation = false;
+            loadModels();
         }
-        ;
-        // Add illumination to the scene
-        addLight(scene)
     }
+}
 
-    function debugPositions(ev: { position: GeolocationPosition }) {
-        const locations = [
-            {
-                name: 'Uni',
-                longitude: 10.006360171632716,
-                latitude: 53.54025627076634,
-                diffLong: 10.006360171632716 - 9.5873684507624617,
-                diffLat: 53.54025627076634 - 53.509736171441112
-            },
-            {
-                name: 'Meckelfeld',
-                longitude: 10.0282,
-                latitude: 53.4174,
-                diffLong: 10.0282 - 9.5873684507624617,
-                diffLat: 53.4174 - 53.509736171441112
-            },
-            {
-                name: 'Horneburg',
-                longitude: 9.5873684507624617,
-                latitude: 53.509736171441112,
-                diffLong: 0,
-                diffLat: 0
-            }
-        ];
-
-        const userLat = ev.position.coords.latitude;
-        const userLon = ev.position.coords.longitude;
-
-        let diffLat = 0;
-        let diffLong = 0;
-
-        // Find nearest location
-        let nearest = locations[0];
-        let minDist = getDistance(userLat, userLon, locations[0].latitude, locations[0].longitude);
-        for (let i = 1; i < locations.length; i++) {
-            const dist = getDistance(userLat, userLon, locations[i].latitude, locations[i].longitude);
-            if (dist < minDist) {
-                minDist = dist;
-                nearest = locations[i];
-            }
-        }
-
-        diffLat = nearest.diffLat;
-        diffLong = nearest.diffLong;
-
-        return { diffLat, diffLong, nearest };
-    }
-});
+function reload() {
+    window.location.reload();
+}
 
 onUnmounted(() => {
     // Clean up resources, event listeners, etc. if needed
     console.log("AR.vue deactivated");
-    try {
-        locar.stopGps();
-        renderer.setAnimationLoop(null);
-        cam.dispose();
-    } catch (e) {
-        console.warn("Error while stopping", e);
-    }
+
+    stopAR()
 });
+
+function stopAR() {
+    let video = document.querySelector("video");
+    if (video) {
+        video.pause();
+        video.srcObject = null;
+        document.body.removeChild(video);
+    }
+
+    if (locar) {
+        locar.stopGps();
+        locar = null as any;
+    }
+    started = false;
+}
+
+function beamMeToHorneburg() {
+    let pos = locar.getLastKnownLocation()
+    if (!pos) {
+        toast("Aktuelle Position unbekannt. Teleportation fehlgeschlagen.");
+        return;
+    }
+    diffLat = pos.latitude - 53.50970522;
+    diffLong = pos.longitude - 9.58754553;
+    gpsUpdate({ position: { coords: { latitude: pos.latitude, longitude: pos.longitude, accuracy: 10 } } } as any, 0);
+}
 
 </script>
 
 <style scoped>
-#ar-container {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+#header {
+    z-index: 20;
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+
+}
+
+#ar-container {
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.ar_overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(calc(-50% + 2em));
+    width: 90%;
+    max-width: 30rem;
+    max-height: calc(100% - 5em);
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255);
+    padding: 1.3rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 15;
+    text-align: left;
+    font-weight: 400;
+}
+
+.ar_overlay h4 {
+    margin-bottom: 1rem;
+}
+
+.ar_overlay #ar_close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.ar_overlay table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0.9375rem;
+}
+
+.ar_overlay table td {
+    padding: 1rem;
+    vertical-align: middle;
+    line-height: 1.5;
+}
+
+.ar_overlay table td img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.ar_overlay #ar_start,
+#error #zumstart {
+    display: block;
+    width: auto;
+    margin: 1rem auto;
+    padding: 1.25rem;
+    background-color: #4A594A;
+    color: white;
+    border: none;
+    border-radius: 0.1rem;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+#error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    background-color: #EBEDE9;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+
+#error>div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(calc(-50% + 2em));
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 80%;
+    max-width: 25rem;
+}
+
+#error img {
+    width: 4rem;
+    height: auto;
+    margin: 0 auto;
+    filter: invert()
+}
+
+#beaming {
+    text-decoration: underline;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+</style>
+
+<style>
+video {
+    z-index: 5 !important;
 }
 </style>
